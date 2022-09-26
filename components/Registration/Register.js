@@ -3,7 +3,7 @@ import {View, StyleSheet, Text, TextInput, Pressable} from 'react-native';
 import Button from '../UI/Button';
 
 const Register = () => {
-  const placeholder = 'Masukan Alamat Email/ No Telepon Anda';
+  const placeholder = 'Enter Email/Phone Number to Register';
   return (
     <View style={styles.container}>
       <View>
