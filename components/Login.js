@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Text, TextInput} from 'react-native';
 import Button from './UI/Button';
+import IconButton from './UI/IconButton';
 
 const Login = () => {
   return (
@@ -12,14 +13,20 @@ const Login = () => {
       <View style={{marginTop: 50}}>
         <View style={{marginBottom: 30}}>
           <Text style={styles.inputText}>Email/ Phone</Text>
-          <View>
-            
+          <View style={{width: '100%', flexDirection: 'row'}}>
             <TextInput
-            style={styles.inputContainer}
-            placeholderTextColor={'#C4C5C4'}
-            placeholder="Enter your email address/ phone number"
-          />
+              style={[styles.inputContainer, {flex: 1}]}
+              placeholderTextColor={'#C4C5C4'}
+              placeholder="Enter your email address/ phone number"
+            />
+            <View>
+              <IconButton
+              
+                size={24}
+                color={'#838589'}
+                name={'eye-outline'}/>
             </View>
+          </View>
         </View>
         <View>
           <Text style={styles.inputText}>Password</Text>
