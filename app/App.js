@@ -23,7 +23,9 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{
+        contentStyle:{backgroundColor:'white'}
+      }}>
         <Stack.Screen
           name="main"
           options={{
