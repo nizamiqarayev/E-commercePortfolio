@@ -12,7 +12,9 @@ const BottomTabs = createBottomTabNavigator();
 
 const App = () => {
 
-  const BottomTab=()=>{
+  const BottomTab = () => {
+    
+    asdasdad
 
     return(
       <BottomTabs.Navigator>
