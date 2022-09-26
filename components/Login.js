@@ -13,29 +13,29 @@ const Login = () => {
       <View style={{marginTop: 50}}>
         <View style={{marginBottom: 30}}>
           <Text style={styles.inputText}>Email/ Phone</Text>
-          <View style={{width: '100%', flexDirection: 'row'}}>
-            <TextInput
-              style={[styles.inputContainer, {flex: 1}]}
-              placeholderTextColor={'#C4C5C4'}
-              placeholder="Enter your email address/ phone number"
-            />
-            <View>
-              <IconButton
-              
-                size={24}
-                color={'#838589'}
-                name={'eye-outline'}/>
-            </View>
-          </View>
-        </View>
-        <View>
-          <Text style={styles.inputText}>Password</Text>
           <TextInput
             style={styles.inputContainer}
             placeholderTextColor={'#C4C5C4'}
-            placeholder="Enter Account Password"
+            placeholder="Enter your email address/ phone number"
           />
         </View>
+        <View>
+          <Text style={styles.inputText}>Password</Text>
+          <View
+            style={{width: '100%', flexDirection: 'row', alignItems: 'center'}}>
+            <TextInput
+              style={[styles.inputContainer, {flex: 1}]}
+              placeholderTextColor={'#C4C5C4'}
+              placeholder="Enter your password"
+            />
+            <View style={{position: 'absolute', right: 0}}>
+              <IconButton size={24} color={'#838589'} name={'eye-outline'} />
+            </View>
+          </View>
+        </View>
+      </View>
+      <View style={{height:60,marginTop:70}} >
+        <Button backgroundColor={'#3669C9'}>Sign In</Button>
       </View>
     </View>
   );
