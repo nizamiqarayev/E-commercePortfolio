@@ -3,7 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {StyleSheet, Text, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Register from '../components/Register';
+import Register from '../components/Registration/Register';
 import Login from '../components/Login';
 
 const Stack = createNativeStackNavigator();
