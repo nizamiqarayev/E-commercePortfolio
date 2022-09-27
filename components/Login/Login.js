@@ -6,8 +6,8 @@ import {
   TextInput,
   Dimensions,
 } from 'react-native';
-import Button from './UI/Button';
-import IconButton from './UI/IconButton';
+import Button from '../UI/Button';
+import IconButton from '../UI/IconButton';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const Login = ({navigation}) => {
@@ -26,7 +26,9 @@ const Login = ({navigation}) => {
       setButtonColor('#838589');
     }
   }, [inputs]);
-
+  function forgotPassword(){
+    navigation.navigate('resetpassword')
+  }
   function changePasswordVisibility() {
     if (iconName == 'eye-outline') {
       setIconName('eye-off-outline');
@@ -44,7 +46,7 @@ const Login = ({navigation}) => {
   return (
     <KeyboardAwareScrollView style={{height: deviceHeight}} bounces={false}>
       <View style={styles.container}>
-        <View style={{marginTop: deviceHeight * 72}}>
+        <View style={{marginTop: deviceHeight * 100}}>
           <View>
             <Text style={styles.welcomeText}>Welcome back to Mega Mall</Text>
             <Text style={styles.descriptionText}>
@@ -94,7 +96,7 @@ const Login = ({navigation}) => {
           </View>
         </View>
         <View style={styles.forgotPassword}>
-          <Button color={'black'}>Forgot Password</Button>
+          <Button color={'black'} onPress={forgotPassword}>Forgot Password</Button>
           <Button color={'#3669C9'}>Sign Up</Button>
         </View>
       </View>
@@ -113,10 +115,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   welcomeText: {
-    fontSize: deviceHeight * 48,
+    fontSize: deviceHeight * 36,
     fontWeight: '700',
     color: '#0C1A30',
     marginBottom: deviceHeight * 20,
+    marginRight:deviceHeight*100
   },
   descriptionText: {
     color: '#838589',
@@ -132,7 +135,7 @@ const styles = StyleSheet.create({
   },
   inputText: {
     color: '#0C1A30',
-    fontSize: deviceHeight * 20,
+    fontSize: deviceHeight * 14,
     marginBottom: deviceHeight * 20,
   },
   forgotPassword: {
