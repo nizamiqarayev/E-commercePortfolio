@@ -5,28 +5,30 @@ import {
   Text,
   TextInput,
   Dimensions,
-  ScrollView,
 } from 'react-native';
-import Button from './UI/Button';
-import IconButton from './UI/IconButton';
+import Button from '../UI/Button';
+import IconButton from '../UI/IconButton';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
-const Login = () => {
+const Login = ({navigation}) => {
+
   const [iconName, setIconName] = useState('eye-outline');
-  const [buttonColor,setButtonColor]=useState('#C4C5C4')
+  const [buttonColor, setButtonColor] = useState('#C4C5C4');
   const [inputs, setInputs] = useState({
     email: '',
     password: '',
   });
   const [passwordType, setPasswordType] = useState(true);
-  useEffect(()=>{
-    if(inputs.email!=''&&inputs.password!=''){
-      setButtonColor('#3669C9')
-      
-    }else{
-      setButtonColor('#838589')
+  useEffect(() => {
+    if (inputs.email != '' && inputs.password != '') {
+      setButtonColor('#3669C9');
+    } else {
+      setButtonColor('#838589');
     }
-  },[inputs])
-  
+  }, [inputs]);
+  function forgotPassword(){
+    navigation.navigate('resetpassword')
+  }
   function changePasswordVisibility() {
     if (iconName == 'eye-outline') {
       setIconName('eye-off-outline');
@@ -40,12 +42,11 @@ const Login = () => {
       ...inputs,
       [inputName]: data,
     });
-    console.log(inputs);
   }
   return (
-    <ScrollView centerContent={true} >
+    <KeyboardAwareScrollView style={{height: deviceHeight}} bounces={false}>
       <View style={styles.container}>
-        <View style={{marginTop:deviceHeight*72}}>
+        <View style={{marginTop: deviceHeight * 100}}>
           <View>
             <Text style={styles.welcomeText}>Welcome back to Mega Mall</Text>
             <Text style={styles.descriptionText}>
@@ -95,28 +96,30 @@ const Login = () => {
           </View>
         </View>
         <View style={styles.forgotPassword}>
-          <Button color={'black'}>Forgot Password</Button>
+          <Button color={'black'} onPress={forgotPassword}>Forgot Password</Button>
           <Button color={'#3669C9'}>Sign Up</Button>
         </View>
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 
 const screenheight = Dimensions.get('screen').height;
-const windowheight=Dimensions.get('window').height
+const windowheight = Dimensions.get('window').height;
 const deviceHeight = screenheight / 1063;
 const styles = StyleSheet.create({
   container: {
-    height:windowheight-deviceHeight*110,
+    flex: 1,
+    height: screenheight - deviceHeight * 160,
     marginHorizontal: 25,
     justifyContent: 'space-between',
   },
   welcomeText: {
-    fontSize: deviceHeight * 32,
+    fontSize: deviceHeight * 36,
     fontWeight: '700',
     color: '#0C1A30',
     marginBottom: deviceHeight * 20,
+    marginRight:deviceHeight*100
   },
   descriptionText: {
     color: '#838589',
@@ -132,13 +135,13 @@ const styles = StyleSheet.create({
   },
   inputText: {
     color: '#0C1A30',
-    fontSize: deviceHeight * 20,
+    fontSize: deviceHeight * 14,
     marginBottom: deviceHeight * 20,
   },
   forgotPassword: {
-    height:deviceHeight*60,
+    height: deviceHeight * 60,
     flexDirection: 'row',
-    justifyContent:'space-between',
+    justifyContent: 'space-between',
     width: '100%',
   },
   signin: {
