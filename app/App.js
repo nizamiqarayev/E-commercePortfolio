@@ -5,6 +5,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Register from '../components/Registration/Register';
 import Login from '../components/Login';
+import Verification from '../components/Registration/Verification';
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -33,6 +34,7 @@ const App = () => {
           }}
           component={BottomTab}></Stack.Screen>
         <Stack.Screen name="second" component={Login}></Stack.Screen>
+        <Stack.Screen name="verification" component={Verification}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
