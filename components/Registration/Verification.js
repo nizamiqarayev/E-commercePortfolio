@@ -1,5 +1,5 @@
-import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import {useNavigation} from '@react-navigation/native';
+import React, { useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -13,17 +13,31 @@ import {
 import Button from '../UI/Button';
 const dimension = Dimensions.get('screen').height / 830;
 
-const Register = () => {
-  console.log(dimension);
+const Register = ({route}) => {
+  const val = Math.floor(1000 + Math.random() * 9000);
 
-  const dp = px => {
-    return px / PixelRatio.get();
-  };
-  const sp = px => {
-    return px / (PixelRatio.getFontScale() * PixelRatio.get());
-  };
+  console.log(route.params.path);
+    console.log(dimension);
 
-  const navigate = useNavigation()
+
+    const OtpArr = []
+    
+
+    useEffect(() => {
+        
+    })
+
+  //   const dp = px => {
+  //     return px / PixelRatio.get();
+  //   };
+  //   const sp = px => {
+  //     return px / (PixelRatio.getFontScale() * PixelRatio.get());
+  //   };
+
+   
+  
+
+  const navigate = useNavigation();
 
   const placeholder = 'Enter Email/Phone Number to Register';
   return (
@@ -38,7 +52,7 @@ const Register = () => {
               fontWeight: '700',
               color: '#0C1A30',
             }}>
-            Register Account
+            Verification
           </Text>
           <Text
             style={{
@@ -46,7 +60,7 @@ const Register = () => {
               fontSize: 16 * dimension,
               fontWeight: '400',
             }}>
-            Masukan Email/ No. Hp untuk mendaftar
+            We have sent the verification code to +628*******716 Change?
           </Text>
         </View>
         <View
@@ -61,44 +75,16 @@ const Register = () => {
                 fontSize: 20 * dimension,
                 fontWeight: '400',
               }}>
-              Email/Phone
+              Verification Code
             </Text>
-            <TextInput
-              style={styles.textInput}
-              placeholder={placeholder}
-              placeholderTextColor="#C4C5C4"
-              underlineColorAndroid={'transparent'}
-            />
+            <OtpGenerator />
           </View>
 
           <View style={{marginTop: 150 * dimension}}>
             <View style={{height: 60 * dimension}}>
-              <Button
-                backgroundColor={'#C4C5C4'}
-                color={'white'}
-                onPress={() => {
-                  console.log('navigating');
-                  navigate.navigate('verification', {
-                    path: "registerfinish"
-                  });
-                }}>
+              <Button backgroundColor={'#C4C5C4'} color={'white'}>
                 Continue
               </Button>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                marginTop: 150 * dimension,
-                paddingBottom: 30 * dimension,
-              }}>
-              <Text style={{marginRight: 5 * dimension,color:"#838589"}}>Have an account?</Text>
-              <Pressable
-                onPress={() => {
-                  console.log('asdada');
-                }}>
-                <Text style={{color: '#3669c9'}}> Sign In</Text>
-              </Pressable>
             </View>
           </View>
         </View>
