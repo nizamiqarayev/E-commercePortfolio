@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -9,36 +9,69 @@ import {
   ScrollView,
   Dimensions,
   PixelRatio,
+  FlatList,
 } from 'react-native';
 import Button from '../UI/Button';
 const dimension = Dimensions.get('screen').height / 830;
 
-const Register = ({route}) => {
-  const val = Math.floor(1000 + Math.random() * 9000);
+const Verification = ({route}) => {
+  const changeHandler = (index, text) => {
+    console.log('index:', index);
+    console.log('text:', text);
+
+    if (index < val.toString().length - 1 && text != '') {
+      console.log(val.toString().length);
+      console.log(index);
+      this[`input${index + 1}`].focus();
+      console.log("frontFocus");
+      inputData[index] = text;
+    } else {
+      if (index != 0 && index != val.toString().length && text =="" ) {
+        console.log(index);
+        console.log(val.toString().length - 1);
+        console.log("Backpedal");
+        this[`input${index + -1}`].focus();
+      }
+    }
+  };
+  // const clickHandler = (index) => {
+  //   console.log(index);
+  //   if (index > 0 && inputData[index-1]!="") {
+  //     this[`input${index - 1}`].focus()
+  //   }
+  // }
 
   console.log(route.params.path);
-    console.log(dimension);
-    const [enteredOtp, setEnterdOtp] =[useState]
+  console.log(dimension);
+  const [enteredOtp, setEnteredOtp] = useState('');
+  const [val, setVal] = useState(Math.floor(1000 + Math.random() * 9000));
 
+  const [otparr, setOtpArr] = useState([]);
 
-    const OtpArr = []
-    
+  const inputData = ['', '', '', ''];
 
-    useEffect(() => {
-        for (let i = 0; i < val.toString().length){
-            OtpArr.push(<TextInput maxLength={1} onChangeText={() => set } />)
-        }
-    })
+  useEffect(() => {
+    const temparr = [];
+    for (let i = 0; i < val.toString().length; i++) {
+      console.log('amogus');
 
-  //   const dp = px => {
-  //     return px / PixelRatio.get();
-  //   };
-  //   const sp = px => {
-  //     return px / (PixelRatio.getFontScale() * PixelRatio.get());
-  //   };
-
-   
-  
+      temparr.push(
+        <TextInput
+          key={i}
+          style={styles.textInput}
+          maxLength={1}
+          textAlign="center"
+          // onFocus={()=>{clickHandler(i)}}
+          onChangeText={text => changeHandler(i, text)}
+          ref={input => {
+            this[`input${i}`] = input;
+          }}
+        />,
+      );
+    }
+    setOtpArr(temparr);
+    console.log(otparr);
+  }, []);
 
   const navigate = useNavigation();
 
@@ -80,7 +113,13 @@ const Register = ({route}) => {
               }}>
               Verification Code
             </Text>
-            <OtpGenerator />
+            {/* <View style={{flexDirection: 'row'}}>{OtpArr}</View> */}
+            <View style={{flexDirection: 'row'}}>
+              {otparr.map(input => {
+                console.log(input);
+                return input;
+              })}
+            </View>
           </View>
 
           <View style={{marginTop: 150 * dimension}}>
@@ -102,12 +141,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   textInput: {
-    paddingVertical: 20 * dimension,
-    paddingHorizontal: 16 * dimension,
+    flex: 1,
+    marginRight: 10,
+    paddingVertical: 16 * dimension,
+    paddingHorizontal: 20 * dimension,
     backgroundColor: '#FAFAFA',
     borderRadius: 10,
     marginTop: 20 * dimension,
+
+    borderWidth: 2,
   },
 });
 
-export default Register;
+export default Verification;
