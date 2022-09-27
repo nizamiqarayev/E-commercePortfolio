@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -18,13 +18,16 @@ const Register = ({route}) => {
 
   console.log(route.params.path);
     console.log(dimension);
+    const [enteredOtp, setEnterdOtp] =[useState]
 
 
     const OtpArr = []
     
 
     useEffect(() => {
-        
+        for (let i = 0; i < val.toString().length){
+            OtpArr.push(<TextInput maxLength={1} onChangeText={() => set } />)
+        }
     })
 
   //   const dp = px => {
