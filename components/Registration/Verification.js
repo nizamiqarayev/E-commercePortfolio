@@ -23,23 +23,17 @@ const Verification = ({route}) => {
       console.log(val.toString().length);
       console.log(index);
       this[`input${index + 1}`].focus();
-      console.log("frontFocus");
+      console.log('frontFocus');
       inputData[index] = text;
     } else {
-      if (index != 0 && index != val.toString().length && text =="" ) {
+      if (index != 0 && index != val.toString().length && text == '') {
         console.log(index);
         console.log(val.toString().length - 1);
-        console.log("Backpedal");
+        console.log('Backpedal');
         this[`input${index + -1}`].focus();
       }
     }
   };
-  // const clickHandler = (index) => {
-  //   console.log(index);
-  //   if (index > 0 && inputData[index-1]!="") {
-  //     this[`input${index - 1}`].focus()
-  //   }
-  // }
 
   console.log(route.params.path);
   console.log(dimension);
