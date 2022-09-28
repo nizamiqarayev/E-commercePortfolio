@@ -31,10 +31,8 @@ const ProfilePassword = () => {
   const inputHandler = (text, inputType) => {
     if (inputType == 'password' && text.length < 6 && text.length != 0) {
       setWarning(true);
-    }
-    else {
+    } else {
       setWarning(false);
-
     }
 
     setInput({
@@ -63,6 +61,7 @@ const ProfilePassword = () => {
             <View style={styles.inputCellContainer}>
               <Text style={styles.label}> Full Name </Text>
               <TextInput
+                placeholderTextColor={'C4C5C4'}
                 placeholder="Enter your full name"
                 style={[styles.input]}
                 onChangeText={text => {
@@ -101,9 +100,9 @@ const ProfilePassword = () => {
                   <Ionicons
                     name={'alert-circle-outline'}
                     size={24}
-                    color={'red'}
+                    color={'#838589'}
                   />
-                  <Text>Password must be 6 characters or more</Text>
+                  <Text style={{color:"#838589"}}>Password must be 6 characters or more</Text>
                 </View>
               ) : (
                 <></>
@@ -113,6 +112,7 @@ const ProfilePassword = () => {
             <View style={styles.inputCellContainer}>
               <Text style={styles.label}> Referal Code (Optional) </Text>
               <TextInput
+                placeholderTextColor={'C4C5C4'}
                 style={[styles.input]}
                 placeholder="Input your code"
                 onChangeText={text => {
@@ -160,13 +160,14 @@ const styles = StyleSheet.create({
   },
   label: {
     marginBottom: 20 * dimension,
+    color: "#0C1A30"
   },
   inputCellContainer: {
     marginBottom: 30 * dimension,
   },
   warning: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginTop: 10 * dimension,
-    alignItems:"center"
-  }
+    alignItems: 'center',
+  },
 });

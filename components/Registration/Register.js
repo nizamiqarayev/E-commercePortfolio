@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {
   View,
@@ -14,7 +14,6 @@ import Button from '../UI/Button';
 const dimension = Dimensions.get('screen').height / 830;
 
 const Register = () => {
-
   const dp = px => {
     return px / PixelRatio.get();
   };
@@ -22,7 +21,7 @@ const Register = () => {
     return px / (PixelRatio.getFontScale() * PixelRatio.get());
   };
 
-  const navigate = useNavigation()
+  const navigate = useNavigation();
 
   const placeholder = 'Enter Email/Phone Number to Register';
   return (
@@ -33,7 +32,7 @@ const Register = () => {
             style={{
               marginTop: 30 * dimension,
               marginBottom: 20 * dimension,
-              fontSize: 36 * dimension,
+              fontSize: 32 * dimension,
               fontWeight: '700',
               color: '#0C1A30',
             }}>
@@ -45,7 +44,7 @@ const Register = () => {
               fontSize: 16 * dimension,
               fontWeight: '400',
             }}>
-            Masukan Email/ No. Hp untuk mendaftar
+            Enter Email / No. Phone to register{' '}
           </Text>
         </View>
         <View
@@ -77,7 +76,7 @@ const Register = () => {
                 color={'white'}
                 onPress={() => {
                   navigate.navigate('verification', {
-                    path: "registerfinish"
+                    path: 'registerfinish',
                   });
                 }}>
                 Continue
@@ -87,13 +86,13 @@ const Register = () => {
               style={{
                 flexDirection: 'row',
                 justifyContent: 'center',
-                marginTop: 150 * dimension,
-                paddingBottom: 30 * dimension,
+                marginTop: 120 * dimension,
+                paddingBottom: 20 * dimension,
               }}>
-              <Text style={{marginRight: 5 * dimension,color:"#838589"}}>Have an account?</Text>
-              <Pressable
-                onPress={() => {
-                }}>
+              <Text style={{marginRight: 5 * dimension, color: '#838589'}}>
+                Have an account?
+              </Text>
+              <Pressable onPress={() => {}}>
                 <Text style={{color: '#3669c9'}}> Sign In</Text>
               </Pressable>
             </View>
@@ -110,8 +109,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   textInput: {
-    paddingVertical: 20 * dimension,
-    paddingHorizontal: 16 * dimension,
+    paddingVertical: 16 * dimension,
+    paddingHorizontal: 20 * dimension,
     backgroundColor: '#FAFAFA',
     borderRadius: 10,
     marginTop: 20 * dimension,

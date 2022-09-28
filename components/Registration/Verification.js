@@ -5,11 +5,9 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  Pressable,
   ScrollView,
   Dimensions,
-  PixelRatio,
-  FlatList,
+ 
 } from 'react-native';
 import Button from '../UI/Button';
 const dimension = Dimensions.get('screen').height / 830;
@@ -48,6 +46,7 @@ const Verification = ({route}) => {
           style={styles.textInput}
           maxLength={1}
           textAlign="center"
+          placeholderTextColor={"C4C5C4"}
           // onFocus={()=>{clickHandler(i)}}
           onChangeText={text => changeHandler(i, text)}
           ref={input => {
