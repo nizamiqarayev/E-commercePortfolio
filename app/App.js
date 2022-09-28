@@ -4,8 +4,10 @@ import {StyleSheet, Text, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Register from '../components/Registration/Register';
-import Login from '../components/Login';
+import Login from '../components/Login/Login';
 import Verification from '../components/Registration/Verification';
+import ResetPassword from '../components/Login/ResetPassword';
+import UpdatePassword from '../components/Login/UpdatePassword';
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -24,9 +26,10 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{
-        contentStyle:{backgroundColor:'white'}
-      }}>
+      <Stack.Navigator
+        screenOptions={{
+          contentStyle: {backgroundColor: 'white'},
+        }}>
         <Stack.Screen
           name="main"
           options={{
@@ -34,7 +37,20 @@ const App = () => {
           }}
           component={BottomTab}></Stack.Screen>
         <Stack.Screen name="second" component={Login}></Stack.Screen>
-        <Stack.Screen name="verification" component={Verification}></Stack.Screen>
+        <Stack.Group
+          screenOptions={{
+            headerTitle: '',
+          }}>
+          <Stack.Screen
+            name="verification"
+            component={Verification}></Stack.Screen>
+          <Stack.Screen
+            name="updatepassword"
+            component={UpdatePassword}></Stack.Screen>
+          <Stack.Screen
+            name="resetpassword"
+            component={ResetPassword}></Stack.Screen>
+        </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
   );
