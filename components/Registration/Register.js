@@ -14,7 +14,6 @@ import Button from '../UI/Button';
 const dimension = Dimensions.get('screen').height / 830;
 
 const Register = () => {
-  console.log(dimension);
 
   const dp = px => {
     return px / PixelRatio.get();
@@ -77,7 +76,6 @@ const Register = () => {
                 backgroundColor={'#C4C5C4'}
                 color={'white'}
                 onPress={() => {
-                  console.log('navigating');
                   navigate.navigate('verification', {
                     path: "registerfinish"
                   });
@@ -95,7 +93,6 @@ const Register = () => {
               <Text style={{marginRight: 5 * dimension,color:"#838589"}}>Have an account?</Text>
               <Pressable
                 onPress={() => {
-                  console.log('asdada');
                 }}>
                 <Text style={{color: '#3669c9'}}> Sign In</Text>
               </Pressable>
