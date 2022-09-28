@@ -44,7 +44,7 @@ const Login = ({navigation}) => {
     });
   }
   return (
-    <KeyboardAwareScrollView style={{height: deviceHeight}} bounces={false}>
+    <KeyboardAwareScrollView  style={{height: deviceHeight,backgroundColor:'white'}} bounces={false}>
       <View style={styles.container}>
         <View style={{marginTop: deviceHeight * 100}}>
           <View>

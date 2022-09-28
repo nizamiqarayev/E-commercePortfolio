@@ -8,6 +8,7 @@ import Login from '../components/Login/Login';
 import Verification from '../components/Registration/Verification';
 import ResetPassword from '../components/Login/ResetPassword';
 import UpdatePassword from '../components/Login/UpdatePassword';
+import ProfilePassword from '../components/Registration/ProfilePassword';
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -15,8 +16,8 @@ const BottomTabs = createBottomTabNavigator();
 const App = () => {
   const BottomTab = () => {
     return (
-      <BottomTabs.Navigator>
-        <BottomTabs.Screen name="Login" component={Login}></BottomTabs.Screen>
+      <BottomTabs.Navigator >
+        <BottomTabs.Screen  name="Login" component={Login}  options={{}}></BottomTabs.Screen>
         <BottomTabs.Screen
           name="Register"
           component={Register}></BottomTabs.Screen>
@@ -43,7 +44,20 @@ const App = () => {
           }}>
           <Stack.Screen
             name="verification"
-            component={Verification}></Stack.Screen>
+            component={Verification}
+            options={
+              {
+                headerShadowVisible: false
+              }}
+          ></Stack.Screen>
+           <Stack.Screen
+            name="Profile Password"
+            component={ProfilePassword}
+            options={
+              {
+              headerShadowVisible: false
+            }
+          }></Stack.Screen>
           <Stack.Screen
             name="updatepassword"
             component={UpdatePassword}></Stack.Screen>
