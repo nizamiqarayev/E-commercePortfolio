@@ -9,6 +9,7 @@ import Verification from '../components/Registration/Verification';
 import ResetPassword from '../components/Login/ResetPassword';
 import UpdatePassword from '../components/Login/UpdatePassword';
 import ProfilePassword from '../components/Registration/ProfilePassword';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -16,11 +17,33 @@ const BottomTabs = createBottomTabNavigator();
 const App = () => {
   const BottomTab = () => {
     return (
-      <BottomTabs.Navigator >
-        <BottomTabs.Screen  name="Login" component={Login}  options={{}}></BottomTabs.Screen>
+      <BottomTabs.Navigator>
+        <BottomTabs.Screen
+          name="Login"
+          component={Login}
+          options={{
+            tabBarIcon: ({focused, color}) => (
+              <Icon
+                name="login"
+                size={24}
+                color={focused ? color : '#838589'}
+              />
+            ),
+          }}
+        />
         <BottomTabs.Screen
           name="Register"
-          component={Register}></BottomTabs.Screen>
+          component={Register}
+          options={{
+            tabBarIcon: ({focused, color}) => (
+              <Icon
+                name="adduser"
+                size={24}
+                color={focused ? color : '#838589'}
+              />
+            ),
+          }}
+        />
       </BottomTabs.Navigator>
     );
   };
@@ -45,19 +68,15 @@ const App = () => {
           <Stack.Screen
             name="verification"
             component={Verification}
-            options={
-              {
-                headerShadowVisible: false
-              }}
-          ></Stack.Screen>
-           <Stack.Screen
+            options={{
+              headerShadowVisible: false,
+            }}></Stack.Screen>
+          <Stack.Screen
             name="Profile Password"
             component={ProfilePassword}
-            options={
-              {
-              headerShadowVisible: false
-            }
-          }></Stack.Screen>
+            options={{
+              headerShadowVisible: false,
+            }}></Stack.Screen>
           <Stack.Screen
             name="updatepassword"
             component={UpdatePassword}></Stack.Screen>
