@@ -3,12 +3,22 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {StyleSheet, Text, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+<<<<<<< HEAD
 import Register from './components/Registration/Register';
 import Login from './components/Login/Login';
 import Verification from './components/Registration/Verification';
 import ResetPassword from './components/Login/ResetPassword';
 import UpdatePassword from './components/Login/UpdatePassword';
 import ProfilePassword from './components/Registration/ProfilePassword';
+=======
+import Register from '../components/Registration/Register';
+import Login from '../components/Login/Login';
+import Verification from '../components/Registration/Verification';
+import ResetPassword from '../components/Login/ResetPassword';
+import UpdatePassword from '../components/Login/UpdatePassword';
+import ProfilePassword from '../components/Registration/ProfilePassword';
+import Icon from 'react-native-vector-icons/AntDesign';
+>>>>>>> d02aec39e546c5a8f08f1b6021613defbf4a60e1
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -16,11 +26,33 @@ const BottomTabs = createBottomTabNavigator();
 const App = () => {
   const BottomTab = () => {
     return (
-      <BottomTabs.Navigator >
-        <BottomTabs.Screen  name="Login" component={Login}  options={{}}></BottomTabs.Screen>
+      <BottomTabs.Navigator>
+        <BottomTabs.Screen
+          name="Login"
+          component={Login}
+          options={{
+            tabBarIcon: ({focused, color}) => (
+              <Icon
+                name="login"
+                size={24}
+                color={focused ? color : '#838589'}
+              />
+            ),
+          }}
+        />
         <BottomTabs.Screen
           name="Register"
-          component={Register}></BottomTabs.Screen>
+          component={Register}
+          options={{
+            tabBarIcon: ({focused, color}) => (
+              <Icon
+                name="adduser"
+                size={24}
+                color={focused ? color : '#838589'}
+              />
+            ),
+          }}
+        />
       </BottomTabs.Navigator>
     );
   };
@@ -45,19 +77,15 @@ const App = () => {
           <Stack.Screen
             name="verification"
             component={Verification}
-            options={
-              {
-                headerShadowVisible: false
-              }}
-          ></Stack.Screen>
-           <Stack.Screen
+            options={{
+              headerShadowVisible: false,
+            }}></Stack.Screen>
+          <Stack.Screen
             name="Profile Password"
             component={ProfilePassword}
-            options={
-              {
-              headerShadowVisible: false
-            }
-          }></Stack.Screen>
+            options={{
+              headerShadowVisible: false,
+            }}></Stack.Screen>
           <Stack.Screen
             name="updatepassword"
             component={UpdatePassword}></Stack.Screen>

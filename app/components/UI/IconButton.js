@@ -2,11 +2,11 @@ import React from 'react';
 import {StyleSheet, Pressable, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const IconButton = ({name, size, color, onPress,position}) => {
+const IconButton = ({name, size, color, onPress, position}) => {
   return (
-    <Pressable style={{position:position}} onPress={onPress}>
+    <Pressable style={{position}} onPress={onPress}>
       <View style={styles.container}>
-        <Ionicons name={name} size={size} color={color} />
+        <Ionicons {...{name, size, color}} />
       </View>
     </Pressable>
   );
@@ -14,9 +14,9 @@ const IconButton = ({name, size, color, onPress,position}) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding:6,
-    margin:8,
-    borderRadius:8
+    padding: 6,
+    margin: 8,
+    borderRadius: 8,
   },
 });
 
