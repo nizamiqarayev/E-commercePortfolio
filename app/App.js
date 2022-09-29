@@ -9,6 +9,7 @@ import Verification from './components/Registration/Verification';
 import ResetPassword from './components/Login/ResetPassword';
 import UpdatePassword from './components/Login/UpdatePassword';
 import ProfilePassword from './components/Registration/ProfilePassword';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -58,8 +59,9 @@ const App = () => {
           options={{
             headerShown: false,
           }}
-          component={BottomTab}></Stack.Screen>
-        <Stack.Screen name="second" component={Login}></Stack.Screen>
+          component={BottomTab}
+        />
+        <Stack.Screen name="second" component={Login} />
         <Stack.Group
           screenOptions={{
             headerTitle: '',
@@ -69,19 +71,17 @@ const App = () => {
             component={Verification}
             options={{
               headerShadowVisible: false,
-            }}></Stack.Screen>
+            }}
+          />
           <Stack.Screen
             name="Profile Password"
             component={ProfilePassword}
             options={{
               headerShadowVisible: false,
-            }}></Stack.Screen>
-          <Stack.Screen
-            name="updatepassword"
-            component={UpdatePassword}></Stack.Screen>
-          <Stack.Screen
-            name="resetpassword"
-            component={ResetPassword}></Stack.Screen>
+            }}
+          />
+          <Stack.Screen name="updatepassword" component={UpdatePassword} />
+          <Stack.Screen name="resetpassword" component={ResetPassword} />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
