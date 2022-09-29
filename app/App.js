@@ -10,6 +10,7 @@ import ResetPassword from './components/Login/ResetPassword';
 import UpdatePassword from './components/Login/UpdatePassword';
 import ProfilePassword from './components/Registration/ProfilePassword';
 import Icon from 'react-native-vector-icons/AntDesign';
+import HomePage from './components/HomePage/HomePage';
 
 //comment
 const Stack = createNativeStackNavigator();
@@ -21,7 +22,7 @@ const App = () => {
       <BottomTabs.Navigator>
         <BottomTabs.Screen
           name="Login"
-          component={Login}
+          component={HomePage}
           options={{
             tabBarIcon: ({focused, color}) => (
               <Icon
