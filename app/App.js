@@ -3,22 +3,14 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {StyleSheet, Text, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-<<<<<<< HEAD
+
 import Register from './components/Registration/Register';
 import Login from './components/Login/Login';
 import Verification from './components/Registration/Verification';
 import ResetPassword from './components/Login/ResetPassword';
 import UpdatePassword from './components/Login/UpdatePassword';
 import ProfilePassword from './components/Registration/ProfilePassword';
-=======
-import Register from '../components/Registration/Register';
-import Login from '../components/Login/Login';
-import Verification from '../components/Registration/Verification';
-import ResetPassword from '../components/Login/ResetPassword';
-import UpdatePassword from '../components/Login/UpdatePassword';
-import ProfilePassword from '../components/Registration/ProfilePassword';
-import Icon from 'react-native-vector-icons/AntDesign';
->>>>>>> d02aec39e546c5a8f08f1b6021613defbf4a60e1
+
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
