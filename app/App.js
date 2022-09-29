@@ -11,6 +11,7 @@ import UpdatePassword from './components/Login/UpdatePassword';
 import ProfilePassword from './components/Registration/ProfilePassword';
 import Icon from 'react-native-vector-icons/AntDesign';
 
+//comment
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
