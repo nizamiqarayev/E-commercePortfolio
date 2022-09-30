@@ -140,6 +140,7 @@ const styles = StyleSheet.create({
     marginBottom: deviceHeight * 20,
   },
   forgotPassword: {
+    borderWidth:2,
     height: deviceHeight * 60,
     flexDirection: 'row',
     justifyContent: 'space-between',
