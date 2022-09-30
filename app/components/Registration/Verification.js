@@ -5,44 +5,30 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  Pressable,
   ScrollView,
   Dimensions,
-  PixelRatio,
-  FlatList,
+ 
 } from 'react-native';
 import Button from '../UI/Button';
 const dimension = Dimensions.get('screen').height / 830;
 
 const Verification = ({route}) => {
   const changeHandler = (index, text) => {
-    console.log('index:', index);
-    console.log('text:', text);
+    
 
     if (index < val.toString().length - 1 && text != '') {
-      console.log(val.toString().length);
-      console.log(index);
+  
       this[`input${index + 1}`].focus();
-      console.log("frontFocus");
+   
       inputData[index] = text;
     } else {
-      if (index != 0 && index != val.toString().length && text =="" ) {
-        console.log(index);
-        console.log(val.toString().length - 1);
-        console.log("Backpedal");
+      if (index != 0 && index != val.toString().length && text == '') {
+    
         this[`input${index + -1}`].focus();
       }
     }
   };
-  // const clickHandler = (index) => {
-  //   console.log(index);
-  //   if (index > 0 && inputData[index-1]!="") {
-  //     this[`input${index - 1}`].focus()
-  //   }
-  // }
 
-  console.log(route.params.path);
-  console.log(dimension);
   const [enteredOtp, setEnteredOtp] = useState('');
   const [val, setVal] = useState(Math.floor(1000 + Math.random() * 9000));
 
@@ -53,7 +39,6 @@ const Verification = ({route}) => {
   useEffect(() => {
     const temparr = [];
     for (let i = 0; i < val.toString().length; i++) {
-      console.log('amogus');
 
       temparr.push(
         <TextInput
@@ -61,6 +46,7 @@ const Verification = ({route}) => {
           style={styles.textInput}
           maxLength={1}
           textAlign="center"
+          placeholderTextColor={"C4C5C4"}
           // onFocus={()=>{clickHandler(i)}}
           onChangeText={text => changeHandler(i, text)}
           ref={input => {
@@ -70,7 +56,6 @@ const Verification = ({route}) => {
       );
     }
     setOtpArr(temparr);
-    console.log(otparr);
   }, []);
 
   const navigate = useNavigation();
@@ -116,7 +101,6 @@ const Verification = ({route}) => {
             {/* <View style={{flexDirection: 'row'}}>{OtpArr}</View> */}
             <View style={{flexDirection: 'row'}}>
               {otparr.map(input => {
-                console.log(input);
                 return input;
               })}
             </View>
@@ -124,7 +108,12 @@ const Verification = ({route}) => {
 
           <View style={{marginTop: 150 * dimension}}>
             <View style={{height: 60 * dimension}}>
-              <Button backgroundColor={'#C4C5C4'} color={'white'}>
+            <Button
+                backgroundColor={'#C4C5C4'}
+                color={'white'}
+                onPress={() => {
+                  navigate.navigate('Profile Password');
+                }}>
                 Continue
               </Button>
             </View>
@@ -148,8 +137,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFAFA',
     borderRadius: 10,
     marginTop: 20 * dimension,
+    elevation:5,
 
-    borderWidth: 2,
   },
 });
 

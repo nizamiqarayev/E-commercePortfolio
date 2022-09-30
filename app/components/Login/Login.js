@@ -10,7 +10,8 @@ import Button from '../UI/Button';
 import IconButton from '../UI/IconButton';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
-const Login = ({navigation}) => {
+const Login = ({ navigation }) => {
+  // assdad
 
   const [iconName, setIconName] = useState('eye-outline');
   const [buttonColor, setButtonColor] = useState('#C4C5C4');
@@ -44,7 +45,7 @@ const Login = ({navigation}) => {
     });
   }
   return (
-    <KeyboardAwareScrollView style={{height: deviceHeight}} bounces={false}>
+    <KeyboardAwareScrollView  style={{height: deviceHeight,backgroundColor:'white'}} bounces={false}>
       <View style={styles.container}>
         <View style={{marginTop: deviceHeight * 100}}>
           <View>
