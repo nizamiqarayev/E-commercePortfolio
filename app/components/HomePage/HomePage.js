@@ -3,8 +3,10 @@ import React from 'react';
 import LatestNewsList from './LatestNews/LatestNewsList';
 import Button from '../UI/Button';
 import px from '../../assets/utility/dimension';
+import { useNavigation } from '@react-navigation/native';
 
 const HomePage = () => {
+  const navigate= useNavigation()
   return (
     <View style={styles.container}>
       <View style={{paddingVertical:px(30)}}>
@@ -12,10 +14,18 @@ const HomePage = () => {
           <Text style={styles.latestNewsHeaderText}>Latest News</Text>
         </View>
 
-        <LatestNewsList amountOfNews={3} />
+        <LatestNewsList amountOfNews={3} extraRender={false} />
 
-        <View>
-          <Button>See All News</Button>
+        <View style={{height: px(60)}}>
+        <Button
+            backgroundColor={'white'}
+            color={"#0C1A30"}
+            borderColor={"#0C1A30"}
+                onPress={() => {
+                  navigate.navigate('allnews');
+                }}>
+                See All News
+              </Button>
         </View>
       </View>
     </View>
