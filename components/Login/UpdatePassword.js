@@ -119,12 +119,12 @@ const UpdatePassword = ({navigation}) => {
               </View>
             </View>
           </View>
+        </View>
           <View style={styles.signin}>
             <Button color={'white'} backgroundColor={buttonColor}>
-              Confirm
+             Save Update
             </Button>
           </View>
-        </View>
       </View>
     </KeyboardAwareScrollView>
   );
