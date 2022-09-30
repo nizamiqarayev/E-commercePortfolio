@@ -85,9 +85,11 @@ const App = () => {
           />
           <Stack.Screen name="updatepassword" component={UpdatePassword} />
           <Stack.Screen name="resetpassword" component={ResetPassword} />
-          <Stack.Screen name="newsdetail" component={NewsDetail} />
-
         </Stack.Group>
+          <Stack.Screen name="newsdetail" component={NewsDetail} options={{
+            headerTitle:'Detail News',
+            headerTitleAlign:'center',
+          }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
