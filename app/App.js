@@ -86,6 +86,8 @@ const App = () => {
           />
           <Stack.Screen name="updatepassword" component={UpdatePassword} />
           <Stack.Screen name="resetpassword" component={ResetPassword} />
+          <Stack.Screen name="allnews" component={AllNews} />
+
         </Stack.Group>
         <Stack.Screen
           name="newsdetail"
@@ -95,7 +97,6 @@ const App = () => {
             headerTitleAlign: 'center',
           }}
         />
-        <Stack.Screen name="allnews" component={AllNews} />
       </Stack.Navigator>
     </NavigationContainer>
   );
