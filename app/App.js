@@ -11,6 +11,7 @@ import UpdatePassword from './components/Login/UpdatePassword';
 import ProfilePassword from './components/Registration/ProfilePassword';
 import Icon from 'react-native-vector-icons/AntDesign';
 import HomePage from './components/HomePage/HomePage';
+import NewsDetail from './components/HomePage/NewsDetail/NewsDetail';
 
 //comment
 const Stack = createNativeStackNavigator();
@@ -84,6 +85,8 @@ const App = () => {
           />
           <Stack.Screen name="updatepassword" component={UpdatePassword} />
           <Stack.Screen name="resetpassword" component={ResetPassword} />
+          <Stack.Screen name="newsdetail" component={NewsDetail} />
+
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
