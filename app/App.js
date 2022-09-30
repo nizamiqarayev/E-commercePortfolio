@@ -86,11 +86,16 @@ const App = () => {
           />
           <Stack.Screen name="updatepassword" component={UpdatePassword} />
           <Stack.Screen name="resetpassword" component={ResetPassword} />
-          <Stack.Screen name="newsdetail" component={NewsDetail} />
-          <Stack.Screen name="allnews" component={AllNews} />
-
-
         </Stack.Group>
+        <Stack.Screen
+          name="newsdetail"
+          component={NewsDetail}
+          options={{
+            headerTitle: 'Detail News',
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen name="allnews" component={AllNews} />
       </Stack.Navigator>
     </NavigationContainer>
   );
