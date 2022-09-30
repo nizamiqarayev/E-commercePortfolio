@@ -46,6 +46,8 @@ const styles = StyleSheet.create({
   textView: {width: px(225), marginRight: px(20)},
   text: {
     marginBottom: 10,
+    color: '#0C1A30',
+
   },
 
   image: {
