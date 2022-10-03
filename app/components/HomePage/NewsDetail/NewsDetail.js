@@ -1,4 +1,5 @@
 import {
+  Dimensions,
   FlatList,
   Image,
   ScrollView,
@@ -15,7 +16,6 @@ import Button from '../../UI/Button';
 const NewsDetail = () => {
   const data = Dummy[0];
   const otherdata = [Dummy[1], Dummy[2]];
-
   const otherNews = data => {
     return (
       <View
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: '100%',
+    width: px(325),
     height: px(200),
     borderRadius: px(10),
   },

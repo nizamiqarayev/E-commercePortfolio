@@ -1,18 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  TextInput,
-  Dimensions,
-} from 'react-native';
+import {View, StyleSheet, Text, TextInput, Dimensions} from 'react-native';
 import Button from '../UI/Button';
 import IconButton from '../UI/IconButton';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import px from '../../assets/utility/dimension';
 
-const Login = ({ navigation }) => {
-  // assdad
-
+const Login = ({navigation}) => {
   const [iconName, setIconName] = useState('eye-outline');
   const [buttonColor, setButtonColor] = useState('#C4C5C4');
   const [inputs, setInputs] = useState({
@@ -27,8 +20,11 @@ const Login = ({ navigation }) => {
       setButtonColor('#838589');
     }
   }, [inputs]);
-  function forgotPassword(){
-    navigation.navigate('resetpassword')
+  function forgotPassword() {
+    navigation.navigate('resetpassword');
+  }
+  function SignUp() {
+    navigation.navigate('Register');
   }
   function changePasswordVisibility() {
     if (iconName == 'eye-outline') {
@@ -45,17 +41,22 @@ const Login = ({ navigation }) => {
     });
   }
   return (
-    <KeyboardAwareScrollView  style={{height: deviceHeight,backgroundColor:'white'}} bounces={false}>
+    <KeyboardAwareScrollView
+      style={{backgroundColor: 'white'}}
+      showsVerticalScrollIndicator={false}
+      enableOnAndroid={true}
+      keyboardShouldPersistTaps="always"
+      bounces={false}>
       <View style={styles.container}>
-        <View style={{marginTop: deviceHeight * 100}}>
+        <View style={{marginTop:px(72)}}>
           <View>
             <Text style={styles.welcomeText}>Welcome back to Mega Mall</Text>
             <Text style={styles.descriptionText}>
               Please enter data to login
             </Text>
           </View>
-          <View style={{marginTop: deviceHeight * 50}}>
-            <View style={{marginBottom: deviceHeight * 30}}>
+          <View style={{marginTop: px(50)}}>
+            <View style={{marginBottom:px(30)}}>
               <Text style={styles.inputText}>Email/ Phone</Text>
               <TextInput
                 style={styles.inputContainer}
@@ -96,9 +97,11 @@ const Login = ({ navigation }) => {
             </Button>
           </View>
         </View>
-        <View style={styles.forgotPassword}>
-          <Button color={'black'} onPress={forgotPassword}>Forgot Password</Button>
-          <Button color={'#3669C9'}>Sign Up</Button>
+        <View style={[styles.forgotPassword]}>
+          <Button color={'black'} onPress={forgotPassword}>
+            Forgot Password
+          </Button>
+          <Button onPress={SignUp} color={'#3669C9'}>Sign Up</Button>
         </View>
       </View>
     </KeyboardAwareScrollView>
@@ -110,45 +113,46 @@ const windowheight = Dimensions.get('window').height;
 const deviceHeight = screenheight / 1063;
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    height: screenheight - deviceHeight * 160,
-    marginHorizontal: 25,
+
+    marginHorizontal: px(25),
     justifyContent: 'space-between',
+    height:windowheight-px(85)
   },
   welcomeText: {
-    fontSize: deviceHeight * 36,
-    fontWeight: '700',
+    fontSize: px(25),
     color: '#0C1A30',
-    marginBottom: deviceHeight * 20,
-    marginRight:deviceHeight*100
+    marginBottom: px(20),
+    fontFamily:'DMSans-Bold',
+
   },
   descriptionText: {
     color: '#838589',
-    fontSize: deviceHeight * 24,
+    fontSize: px(24),
     fontWeight: '400',
+    fontFamily:'DMSans-Regular'
   },
   inputContainer: {
     color: '#0C1A30',
     borderRadius: 10,
     backgroundColor: '#FAFAFA',
-    paddingVertical: deviceHeight * 16,
-    paddingHorizontal: deviceHeight * 20,
+    paddingVertical:px(16),
+    paddingHorizontal: px(20),
   },
   inputText: {
     color: '#0C1A30',
-    fontSize: deviceHeight * 14,
-    marginBottom: deviceHeight * 20,
+    fontSize: px(14),
+    marginBottom: px(20),
+    fontFamily:'DMSans-Regular'
   },
   forgotPassword: {
-    borderWidth:2,
-    height: deviceHeight * 60,
+    height: px(50),
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
   },
   signin: {
-    height: deviceHeight * 60,
-    marginTop: deviceHeight * 70,
+    height: px(40),
+    marginTop: px(70),
   },
 });
 
