@@ -11,12 +11,12 @@ import UpdatePassword from './components/Login/UpdatePassword';
 import ProfilePassword from './components/Registration/ProfilePassword';
 import Wishlist from './components/Wishlist/Wishlist';
 import Order from './components/Order/Order';
-import Icon from 'react-native-vector-icons/AntDesign';
 import HomePage from './components/HomePage/HomePage';
 import NewsDetail from './components/HomePage/NewsDetail/NewsDetail';
 import Octicons from 'react-native-vector-icons/Octicons'; 
 import Ionicons from 'react-native-vector-icons/Ionicons'; 
 import Feather from 'react-native-vector-icons/Feather'; 
+import colors from './config/colors';
 //comment
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -34,7 +34,7 @@ const App = () => {
               <Octicons
                 name="home"
                 size={24}
-                color={focused ? color : '#838589'}
+                color={focused ? color : colors.darkgray}
               />
             ),
           }}></BottomTabs.Screen>
@@ -47,7 +47,7 @@ const App = () => {
               <Ionicons
                 name="heart-outline"
                 size={24}
-                color={focused ? color : '#838589'}
+                color={focused ? color : colors.darkgray}
               />
             ),
           }}></BottomTabs.Screen>
@@ -60,7 +60,7 @@ const App = () => {
               <Feather
                 name="shopping-bag"
                 size={24}
-                color={focused ? color : '#838589'}
+                color={focused ? color : colors.darkgray}
               />
             ),
           }}></BottomTabs.Screen>
@@ -72,7 +72,7 @@ const App = () => {
               <Ionicons
                 name="person-outline"
                 size={24}
-                color={focused ? color : '#838589'}
+                color={focused ? color : colors.darkgray}
               />
             ),
           }}
