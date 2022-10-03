@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -15,6 +15,27 @@ import Button from '../UI/Button';
 const dimension = Dimensions.get('screen').height / 830;
 
 const Register = () => {
+  const [email, setEmail] = useState('');
+
+  const [errMsg, setErrMsg] = useState(false)
+
+
+  const emailInputHandler = text => {
+    if (
+      String(email)
+        .toLowerCase()
+        .match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        )
+    ) {
+      setErrMsg(false)
+      setEmail(text)
+    }
+    else {
+      setErrMsg(true)
+    }
+  };
+
   const dp = px => {
     return px / PixelRatio.get();
   };
@@ -67,6 +88,7 @@ const Register = () => {
               placeholder={placeholder}
               placeholderTextColor="#C4C5C4"
               underlineColorAndroid={'transparent'}
+              onChangeText={emailInputHandler}
             />
           </View>
 
