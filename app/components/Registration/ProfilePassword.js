@@ -10,23 +10,46 @@ import React, {useState} from 'react';
 import IconButton from '../UI/IconButton';
 import Button from '../UI/Button';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import axios from 'axios';
 
 const dimension = Dimensions.get('screen').height / 830;
 
-const ProfilePassword = () => {
+const ProfilePassword = ({route}) => {
   const [passwordType, setPasswordType] = useState(true);
 
   const [warning, setWarning] = useState(false);
 
+  const [unmatchedpwErr, setUnMErr] = useState(false)
+
   const [input, setInput] = useState({
     name: '',
     password: '',
-    referral: '',
+    confirm: '',
   });
 
   const changePasswordVisibility = () => {
     setPasswordType(!passwordType);
   };
+
+  const submissionHandler = async () => {
+    console.log(input.password);
+    console.log(input.confirm);
+    if (input.password == input.confirm) {
+
+      try {
+        const response = await axios.post("https://izzi-ecom.herokuapp.com/user/register",
+          { username: input.name, email: route.params.email, password: input.password })
+        console.log(response.data);
+      }
+      catch (error) {
+        console.log("asdadd");
+        console.log(error);
+      }
+    
+    }
+    else {
+    }
+  }
 
   const inputHandler = (text, inputType) => {
     if (inputType == 'password' && text.length < 6 && text.length != 0) {
@@ -110,19 +133,47 @@ const ProfilePassword = () => {
             </View>
 
             <View style={styles.inputCellContainer}>
-              <Text style={styles.label}> Referal Code (Optional) </Text>
-              <TextInput
-                placeholderTextColor={'C4C5C4'}
-                style={[styles.input]}
-                placeholder="Input your code"
-                onChangeText={text => {
-                  inputHandler(text, 'referral');
-                }}
-              />
+              <Text style={styles.label}>Confirm Password</Text>
+              <View
+                style={{
+                  width: '100%',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                <TextInput
+                  style={[styles.input, {flex: 1}]}
+                  placeholderTextColor={'#C4C5C4'}
+                  placeholder="Confirm your password"
+                  onChangeText={text => {
+                    inputHandler(text, 'confirm');
+                  }}
+                  secureTextEntry={passwordType}
+                />
+                <View style={{position: 'absolute', right: 0}}>
+                  <IconButton
+                    size={24}
+                    color={'#838589'}
+                    onPress={changePasswordVisibility}
+                    name={'eye-outline'}
+                  />
+                </View>
+              </View>
+              {warning ? (
+                <View style={styles.warning}>
+                  <Ionicons
+                    name={'alert-circle-outline'}
+                    size={24}
+                    color={'#838589'}
+                  />
+                  <Text style={{color:"#838589"}}>Password must be 6 characters or more</Text>
+                </View>
+              ) : (
+                <></>
+              )}
             </View>
           </View>
           <View style={{width: '100%'}}>
-            <Button backgroundColor={'#3669C9'} color={'white'}>
+            <Button backgroundColor={'#3669C9'} color={'white'} onPress={submissionHandler}>
               Confirmation
             </Button>
           </View>

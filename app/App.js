@@ -17,6 +17,7 @@ import Octicons from 'react-native-vector-icons/Octicons';
 import Ionicons from 'react-native-vector-icons/Ionicons'; 
 import Feather from 'react-native-vector-icons/Feather'; 
 import colors from './config/colors';
+import AllNews from "./components/AllNews/AllNews"
 //comment
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -120,6 +121,8 @@ const App = () => {
           />
           <Stack.Screen name="updatepassword" component={UpdatePassword} />
           <Stack.Screen name="resetpassword" component={ResetPassword} />
+          <Stack.Screen name="allnews" component={AllNews} />
+
         </Stack.Group>
         <Stack.Screen
           name="newsdetail"
