@@ -17,6 +17,7 @@ import Octicons from 'react-native-vector-icons/Octicons';
 import Ionicons from 'react-native-vector-icons/Ionicons'; 
 import Feather from 'react-native-vector-icons/Feather'; 
 import colors from './config/colors';
+import AllNews from "./components/AllNews/AllNews"
 //comment
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
