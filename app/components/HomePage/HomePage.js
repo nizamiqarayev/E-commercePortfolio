@@ -30,7 +30,7 @@ const HomePage = ({route,navigation}) => {
             color={"#0C1A30"}
             borderColor={"#0C1A30"}
                 onPress={() => {
-                  navigate.navigate('allnews');
+                  navigation.navigate('allnews');
                 }}>
                 See All News
               </Button>
