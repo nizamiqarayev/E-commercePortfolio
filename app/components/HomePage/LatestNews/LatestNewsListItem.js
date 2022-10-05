@@ -6,8 +6,10 @@ import {useNavigation} from '@react-navigation/native';
 const LatestNewsListItem = ({data}) => {
   const navigation = useNavigation();
   useEffect(() => {
-    console.log('id', data.id);
-  }, []);
+    if (data != null) {
+      console.log('id', data._id);
+    }
+  }, [data]);
   return (
     <View style={{overflow: 'hidden'}}>
       <Pressable
@@ -18,18 +20,19 @@ const LatestNewsListItem = ({data}) => {
         }}>
         <View style={styles.textView}>
           <Text style={[styles.text, {marginTop: 20}]}>
-            Philosophy That Addresses Topics Such As Goodness
+            {data != null ? data.title : ''}
           </Text>
-          <Text style={styles.text}>
-            Agar tetap kinclong, bodi motor ten...{' '}
-          </Text>
-          <Text style={[styles.text, {marginBottom: 20}]}> 13 Jan 2021</Text>
+          <Text style={styles.text} numberOfLines={1}>{data != null ? data.content : ''}</Text>
+          <Text style={[styles.text, {marginBottom: 20}]}>{data != null ? `${new Date(data.date).toDateString()}` : ''}</Text>
         </View>
         <View>
           <Image
             style={styles.image}
-            size
-            source={require('../../../assets/images/480-4800827_little-penguin-simple-cute-penguin-cartoon.png')}
+            source={
+              data != null
+                ? {uri: data.image}
+                : require('../../../assets/images/480-4800827_little-penguin-simple-cute-penguin-cartoon.png')
+            }
           />
         </View>
       </Pressable>
