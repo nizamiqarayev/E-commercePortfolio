@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -10,15 +10,31 @@ import {
   Dimensions,
   PixelRatio,
 } from 'react-native';
+import px from '../../assets/utility/dimension';
 import Button from '../UI/Button';
 const dimension = Dimensions.get('screen').height / 830;
 
 const Register = () => {
-  const dp = px => {
-    return px / PixelRatio.get();
-  };
-  const sp = px => {
-    return px / (PixelRatio.getFontScale() * PixelRatio.get());
+  const [email, setEmail] = useState('');
+
+  const [errMsg, setErrMsg] = useState(false);
+
+  const [buttonReady, setButtonReady] = useState('false');
+
+  const emailInputHandler = text => {
+    if (
+      text.match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      )
+    ) {
+      console.log('verif');
+      setErrMsg(false);
+      setEmail(text);
+      setButtonReady(true)
+    } else {
+      setButtonReady(false)
+      setErrMsg(true);
+    }
   };
 
   const navigate = useNavigation();
@@ -66,19 +82,21 @@ const Register = () => {
               placeholder={placeholder}
               placeholderTextColor="#C4C5C4"
               underlineColorAndroid={'transparent'}
+              onChangeText={emailInputHandler}
             />
           </View>
 
           <View style={{marginTop: 150 * dimension}}>
-            <View style={{height: 60 * dimension}}>
+            <View style={{height: px(60)}}>
               <Button
-                backgroundColor={'#C4C5C4'}
+                backgroundColor={buttonReady? "#3669c9" : '#C4C5C4'}
                 color={'white'}
-                onPress={() => {
+                onPress={email!=""? () => {
                   navigate.navigate('verification', {
                     path: 'registerfinish',
+                    email:email
                   });
-                }}>
+                } : () =>{}}>
                 Continue
               </Button>
             </View>
@@ -92,7 +110,7 @@ const Register = () => {
               <Text style={{marginRight: 5 * dimension, color: '#838589'}}>
                 Have an account?
               </Text>
-              <Pressable onPress={() => {}}>
+              <Pressable onPress={() => {navigate.goBack()}}>
                 <Text style={{color: '#3669c9'}}> Sign In</Text>
               </Pressable>
             </View>

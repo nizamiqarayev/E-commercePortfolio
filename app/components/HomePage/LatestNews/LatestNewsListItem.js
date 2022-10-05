@@ -1,16 +1,21 @@
 import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import px from '../../../assets/utility/dimension';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
-const LatestNewsListItem = () => {
-  const navigation= useNavigation()
-
+const LatestNewsListItem = ({data}) => {
+  const navigation = useNavigation();
+  useEffect(() => {
+    console.log('id', data.id);
+  }, []);
   return (
     <View style={{overflow: 'hidden'}}>
-      <Pressable style={styles.container} android_ripple={{ color: '#FFFFAD' }} onPress={() => {
-        navigation.navigate("newsdetail")
-      }}>
+      <Pressable
+        style={styles.container}
+        android_ripple={{color: '#FFFFAD'}}
+        onPress={() => {
+          navigation.navigate('newsdetail');
+        }}>
         <View style={styles.textView}>
           <Text style={[styles.text, {marginTop: 20}]}>
             Philosophy That Addresses Topics Such As Goodness
@@ -47,7 +52,6 @@ const styles = StyleSheet.create({
   text: {
     marginBottom: 10,
     color: '#0C1A30',
-
   },
 
   image: {

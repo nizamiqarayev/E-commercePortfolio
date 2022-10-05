@@ -26,10 +26,20 @@ const HomePage = ({route, navigation}) => {
           <Text style={styles.latestNewsHeaderText}>Latest News</Text>
         </View>
 
-        <LatestNewsList amountOfNews={3} />
-          <ProductCard></ProductCard>
-        <View style={{height:100}}>
-          <Button color={colors.black}>See All News</Button>
+
+        <LatestNewsList amountOfNews={3} extraRender={false} />
+
+        <View style={{height: px(60)}}>
+        <Button
+            backgroundColor={'white'}
+            color={"#0C1A30"}
+            borderColor={"#0C1A30"}
+                onPress={() => {
+                  navigate.navigate('allnews');
+                }}>
+                See All News
+              </Button>
+
         </View>
       </View>
     </View>
