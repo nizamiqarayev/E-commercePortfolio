@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Pressable} from 'react-native';
 import React, {useEffect} from 'react';
 import LatestNewsList from './LatestNews/LatestNewsList';
 import Button from '../UI/Button';
@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useIsFocused} from '@react-navigation/native';
 import ProductCard from '../ProductCard/ProductCard';
 import colors from '../../config/colors';
+import CategoryCarousel from './Categories/CategoryCarousel';
 
 const HomePage = ({route, navigation}) => {
   const focused = useIsFocused();
@@ -19,31 +20,38 @@ const HomePage = ({route, navigation}) => {
     }
   }, [focused]);
   return (
-
     <View style={styles.container}>
       <View style={{paddingVertical: px(30)}}>
         <View>
           <Text style={styles.latestNewsHeaderText}>Latest News</Text>
         </View>
-
+        <View>
+          <View style={{flexDirection:"row", justifyContent:"space-between"}}>
+            <Text>Categories</Text>
+            <Pressable onPress={() => {
+              navigation.navigate("allcategories")
+            }}>
+              <Text style={{ color:colors.blue}}>See All</Text>
+            </Pressable>
+          </View>
+          <CategoryCarousel />
+        </View>
 
         <LatestNewsList amountOfNews={3} extraRender={false} />
 
         <View style={{height: px(60)}}>
-        <Button
+          <Button
             backgroundColor={'white'}
-            color={"#0C1A30"}
-            borderColor={"#0C1A30"}
-                onPress={() => {
-                  navigation.navigate('allnews');
-                }}>
-                See All News
-              </Button>
-
+            color={'#0C1A30'}
+            borderColor={'#0C1A30'}
+            onPress={() => {
+              navigation.navigate('allnews');
+            }}>
+            See All News
+          </Button>
         </View>
       </View>
     </View>
-
   );
 };
 

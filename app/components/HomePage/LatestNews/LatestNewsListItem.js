@@ -5,11 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 
 const LatestNewsListItem = ({data}) => {
   const navigation = useNavigation();
-  useEffect(() => {
-    if (data != null) {
-      console.log('id', data._id);
-    }
-  }, [data]);
+
   return (
     <View style={{overflow: 'hidden'}}>
       <Pressable

@@ -18,6 +18,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather'; 
 import colors from './config/colors';
 import AllNews from "./components/AllNews/AllNews"
+import AllCategories from './components/HomePage/Categories/AllCategories';
 //comment
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -123,6 +124,7 @@ const App = () => {
           <Stack.Screen name="resetpassword" component={ResetPassword} />
           <Stack.Screen name="allnews" component={AllNews} />
 
+
         </Stack.Group>
         <Stack.Screen
           name="newsdetail"
@@ -131,7 +133,13 @@ const App = () => {
             headerTitle: 'Detail News',
             headerTitleAlign: 'center',
           }}
+          
         />
+        
+        <Stack.Screen
+              name="allcategories"
+              component={AllCategories}
+            />
       </Stack.Navigator>
     </NavigationContainer>
   );
