@@ -1,12 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Text, TextInput, Dimensions} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Button from '../UI/Button';
 import IconButton from '../UI/IconButton';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import px from '../../assets/utility/dimension';
 import axios from 'axios';
-import colors from '../../config/colors';
+import colors from '../../config/colors';;
 
 const Login = ({navigation}) => {
   const [iconName, setIconName] = useState('eye-outline');
@@ -73,15 +80,17 @@ const Login = ({navigation}) => {
       navigation.navigate('HomePage');
     }
   }
+
   return (
-    <KeyboardAwareScrollView
-      style={{backgroundColor: 'white'}}
-      showsVerticalScrollIndicator={false}
-      enableOnAndroid={true}
-      keyboardShouldPersistTaps="always"
-      bounces={false}>
+    <ScrollView
+      style={styles.scrollView}
+      // showsVerticalScrollIndicator={false}
+      // enableOnAndroid={true}
+      // keyboardShouldPersistTaps="always"
+      // bounces={false}>
+      >
       <View style={styles.container}>
-        <View style={{marginTop: px(72)}}>
+        <View style={{marginTop: px(20)}}>
           <View>
             <Text style={styles.welcomeText}>Welcome back to Mega Mall</Text>
             <Text style={styles.descriptionText}>
@@ -96,7 +105,7 @@ const Login = ({navigation}) => {
                   styles.inputContainer,
                   error && {borderWidth: 1, borderColor: colors.errorRed},
                 ]}
-                placeholderTextColor={colors.disabledButton}
+                placeholderTextColor={colors.darkgray}
                 placeholder="Enter your email address/ phone number"
                 onChangeText={getInputs.bind(this, 'email')}
               />
@@ -156,18 +165,19 @@ const Login = ({navigation}) => {
           </Button>
         </View>
       </View>
-    </KeyboardAwareScrollView>
+    </ScrollView>
   );
 };
-
-const screenheight = Dimensions.get('screen').height;
-const windowheight = Dimensions.get('window').height;
-const deviceHeight = screenheight / 1063;
+const screen=Dimensions.get('window').height
 const styles = StyleSheet.create({
+  scrollView: { 
+    backgroundColor:colors.white,
+    borderWidth: 5,
+  },
   container: {
     marginHorizontal: px(25),
+    borderWidth: 1,
     justifyContent: 'space-between',
-    height: windowheight - px(85),
   },
   welcomeText: {
     fontSize: px(25),
@@ -195,10 +205,13 @@ const styles = StyleSheet.create({
     fontFamily: 'DMSans-Regular',
   },
   forgotPassword: {
+    position:'absolute',
+    bottom:0,
     height: px(50),
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
+    borderWidth: 1,
   },
   signin: {
     height: px(40),
