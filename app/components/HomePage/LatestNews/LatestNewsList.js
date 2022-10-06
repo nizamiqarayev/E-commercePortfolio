@@ -31,7 +31,6 @@ const LatestNewsList = ({amountOfNews, extraRender}) => {
   };
 
   const newsInjector = () => {
-    console.log('length:', newsData.length);
 
     const temparr = [];
     if (amountOfNews == null && newsData.length!=0) {
@@ -43,10 +42,8 @@ const LatestNewsList = ({amountOfNews, extraRender}) => {
       if (newsData.length != 0) {
        
         for (let index = 0; index < amountOfNews; index++) {
-          console.log('====================================');
-          console.log("asdasdasd");
-          console.log('====================================');
-          temparr.push(<LatestNewsListItem key={index} data={newsData[index]} index={counter} />);
+      
+          temparr.push(<LatestNewsListItem key={index} data={newsData[index]} />);
         }
      }
       
@@ -67,9 +64,7 @@ const LatestNewsList = ({amountOfNews, extraRender}) => {
         data={newsArr}
         onEndReached={() => {
           if (nextAvailable == true && extraRender ==true) {
-            console.log('====================================');
-            console.log(counter);
-            console.log('====================================');
+     
             datafetcher(counter + 1)
             setCounter(counter+1)
           }
