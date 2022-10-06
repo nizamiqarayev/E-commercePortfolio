@@ -2,58 +2,79 @@ import {FlatList, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import LatestNewsListItem from './LatestNewsListItem';
 import Dummy from '../../../assets/data/DummyData/Dummy';
+import axios from 'axios';
 
 let renderedListMaxIndex = 0;
 const LatestNewsList = ({amountOfNews, extraRender}) => {
   const [newsArr, setnewsArr] = useState([]);
-  useEffect(() => {
-    renderedListMaxIndex = 0;
+  const [newsData, setNewsData] = useState([]);
 
-    newsInjector(amountOfNews);
+  const [loadedNews, setLoadedNews] = useState([]);
+
+  const [counter, setCounter] = useState(1)
+
+  const [nextAvailable , setNextAvailable] = useState(false)
+
+  useEffect(() => {
+    datafetcher(1);
   }, []);
 
-  const newsInjector = amount => {
-    console.log(renderedListMaxIndex);
-    if (renderedListMaxIndex < Dummy.length) {
-      const temparr = [];
-
-      const intervalIndex = renderedListMaxIndex + amount;
-
-      let interval = 0;
-      if (intervalIndex < Dummy.length) {
-        interval = amount;
-      } else {
-        if (intervalIndex - Dummy.length < amount) {
-          interval = intervalIndex - Dummy.length;
-        }
-      }
-      if (interval > 0) {
-        for (
-          let index = renderedListMaxIndex;
-          index < renderedListMaxIndex + interval;
-          index++
-        ) {
-          temparr.push(<LatestNewsListItem key={index} data={Dummy[index]} />);
-        }
-
-        setnewsArr([...newsArr, temparr]);
-      }
-      renderedListMaxIndex = intervalIndex;
-
+  const datafetcher = async index => {
+    if (!loadedNews.includes(index)) {
+      const response = await axios.get(
+        `https://izzi-ecom.herokuapp.com/news/${index}`,
+      );
+      
+      setNextAvailable(response.data.next)
+      setNewsData(response.data.data);
     }
   };
+
+  const newsInjector = () => {
+    console.log('length:', newsData.length);
+
+    const temparr = [];
+    if (amountOfNews == null && newsData.length!=0) {
+      for (let index = 0; index < newsData.length; index++) {
+        temparr.push(<LatestNewsListItem key={newsData[index]._id} data={newsData[index]} index={counter} />);
+      }
+    } else {
+
+      if (newsData.length != 0) {
+       
+        for (let index = 0; index < amountOfNews; index++) {
+          console.log('====================================');
+          console.log("asdasdasd");
+          console.log('====================================');
+          temparr.push(<LatestNewsListItem key={index} data={newsData[index]} index={counter} />);
+        }
+     }
+      
+     
+    }
+    
+    const finaltemparr=newsArr.concat(temparr)
+
+    setnewsArr(finaltemparr);
+  };
+  useEffect(() => {
+    newsInjector();
+  }, [newsData]);
 
   return (
     <View>
       <FlatList
         data={newsArr}
         onEndReached={() => {
-          if (extraRender) {
-            newsInjector(5);
-            console.log(newsArr);
+          if (nextAvailable == true && extraRender ==true) {
+            console.log('====================================');
+            console.log(counter);
+            console.log('====================================');
+            datafetcher(counter + 1)
+            setCounter(counter+1)
           }
         }}
-        onEndReachedThreshold={0.75}
+        onEndReachedThreshold={0.5}
         renderItem={({item}) => {
           return item;
         }}

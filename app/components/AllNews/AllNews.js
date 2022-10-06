@@ -5,7 +5,7 @@ import Dummy from '../../assets/data/DummyData/Dummy';
 const AllNews = () => {
   return (
     <View>
-      <LatestNewsList amountOfNews={5} extraRender={true} />
+      <LatestNewsList amountOfNews={null} extraRender={true} />
     </View>
   );
 };
