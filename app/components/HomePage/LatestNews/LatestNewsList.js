@@ -36,7 +36,7 @@ const LatestNewsList = ({amountOfNews, extraRender}) => {
     const temparr = [];
     if (amountOfNews == null && newsData.length!=0) {
       for (let index = 0; index < newsData.length; index++) {
-        temparr.push(<LatestNewsListItem key={newsData[index]._id} data={newsData[index]} />);
+        temparr.push(<LatestNewsListItem key={newsData[index]._id} data={newsData[index]} index={counter} />);
       }
     } else {
 
@@ -46,7 +46,7 @@ const LatestNewsList = ({amountOfNews, extraRender}) => {
           console.log('====================================');
           console.log("asdasdasd");
           console.log('====================================');
-          temparr.push(<LatestNewsListItem key={index} data={newsData[index]} />);
+          temparr.push(<LatestNewsListItem key={index} data={newsData[index]} index={counter} />);
         }
      }
       
