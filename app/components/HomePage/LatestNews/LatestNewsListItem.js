@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 import px from '../../../assets/utility/dimension';
 import {useNavigation} from '@react-navigation/native';
 
-const LatestNewsListItem = ({data}) => {
+const LatestNewsListItem = ({data,index,onPress}) => {
   const navigation = useNavigation();
   useEffect(() => {
     if (data != null) {
@@ -15,8 +15,8 @@ const LatestNewsListItem = ({data}) => {
       <Pressable
         style={styles.container}
         android_ripple={{color: '#FFFFAD'}}
-        onPress={() => {
-          navigation.navigate('newsdetail');
+        onPress={onPress?onPress:() => {
+          navigation.navigate('newsdetail',{data:data,index:index});
         }}>
         <View style={styles.textView}>
           <Text style={[styles.text, {marginTop: 20}]}>
