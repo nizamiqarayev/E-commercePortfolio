@@ -10,7 +10,7 @@ const LatestNewsListItem = ({data,index,onPress}) => {
     <View style={{overflow: 'hidden'}}>
       <Pressable
         style={styles.container}
-        android_ripple={{color: '#FFFFAD'}}
+        android_ripple={{color: '#59565A'}}
         onPress={onPress?onPress:() => {
           navigation.navigate('newsdetail',{data:data,index:index});
         }}>

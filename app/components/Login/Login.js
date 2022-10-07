@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   signin: {
-    height: px(40),
+    height: px(50),
     marginTop: px(70),
   },
 });

@@ -11,6 +11,7 @@ import {
   PixelRatio,
 } from 'react-native';
 import px from '../../assets/utility/dimension';
+import colors from '../../config/colors';
 import Button from '../UI/Button';
 const dimension = Dimensions.get('screen').height / 830;
 
@@ -87,7 +88,7 @@ const Register = () => {
           </View>
 
           <View style={{marginTop: 150 * dimension}}>
-            <View style={{height: px(60)}}>
+            <View style={{height: px(50)}}>
               <Button
                 backgroundColor={buttonReady? "#3669c9" : '#C4C5C4'}
                 color={'white'}
@@ -131,6 +132,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20 * dimension,
     backgroundColor: '#FAFAFA',
     borderRadius: 10,
+    color:colors.fontColor,
     marginTop: 20 * dimension,
   },
 });
