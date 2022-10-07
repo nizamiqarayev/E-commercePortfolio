@@ -1,8 +1,11 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import px from '../../../assets/utility/dimension';
 
-const CategoryItem = ({image, title, color}) => {
+const CategoryItem = ({ image, title, color }) => {
+    useEffect(() => {
+        console.log(image);
+    })
   return (
     <View style={styles.container}>
       <View
