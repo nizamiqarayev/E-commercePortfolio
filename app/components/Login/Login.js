@@ -6,6 +6,7 @@ import {
   TextInput,
   ScrollView,
   Dimensions,
+  Keyboard,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Button from '../UI/Button';
@@ -16,6 +17,7 @@ import axios from 'axios';
 import colors from '../../config/colors';;
 
 const Login = ({navigation}) => {
+  const [keyboard,setkeyboard]=useState()
   const [iconName, setIconName] = useState('eye-outline');
   const [buttonColor, setButtonColor] = useState(colors.disabledButton);
   const [buttonHandler, setButtonHandler] = useState(false);
@@ -80,14 +82,27 @@ const Login = ({navigation}) => {
       navigation.navigate('HomePage');
     }
   }
+  useEffect(()=>{
+
+    const keyboardListener=Keyboard.addListener('keyboardDidChangeFrame',(value)=>{
+      setkeyboard(value.endCoordinates.height)
+      console.log(value.endCoordinates.height);
+    })
+  
+    // console.log(keyboardListener);
+    
+    return()=>keyboardListener.remove();
+    
+  },[])
 
   return (
-    <ScrollView
+    <KeyboardAwareScrollView
       style={styles.scrollView}
-      // showsVerticalScrollIndicator={false}
-      // enableOnAndroid={true}
-      // keyboardShouldPersistTaps="always"
-      // bounces={false}>
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={keyboard>0?{flexGrow:0}:{flexGrow:1}}
+      enableOnAndroid={true}
+      overScrollMode={'never'}
+      keyboardShouldPersistTaps="always"
       >
       <View style={styles.container}>
         <View style={{marginTop: px(20)}}>
@@ -165,19 +180,20 @@ const Login = ({navigation}) => {
           </Button>
         </View>
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 const screen=Dimensions.get('window').height
 const styles = StyleSheet.create({
   scrollView: { 
     backgroundColor:colors.white,
-    borderWidth: 5,
+    
   },
   container: {
+    flex:1,
     marginHorizontal: px(25),
-    borderWidth: 1,
     justifyContent: 'space-between',
+    backgroundColor:colors.white
   },
   welcomeText: {
     fontSize: px(25),
@@ -205,13 +221,10 @@ const styles = StyleSheet.create({
     fontFamily: 'DMSans-Regular',
   },
   forgotPassword: {
-    position:'absolute',
-    bottom:0,
     height: px(50),
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    borderWidth: 1,
   },
   signin: {
     height: px(40),
