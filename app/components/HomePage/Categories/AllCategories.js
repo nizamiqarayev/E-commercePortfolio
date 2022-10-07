@@ -1,115 +1,21 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import CategoryItem from './CategoryItem';
+import {useSelector} from 'react-redux';
 
 const AllCategories = () => {
+  const categoriesFromStore = useSelector(state => state.categories);
+
   return (
     <View style={styles.allNewsContainer}>
-      <CategoryItem
-        image={
-          'https://media.istockphoto.com/photos/illustration-of-a-penguin-picture-id519890151?k=20&m=519890151&s=612x612&w=0&h=1Sgx88r1Ne5uQiENnpPNEc3S2LYO_RwR99RaS9i5PgI='
-        }
-        color={'#E4F3EA'}
-        title={'Pengus'}
-      />
-      <CategoryItem
-        image={
-          'https://media.istockphoto.com/photos/illustration-of-a-penguin-picture-id519890151?k=20&m=519890151&s=612x612&w=0&h=1Sgx88r1Ne5uQiENnpPNEc3S2LYO_RwR99RaS9i5PgI='
-        }
-        color={'#E4F3EA'}
-        title={'Pengus'}
-      />
-      <CategoryItem
-        image={
-          'https://media.istockphoto.com/photos/illustration-of-a-penguin-picture-id519890151?k=20&m=519890151&s=612x612&w=0&h=1Sgx88r1Ne5uQiENnpPNEc3S2LYO_RwR99RaS9i5PgI='
-        }
-        color={'#E4F3EA'}
-        title={'Pengus'}
-      />
-      <CategoryItem
-        image={
-          'https://media.istockphoto.com/photos/illustration-of-a-penguin-picture-id519890151?k=20&m=519890151&s=612x612&w=0&h=1Sgx88r1Ne5uQiENnpPNEc3S2LYO_RwR99RaS9i5PgI='
-        }
-        color={'#E4F3EA'}
-        title={'Pengus'}
-      />
-      <CategoryItem
-        image={
-          'https://media.istockphoto.com/photos/illustration-of-a-penguin-picture-id519890151?k=20&m=519890151&s=612x612&w=0&h=1Sgx88r1Ne5uQiENnpPNEc3S2LYO_RwR99RaS9i5PgI='
-        }
-        color={'#E4F3EA'}
-        title={'Pengus'}
-      />
-      <CategoryItem
-        image={
-          'https://media.istockphoto.com/photos/illustration-of-a-penguin-picture-id519890151?k=20&m=519890151&s=612x612&w=0&h=1Sgx88r1Ne5uQiENnpPNEc3S2LYO_RwR99RaS9i5PgI='
-        }
-        color={'#E4F3EA'}
-        title={'Pengus'}
-      />
-      <CategoryItem
-        image={
-          'https://media.istockphoto.com/photos/illustration-of-a-penguin-picture-id519890151?k=20&m=519890151&s=612x612&w=0&h=1Sgx88r1Ne5uQiENnpPNEc3S2LYO_RwR99RaS9i5PgI='
-        }
-        color={'#E4F3EA'}
-        title={'Pengus'}
-      />
-      <CategoryItem
-        image={
-          'https://media.istockphoto.com/photos/illustration-of-a-penguin-picture-id519890151?k=20&m=519890151&s=612x612&w=0&h=1Sgx88r1Ne5uQiENnpPNEc3S2LYO_RwR99RaS9i5PgI='
-        }
-        color={'#E4F3EA'}
-        title={'Pengus'}
-      />
-      <CategoryItem
-        image={
-          'https://media.istockphoto.com/photos/illustration-of-a-penguin-picture-id519890151?k=20&m=519890151&s=612x612&w=0&h=1Sgx88r1Ne5uQiENnpPNEc3S2LYO_RwR99RaS9i5PgI='
-        }
-        color={'#E4F3EA'}
-        title={'Pengus'}
-      />
-      <CategoryItem
-        image={
-          'https://media.istockphoto.com/photos/illustration-of-a-penguin-picture-id519890151?k=20&m=519890151&s=612x612&w=0&h=1Sgx88r1Ne5uQiENnpPNEc3S2LYO_RwR99RaS9i5PgI='
-        }
-        color={'#E4F3EA'}
-        title={'Pengus'}
-      />
-      <CategoryItem
-        image={
-          'https://media.istockphoto.com/photos/illustration-of-a-penguin-picture-id519890151?k=20&m=519890151&s=612x612&w=0&h=1Sgx88r1Ne5uQiENnpPNEc3S2LYO_RwR99RaS9i5PgI='
-        }
-        color={'#E4F3EA'}
-        title={'Pengus'}
-      />
-      <CategoryItem
-        image={
-          'https://media.istockphoto.com/photos/illustration-of-a-penguin-picture-id519890151?k=20&m=519890151&s=612x612&w=0&h=1Sgx88r1Ne5uQiENnpPNEc3S2LYO_RwR99RaS9i5PgI='
-        }
-        color={'#E4F3EA'}
-        title={'Pengus'}
-      />
-      <CategoryItem
-        image={
-          'https://media.istockphoto.com/photos/illustration-of-a-penguin-picture-id519890151?k=20&m=519890151&s=612x612&w=0&h=1Sgx88r1Ne5uQiENnpPNEc3S2LYO_RwR99RaS9i5PgI='
-        }
-        color={'#E4F3EA'}
-        title={'Pengus'}
-      />
-      <CategoryItem
-        image={
-          'https://media.istockphoto.com/photos/illustration-of-a-penguin-picture-id519890151?k=20&m=519890151&s=612x612&w=0&h=1Sgx88r1Ne5uQiENnpPNEc3S2LYO_RwR99RaS9i5PgI='
-        }
-        color={'#E4F3EA'}
-        title={'Pengus'}
-      />
-      <CategoryItem
-        image={
-          'https://media.istockphoto.com/photos/illustration-of-a-penguin-picture-id519890151?k=20&m=519890151&s=612x612&w=0&h=1Sgx88r1Ne5uQiENnpPNEc3S2LYO_RwR99RaS9i5PgI='
-        }
-        color={'#E4F3EA'}
-        title={'Pengus'}
-      />
+      {categoriesFromStore.content.map(item => (
+        <CategoryItem
+          key={item._id}
+          image={item.image}
+          title={item.name}
+          color={item.bgColor}
+        />
+      ))}
     </View>
   );
 };

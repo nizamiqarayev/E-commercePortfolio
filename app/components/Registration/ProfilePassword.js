@@ -16,6 +16,7 @@ const dimension = Dimensions.get('screen').height / 830;
 
 const ProfilePassword = ({route}) => {
   const [passwordType, setPasswordType] = useState(true);
+  const [confirmType, setConfirm] = useState(true)
 
   const [warning, setWarning] = useState(false);
 
@@ -30,6 +31,10 @@ const ProfilePassword = ({route}) => {
   const changePasswordVisibility = () => {
     setPasswordType(!passwordType);
   };
+
+  const changeConfirmVisibility = () => {
+    setConfirm(!confirmType)
+  }
 
   const submissionHandler = async () => {
     console.log(input.password);
@@ -110,12 +115,18 @@ const ProfilePassword = ({route}) => {
                   secureTextEntry={passwordType}
                 />
                 <View style={{position: 'absolute', right: 0}}>
-                  <IconButton
+                  {passwordType ? <IconButton
                     size={24}
                     color={'#838589'}
                     onPress={changePasswordVisibility}
                     name={'eye-outline'}
-                  />
+                  /> :
+                  <IconButton
+                    size={24}
+                    color={'#838589'}
+                    onPress={changePasswordVisibility}
+                    name={'eye-off-outline'}
+                  />}
                 </View>
               </View>
               {warning ? (
@@ -147,15 +158,21 @@ const ProfilePassword = ({route}) => {
                   onChangeText={text => {
                     inputHandler(text, 'confirm');
                   }}
-                  secureTextEntry={passwordType}
+                  secureTextEntry={confirmType}
                 />
                 <View style={{position: 'absolute', right: 0}}>
+                {confirmType ? <IconButton
+                    size={24}
+                    color={'#838589'}
+                    onPress={changeConfirmVisibility}
+                    name={'eye-outline'}
+                  /> :
                   <IconButton
                     size={24}
                     color={'#838589'}
-                    onPress={changePasswordVisibility}
-                    name={'eye-outline'}
-                  />
+                    onPress={changeConfirmVisibility}
+                    name={'eye-off-outline'}
+                  />}
                 </View>
               </View>
               {warning ? (

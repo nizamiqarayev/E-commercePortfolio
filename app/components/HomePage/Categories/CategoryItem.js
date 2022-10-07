@@ -1,25 +1,18 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import px from '../../../assets/utility/dimension';
+import colors from '../../../config/colors';
 
-const CategoryItem = ({ image, title, color }) => {
-    useEffect(() => {
-        console.log(image);
-    })
+const CategoryItem = ({image, title, color}) => {
+  // useEffect(() => {
+  // })
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          backgroundColor: color,
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: px(72),
-          height: px(72),
-        }}>
+      <View style={[styles.backgroundContainer, {backgroundColor: color}]}>
         <Image style={styles.image} source={{uri: image}} />
       </View>
       <View>
-        <Text>{title}</Text>
+        <Text style={styles.text}>{title}</Text>
       </View>
     </View>
   );
@@ -30,12 +23,24 @@ export default CategoryItem;
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 10,
-    
-        justifyContent: "center",
-    alignItems:"center"
+
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   image: {
     width: px(40),
     height: px(40),
+  },
+  backgroundContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    width: px(72),
+    height: px(72),
+  },
+  text: {
+    fontFamily: 'DMSans-regular',
+    color: colors.fontColor,
+    marginVertical: 8,
   },
 });
