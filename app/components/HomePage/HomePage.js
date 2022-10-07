@@ -21,20 +21,21 @@ const HomePage = ({route, navigation}) => {
   }, [focused]);
   return (
     <View style={styles.container}>
+      <View>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems:"center"}}>
+          <Text style={styles.title}>Categories</Text>
+          <Pressable
+            onPress={() => {
+              navigation.navigate('allcategories');
+            }}>
+            <Text style={{color: colors.blue}}>See All</Text>
+          </Pressable>
+        </View>
+        <CategoryCarousel />
+      </View>
       <View style={{paddingVertical: px(30)}}>
         <View>
           <Text style={styles.latestNewsHeaderText}>Latest News</Text>
-        </View>
-        <View>
-          <View style={{flexDirection:"row", justifyContent:"space-between"}}>
-            <Text>Categories</Text>
-            <Pressable onPress={() => {
-              navigation.navigate("allcategories")
-            }}>
-              <Text style={{ color:colors.blue}}>See All</Text>
-            </Pressable>
-          </View>
-          <CategoryCarousel />
         </View>
 
         <LatestNewsList amountOfNews={3} extraRender={false} />
@@ -62,4 +63,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 25,
   },
   latestNewsHeaderText: {fontWeight: '700', fontSize: px(25), color: '#0C1A30'},
+  title: {
+    fontFamily: 'DMSans-regular',
+    color: colors.fontColor,
+    marginVertical: 8,
+    fontWeight: '700', fontSize: px(25), color: '#0C1A30'
+  },
 });
