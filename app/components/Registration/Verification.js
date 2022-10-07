@@ -21,19 +21,17 @@ const Verification = ({route}) => {
   console.log(route.params.email);
   const [enteredOtp, setEnteredOtp] = useState('');
   const [val, setVal] = useState(0);
-
+  console.log(val);
   const [otparr, setOtpArr] = useState([]);
 
   const [otpReadyforTest, setotpReadyforTest] = useState('false');
 
+  const [minutes, setMinutes] = useState(5);
 
-  const [minutes, setMinutes] = useState(5)
-  
-  const [seconds, setSeconds] = useState(0)
-  const [timer, setTimer] = useState(10)
-  
+  const [seconds, setSeconds] = useState(0);
+  const [timer, setTimer] = useState(10);
 
-  const [resendAvailable, setResendAvailable] = useState(false)
+  const [resendAvailable, setResendAvailable] = useState(false);
 
   const changeHandler = (index, text) => {
     if (index <= 3 && text != '') {
@@ -50,7 +48,7 @@ const Verification = ({route}) => {
       if (index != 0 && index != 4 && text == '') {
         this[`input${index + -1}`].focus();
         inputData[index] = text;
-        dataVerifier()
+        dataVerifier();
       }
     }
   };
@@ -77,7 +75,7 @@ const Verification = ({route}) => {
       console.log(value.data.code);
 
       setVal(value.data.code);
-      setResendAvailable(false)
+      setResendAvailable(false);
       // setTimer(5*60)
     } catch (error) {
       console.log(error);
@@ -89,7 +87,7 @@ const Verification = ({route}) => {
 
     inputData = ['', '', '', ''];
 
-    setotpReadyforTest(false)
+    setotpReadyforTest(false);
     async function verifier() {
       try {
         const value = await axios.post(
@@ -183,62 +181,65 @@ const Verification = ({route}) => {
                 }}>
                 Verification Code
               </Text>
-              {
-                resendAvailable ? <Pressable onPress={resendCode}>
-                
+              {resendAvailable ? (
+                <Pressable onPress={resendCode}>
+                  <Text
+                    style={{
+                      color: 'blue',
+                      fontSize: 14 * dimension,
+                      fontWeight: '400',
+                    }}>
+                    Resend code
+                  </Text>
+                </Pressable>
+              ) : (
                 <Text
                   style={{
                     color: 'blue',
                     fontSize: 14 * dimension,
                     fontWeight: '400',
                   }}>
-                  Resend code
+                  Resend not yet available
                 </Text>
-              </Pressable> :  <Text
-                  style={{
-                    color: 'blue',
-                    fontSize: 14 * dimension,
-                    fontWeight: '400',
-                  }}>
-                  Resend not yet available 
-                </Text>
-              }
-              
+              )}
             </View>
             {/* <View style={{flexDirection: 'row'}}>{OtpArr}</View> */}
             <View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              {otparr.map(input => {
-                return input;
-              })}
-
-              
-
-
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                {otparr.map(input => {
+                  return input;
+                })}
               </View>
-              <View style={{ alignSelf: "flex-start" }}>
-
-                <View style={{ flexDirection: "row", justifyContent: "center",alignItems:"center" }}>
-                <CountDown until={timer}
-                  style={{marginHorizontal:2}}
-                  size={15}
-                  onFinish={() => {
-                    setResendAvailable(true)
-                  }}
-                  digitStyle={{backgroundColor: 'transparent'}}
-                  digitTxtStyle={{color: '#0C1A30'}}
-                  timeToShow={['M', 'S']}
-                  timeLabels={{ m: '', s: '' }}
-                  showSeparator
-                />
-                <Text style={{fontWeight:"700", fontSize:15,color: '#0C1A30'}}>Till Resend</Text>
+              <View style={{alignSelf: 'flex-start'}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <CountDown
+                    until={timer}
+                    style={{marginHorizontal: 2}}
+                    size={15}
+                    onFinish={() => {
+                      setResendAvailable(true);
+                    }}
+                    digitStyle={{backgroundColor: 'transparent'}}
+                    digitTxtStyle={{color: '#0C1A30'}}
+                    timeToShow={['M', 'S']}
+                    timeLabels={{m: '', s: ''}}
+                    showSeparator
+                  />
+                  <Text
+                    style={{fontWeight: '700', fontSize: 15, color: '#0C1A30'}}>
+                    Till Resend
+                  </Text>
                 </View>
-               
               </View>
             </View>
           </View>
@@ -247,7 +248,7 @@ const Verification = ({route}) => {
             <View style={{height: 60 * dimension}}>
               <Button
                 backgroundColor={
-                  otpReadyforTest && val != 0 ? '#3669c9':'#C4C5C4'
+                  otpReadyforTest && val != 0 ? '#3669c9' : '#C4C5C4'
                 }
                 color={'white'}
                 onPress={
