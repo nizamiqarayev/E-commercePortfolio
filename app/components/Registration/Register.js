@@ -1,4 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
 import React, {useState} from 'react';
 import {
   View,
@@ -11,6 +12,7 @@ import {
   PixelRatio,
 } from 'react-native';
 import px from '../../assets/utility/dimension';
+import colors from '../../config/colors';
 import Button from '../UI/Button';
 const dimension = Dimensions.get('screen').height / 830;
 
@@ -87,15 +89,31 @@ const Register = () => {
           </View>
 
           <View style={{marginTop: 150 * dimension}}>
-            <View style={{height: px(60)}}>
+            <View style={{height: px(50)}}>
               <Button
                 backgroundColor={buttonReady? "#3669c9" : '#C4C5C4'}
                 color={'white'}
-                onPress={email!=""? () => {
-                  navigate.navigate('verification', {
-                    path: 'registerfinish',
-                    email:email
-                  });
+                onPress={email != "" ? async () => {
+                  try {
+                    const value = await axios.post(
+                      'https://izzi-ecom.herokuapp.com/user/emailConfirm',
+                      {email: email},
+                    );
+
+                    navigate.navigate('verification', {
+                      path: 'Profile Password',
+                      email: email,
+                      otp: value.data.code,
+                      confirmType: 'https://izzi-ecom.herokuapp.com/user/emailConfirm'
+                    });
+                    
+
+
+                  } catch (error) {
+                    console.log(error);
+                  }
+
+                  
                 } : () =>{}}>
                 Continue
               </Button>
@@ -131,6 +149,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20 * dimension,
     backgroundColor: '#FAFAFA',
     borderRadius: 10,
+    color:colors.fontColor,
     marginTop: 20 * dimension,
   },
 });

@@ -10,9 +10,11 @@ import {
   Dimensions,
   Pressable,
 } from 'react-native';
+
 import Button from '../UI/Button';
 import px from '../../assets/utility/dimension';
 import CountDown from 'react-native-countdown-component';
+import CustomTimer from '../UI/CustomTimer';
 const dimension = Dimensions.get('screen').height / 830;
 
 let inputData = ['', '', '', ''];
@@ -20,7 +22,10 @@ let inputData = ['', '', '', ''];
 const Verification = ({route}) => {
   console.log(route.params.email);
   const [enteredOtp, setEnteredOtp] = useState('');
-  const [val, setVal] = useState(0);
+  const [val, setVal] = useState(route.params.otp);
+  console.log('====================================');
+  console.log(val);
+  console.log('====================================');
   console.log(val);
   const [otparr, setOtpArr] = useState([]);
 
@@ -30,7 +35,6 @@ const Verification = ({route}) => {
 
   const [seconds, setSeconds] = useState(0);
   const [timer, setTimer] = useState(10);
-
   const [resendAvailable, setResendAvailable] = useState(false);
 
   const changeHandler = (index, text) => {
@@ -69,7 +73,7 @@ const Verification = ({route}) => {
   const resendCode = async () => {
     try {
       const value = await axios.post(
-        'https://izzi-ecom.herokuapp.com/user/emailConfirm',
+        route.params.confirmType,
         {email: `${route.params.email}`},
       );
       console.log(value.data.code);
@@ -88,20 +92,7 @@ const Verification = ({route}) => {
     inputData = ['', '', '', ''];
 
     setotpReadyforTest(false);
-    async function verifier() {
-      try {
-        const value = await axios.post(
-          'https://izzi-ecom.herokuapp.com/user/emailConfirm',
-          {email: `${route.params.email}`},
-        );
-        console.log(value.data.code);
-        setVal(value.data.code);
-        return value;
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    verifier();
+  
 
     const temparr = [];
     for (let i = 0; i < 4; i++) {
@@ -162,7 +153,7 @@ const Verification = ({route}) => {
               fontSize: 16 * dimension,
               fontWeight: '400',
             }}>
-            We have sent the verification code to +628*******716 Change?
+            We have sent the verification code to {route.params.email}
           </Text>
         </View>
         <View
@@ -189,7 +180,7 @@ const Verification = ({route}) => {
                       fontSize: 14 * dimension,
                       fontWeight: '400',
                     }}>
-                    Resend code
+                    Re-send code
                   </Text>
                 </Pressable>
               ) : (
@@ -215,31 +206,23 @@ const Verification = ({route}) => {
                   return input;
                 })}
               </View>
-              <View style={{alignSelf: 'flex-start'}}>
-                <View
+              <View style={{ alignSelf: 'flex-start', marginTop:5}}>
+                {
+                  resendAvailable ? <></> :<View
                   style={{
                     flexDirection: 'row',
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <CountDown
-                    until={timer}
-                    style={{marginHorizontal: 2}}
-                    size={15}
-                    onFinish={() => {
-                      setResendAvailable(true);
-                    }}
-                    digitStyle={{backgroundColor: 'transparent'}}
-                    digitTxtStyle={{color: '#0C1A30'}}
-                    timeToShow={['M', 'S']}
-                    timeLabels={{m: '', s: ''}}
-                    showSeparator
-                  />
                   <Text
-                    style={{fontWeight: '700', fontSize: 15, color: '#0C1A30'}}>
-                    Till Resend
+                    style={{ fontWeight: '700', fontSize: 15, color: '#0C1A30' }}>
+                    Resend Available in:  
                   </Text>
+                    <CustomTimer initialMinutes={5} initialSeconds={0} onFinish={setResendAvailable}/>
+                  
                 </View>
+                }
+                
               </View>
             </View>
           </View>
@@ -255,7 +238,7 @@ const Verification = ({route}) => {
                   otpReadyforTest && val != 0
                     ? () => {
                         if (otpFinalVerification() == true) {
-                          navigate.navigate('Profile Password', {
+                          navigate.navigate(route.params.path, {
                             email: route.params.email,
                           });
                         } else {
