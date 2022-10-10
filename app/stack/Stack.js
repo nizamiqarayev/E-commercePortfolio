@@ -13,6 +13,7 @@ import AllNews from '../components/AllNews/AllNews';
 import AllCategories from '../components/HomePage/Categories/AllCategories';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BottomTabsenComponent from './BottomTabsenComponent';
+import ReviewProduct from '../components/Reviews/ReviewProduct';
 
 
 
@@ -31,7 +32,7 @@ const StackComponent = () => {
         }}
         component={BottomTabsenComponent}
       />
-      <Stack.Screen name="second" component={Login} />
+      <Stack.Screen name="ReviewProduct" component={ReviewProduct} />
       <Stack.Group
         screenOptions={{
           headerTitle: '',
