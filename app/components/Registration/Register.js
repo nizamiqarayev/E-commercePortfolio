@@ -1,4 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
 import React, {useState} from 'react';
 import {
   View,
@@ -92,11 +93,27 @@ const Register = () => {
               <Button
                 backgroundColor={buttonReady? "#3669c9" : '#C4C5C4'}
                 color={'white'}
-                onPress={email!=""? () => {
-                  navigate.navigate('verification', {
-                    path: 'Profile Password',
-                    email:email
-                  });
+                onPress={email != "" ? async () => {
+                  try {
+                    const value = await axios.post(
+                      'https://izzi-ecom.herokuapp.com/user/emailConfirm',
+                      {email: email},
+                    );
+
+                    navigate.navigate('verification', {
+                      path: 'Profile Password',
+                      email: email,
+                      otp: value.data.code,
+                      confirmType: 'https://izzi-ecom.herokuapp.com/user/emailConfirm'
+                    });
+                    
+
+
+                  } catch (error) {
+                    console.log(error);
+                  }
+
+                  
                 } : () =>{}}>
                 Continue
               </Button>
