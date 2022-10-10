@@ -255,7 +255,7 @@ const Verification = ({route}) => {
                   otpReadyforTest && val != 0
                     ? () => {
                         if (otpFinalVerification() == true) {
-                          navigate.navigate('Profile Password', {
+                          navigate.navigate(route.params.path, {
                             email: route.params.email,
                           });
                         } else {

@@ -94,7 +94,7 @@ const Register = () => {
                 color={'white'}
                 onPress={email!=""? () => {
                   navigate.navigate('verification', {
-                    path: 'registerfinish',
+                    path: 'Profile Password',
                     email:email
                   });
                 } : () =>{}}>
