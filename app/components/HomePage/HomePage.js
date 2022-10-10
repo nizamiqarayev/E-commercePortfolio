@@ -31,47 +31,50 @@ const HomePage = ({route, navigation}) => {
     }
   }, [focused]);
   return (
-    <View style={styles.container}>
-      <View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
-          <Text style={styles.title}>Categories</Text>
-          <Pressable
-            onPress={() => {
-              setCategoriesModal(true);
-            }}>
-            <Text style={{color: colors.blue}}>See All</Text>
-          </Pressable>
-            <AllCategories seeAllCategories={seeAllCategories} setSeeAllCategories={setCategoriesModal} />
-         
-          
-        </View>
-        <CategoryCarousel />
-      </View>
-      <View style={{paddingVertical: px(30)}}>
+    <ScrollView>
+      <View style={styles.container}>
         <View>
-          <Text style={styles.latestNewsHeaderText}>Latest News</Text>
-        </View>
-
-        <LatestNewsList amountOfNews={3} extraRender={false} />
-
-        <View style={{height: px(60)}}>
-          <Button
-            backgroundColor={'white'}
-            color={'#0C1A30'}
-            borderColor={'#0C1A30'}
-            onPress={() => {
-              navigation.navigate('allnews');
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
             }}>
-            See All News
-          </Button>
+            <Text style={styles.title}>Categories</Text>
+            <Pressable
+              onPress={() => {
+                setCategoriesModal(true);
+              }}>
+              <Text style={{color: colors.blue}}>See All</Text>
+            </Pressable>
+            <AllCategories
+              seeAllCategories={seeAllCategories}
+              setSeeAllCategories={setCategoriesModal}
+            />
+          </View>
+          <CategoryCarousel />
+        </View>
+        <View style={{paddingVertical: px(30)}}>
+          <View>
+            <Text style={styles.latestNewsHeaderText}>Latest News</Text>
+          </View>
+
+          <LatestNewsList amountOfNews={3} extraRender={false} />
+
+          <View style={{height: px(60)}}>
+            <Button
+              backgroundColor={'white'}
+              color={'#0C1A30'}
+              borderColor={'#0C1A30'}
+              onPress={() => {
+                navigation.navigate('allnews');
+              }}>
+              See All News
+            </Button>
+          </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
