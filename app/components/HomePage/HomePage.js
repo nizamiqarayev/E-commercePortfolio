@@ -58,8 +58,14 @@ const HomePage = ({route, navigation}) => {
           <View>
             <Text style={styles.latestNewsHeaderText}>Latest News</Text>
           </View>
+          <ScrollView horizontal={true} style={{ width: "100%" }}>
 
-          <LatestNewsList amountOfNews={3} extraRender={false} />
+            <LatestNewsList
+              homepage={true}
+              amountOfNews={3}
+              extraRender={false}
+            />
+          </ScrollView>
 
           <View style={{height: px(60)}}>
             <Button
