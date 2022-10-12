@@ -1,11 +1,20 @@
 import React from 'react';
-import {View, StyleSheet, Text, FlatList, ScrollView} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  FlatList,
+  ScrollView,
+  Image,
+} from 'react-native';
 import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
 import Stars from './Stars';
 import * as Progress from 'react-native-progress';
 import Dummy from '../../assets/data/DummyData/Dummy';
 import ReviewItem from './ReviewItem';
+import Antdesign from 'react-native-vector-icons/AntDesign';
+import {useNavigation} from '@react-navigation/native';
 
 const ReviewProduct = () => {
   let averageRating = 0;
@@ -15,6 +24,19 @@ const ReviewProduct = () => {
     countOfReviews[item.rating - 1] = countOfReviews[item.rating - 1] + 1;
     count = count + 1;
     averageRating = averageRating + item.rating;
+  });
+  const navigation = useNavigation();
+  navigation.setOptions({
+    headerRight: () => {
+      return (
+        <View style={{flexDirection: 'row',alignItems:'center'}}>
+          <Antdesign name="star" size={px(14)} style={styles.star} color={colors.OrangeFresh}></Antdesign>
+          <Text style={styles.headerRightText}>
+            {(averageRating / count).toFixed(1)}
+          </Text>
+        </View>
+      );
+    },
   });
 
   return (
@@ -81,7 +103,7 @@ const ReviewProduct = () => {
         <View style={styles.FlatListContainer}>
           <FlatList
             data={Dummy}
-            key={(item)=>item.id}
+            key={item => item.id}
             renderItem={({item}) => {
               return <ReviewItem data={item} />;
             }}></FlatList>
@@ -94,6 +116,15 @@ const ReviewProduct = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  headerRightText:{
+    color:colors.fontColor,
+    fontFamily:"DMSans-Medium",
+    fontSize:px(16)
+  },
+  star: {
+    width: px(16),
+    height: px(16),
   },
   FlatListContainer: {
     marginTop: px(20),
