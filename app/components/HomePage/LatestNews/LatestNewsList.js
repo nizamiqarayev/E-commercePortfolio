@@ -5,7 +5,7 @@ import Dummy from '../../../assets/data/DummyData/Dummy';
 import axios from 'axios';
 
 let renderedListMaxIndex = 0;
-const LatestNewsList = ({amountOfNews, extraRender}) => {
+const LatestNewsList = ({ homepage,amountOfNews, extraRender}) => {
   const [newsArr, setnewsArr] = useState([]);
   const [newsData, setNewsData] = useState([]);
 
@@ -61,7 +61,9 @@ const LatestNewsList = ({amountOfNews, extraRender}) => {
   return (
     <View>
       <FlatList
+        showsVerticalScrollIndicator={false}
         data={newsArr}
+        scrollEnabled={homepage? false:true}
         onEndReached={() => {
           if (nextAvailable == true && extraRender ==true) {
      
