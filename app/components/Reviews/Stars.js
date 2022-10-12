@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
   star: {
     width: px(14),
     height: px(14),
+    marginRight:px(5),
     
   },
 });

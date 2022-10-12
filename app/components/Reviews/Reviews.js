@@ -26,6 +26,7 @@ const Reviews = () => {
       </View>
       <FlatList
         data={Dummy.slice(0, 3)}
+        key={(item)=>item.id}
         renderItem={({item}) => {
           return <ReviewItem data={item} />;
         }}></FlatList>
