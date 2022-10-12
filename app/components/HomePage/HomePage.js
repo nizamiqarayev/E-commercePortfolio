@@ -16,6 +16,7 @@ import ProductCard from '../ProductCard/ProductCard';
 import colors from '../../config/colors';
 import CategoryCarousel from './Categories/CategoryCarousel';
 import AllCategories from './Categories/AllCategories';
+import FilterModal from './Categories/FilterAndSorting/FilterModal';
 
 const HomePage = ({route, navigation}) => {
   const focused = useIsFocused();
@@ -47,10 +48,14 @@ const HomePage = ({route, navigation}) => {
               }}>
               <Text style={{color: colors.blue}}>See All</Text>
             </Pressable>
-            <AllCategories
+            {/* <AllCategories
               seeAllCategories={seeAllCategories}
               setSeeAllCategories={setCategoriesModal}
-            />
+            /> */}
+              <FilterModal
+                seeFilterModal={seeAllCategories}
+                setTheFilterScreen={setCategoriesModal}
+              />
           </View>
           <CategoryCarousel />
         </View>
@@ -58,8 +63,13 @@ const HomePage = ({route, navigation}) => {
           <View>
             <Text style={styles.latestNewsHeaderText}>Latest News</Text>
           </View>
-
-          <LatestNewsList amountOfNews={3} extraRender={false} />
+          <ScrollView horizontal={true} style={{width: '100%'}}>
+            <LatestNewsList
+              homepage={true}
+              amountOfNews={3}
+              extraRender={false}
+            />
+          </ScrollView>
 
           <View style={{height: px(60)}}>
             <Button
