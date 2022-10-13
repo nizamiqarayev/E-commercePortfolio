@@ -3,11 +3,14 @@ import {View, StyleSheet, Text, TextInput, Dimensions} from 'react-native';
 import Button from '../UI/Button';
 import IconButton from '../UI/IconButton';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-
-const UpdatePassword = ({navigation}) => {
+import axios from 'axios';
+import colors from '../../config/colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import px from '../../assets/utility/dimension';
+const UpdatePassword = ({navigation, route}) => {
   const [iconName, setIconName] = useState('eye-outline');
   const [confirmIconName, setConfirmIconName] = useState('eye-outline');
-  const [buttonColor, setButtonColor] = useState('#C4C5C4');
+  const [buttonColor, setButtonColor] = useState(colors.disabledButton);
   const [inputs, setInputs] = useState({
     newpassword: '',
     confirmpassword: '',
@@ -20,9 +23,9 @@ const UpdatePassword = ({navigation}) => {
       inputs.confirmpassword == inputs.newpassword &&
       inputs.newpassword.length > 6
     ) {
-      setButtonColor('#3669C9');
+      setButtonColor(colors.blue);
     } else {
-      setButtonColor('#838589');
+      setButtonColor(colors.disabledButton);
     }
   }, [inputs]);
   function changePasswordVisibility() {
@@ -47,10 +50,41 @@ const UpdatePassword = ({navigation}) => {
       [inputName]: data,
     });
   }
+  async function Update() {
+    console.log('entered');
+    try {
+      console.log('try');
+      const response = await axios.patch(
+        'https://izzi-ecom.herokuapp.com/user/reset',
+        {
+          email: route.params.email,
+          password: inputs.newpassword,
+          rePassword: inputs.confirmpassword,
+        },
+      );
+
+      await AsyncStorage.setItem('email', response.data.email);
+      await AsyncStorage.setItem('username', response.data.username);
+      await AsyncStorage.setItem('token', response.data.token);
+      await AsyncStorage.setItem('_id', response.data._id);
+
+      Home();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  function Home() {
+    navigation.navigate('HomePage');
+  }
   return (
-    <KeyboardAwareScrollView style={{height: deviceHeight}} bounces={false}>
+    <KeyboardAwareScrollView
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{flexGrow:1}}
+      enableOnAndroid={true}
+      overScrollMode={'never'}
+      keyboardShouldPersistTaps="always">
       <View style={styles.container}>
-        <View style={{marginTop: deviceHeight * 100}}>
+        <View style={{marginTop: px(100)}}>
           <View>
             <Text style={styles.welcomeText}>Update Password</Text>
             <Text style={styles.descriptionText}>
@@ -58,7 +92,7 @@ const UpdatePassword = ({navigation}) => {
               application
             </Text>
           </View>
-          <View style={{marginTop: deviceHeight * 50}}>
+          <View style={{marginTop: px(50)}}>
             <View>
               <Text style={styles.inputText}>New Password</Text>
               <View
@@ -69,7 +103,7 @@ const UpdatePassword = ({navigation}) => {
                 }}>
                 <TextInput
                   style={[styles.inputContainer, {flex: 1}]}
-                  placeholderTextColor={'#C4C5C4'}
+                  placeholderTextColor={colors.disabledButton}
                   placeholder="Enter your password"
                   onChangeText={getInputs.bind(this, 'newpassword')}
                   secureTextEntry={passwordType}
@@ -77,7 +111,7 @@ const UpdatePassword = ({navigation}) => {
                 <View style={{position: 'absolute', right: 0}}>
                   <IconButton
                     size={24}
-                    color={'#838589'}
+                    color={colors.disabledButton}
                     onPress={changePasswordVisibility}
                     name={iconName}
                   />
@@ -88,7 +122,7 @@ const UpdatePassword = ({navigation}) => {
                   name={'information-circle-outline'}
                   size={18}
                   color={'#999'}></IconButton>
-                <Text style={{color: '#999'}}>
+                <Text style={{color: colors.darkgray}}>
                   Password must be 6 characters or more
                 </Text>
               </View>
@@ -103,7 +137,7 @@ const UpdatePassword = ({navigation}) => {
                 }}>
                 <TextInput
                   style={[styles.inputContainer, {flex: 1}]}
-                  placeholderTextColor={'#C4C5C4'}
+                  placeholderTextColor={colors.disabledButton}
                   placeholder="Enter your password"
                   onChangeText={getInputs.bind(this, 'confirmpassword')}
                   secureTextEntry={confirmPasswordType}
@@ -111,7 +145,7 @@ const UpdatePassword = ({navigation}) => {
                 <View style={{position: 'absolute', right: 0}}>
                   <IconButton
                     size={24}
-                    color={'#838589'}
+                    color={colors.disabledButton}
                     onPress={changeConfirmPasswordVisibility}
                     name={confirmIconName}
                   />
@@ -120,59 +154,59 @@ const UpdatePassword = ({navigation}) => {
             </View>
           </View>
         </View>
-          <View style={styles.signin}>
-            <Button color={'white'} backgroundColor={buttonColor}>
-             Save Update
-            </Button>
-          </View>
+        <View style={styles.signin}>
+          <Button
+            onPress={buttonColor == colors.blue ? Update : () => {}}
+            color={'white'}
+            backgroundColor={buttonColor}>
+            Save Update
+          </Button>
+        </View>
       </View>
     </KeyboardAwareScrollView>
   );
 };
 
-const screenheight = Dimensions.get('screen').height;
-const windowheight = Dimensions.get('window').height;
-const deviceHeight = screenheight / 1063;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: screenheight - deviceHeight * 160,
     marginHorizontal: 25,
     justifyContent: 'space-between',
   },
   welcomeText: {
-    fontSize: deviceHeight * 36,
+    fontSize: px(24),
     fontWeight: '700',
     color: '#0C1A30',
-    marginBottom: deviceHeight * 20,
-    marginRight: deviceHeight * 100,
+    marginBottom: px(20),
+    marginRight: px(100),
   },
   descriptionText: {
-    color: '#838589',
-    fontSize: deviceHeight * 18,
+    color: colors.disabledButton,
+    fontSize: px(16),
     fontWeight: '400',
   },
   inputContainer: {
-    color: '#0C1A30',
+    color: colors.fontColor,
     borderRadius: 10,
-    backgroundColor: '#FAFAFA',
-    paddingVertical: deviceHeight * 16,
-    paddingHorizontal: deviceHeight * 20,
+    backgroundColor: colors.softGray,
+    paddingVertical: px(16),
+    paddingHorizontal: px(20),
   },
   inputText: {
-    color: '#0C1A30',
-    fontSize: deviceHeight * 14,
-    marginBottom: deviceHeight * 20,
+    color: colors.fontColor,
+    fontSize: px(14),
+    marginBottom: px(10),
   },
   forgotPassword: {
-    height: deviceHeight * 60,
+    height: px(50),
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
   },
   signin: {
-    height: deviceHeight * 60,
-    marginTop: deviceHeight * 70,
+    height: px(50),
+    marginBottom:px(20),
+    marginTop:px(30),
   },
 });
 
