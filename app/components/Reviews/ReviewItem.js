@@ -19,7 +19,7 @@ const ReviewItem = ({data}) => {
                     <Text style={styles.date}>{getdate(data.date)}</Text>
                 </View>
                 <View style={{marginBottom:px(9)}}>
-                    <Stars filled={data.rating}/>
+                    <Stars key={Math.random()} filled={data.rating}/>
                 </View>
                 <View>
                     <Text style={styles.description}>{data.description}</Text>

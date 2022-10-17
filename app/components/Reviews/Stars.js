@@ -10,12 +10,12 @@ const Stars = ({filled}) => {
   const temparr = [];
   for (let index = 0; index < filled; index++) {
     temparr.push(
-      <Antdesign name="star" size={px(14)} style={styles.star} color={colors.OrangeFresh}></Antdesign>,
+      <Antdesign key={(index+1)*Math.random()} name="star" size={px(14)} style={styles.star} color={colors.OrangeFresh}></Antdesign>,
     );
   }
   for (let index = 0; index < empty; index++) {
     temparr.push(
-      <Antdesign name="staro" size={px(14)} style={styles.star} color={colors.OrangeFresh}></Antdesign>,
+      <Antdesign key={(index+1)*Math.random()} name="staro" size={px(14)} style={styles.star} color={colors.OrangeFresh}></Antdesign>,
     );
   }
 

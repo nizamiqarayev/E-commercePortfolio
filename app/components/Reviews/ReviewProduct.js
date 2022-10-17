@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -26,18 +26,21 @@ const ReviewProduct = () => {
     averageRating = averageRating + item.rating;
   });
   const navigation = useNavigation();
-  navigation.setOptions({
-    headerRight: () => {
-      return (
-        <View style={{flexDirection: 'row',alignItems:'center'}}>
-          <Antdesign name="star" size={px(14)} style={styles.star} color={colors.OrangeFresh}></Antdesign>
-          <Text style={styles.headerRightText}>
-            {(averageRating / count).toFixed(1)}
-          </Text>
-        </View>
-      );
-    },
-  });
+  useEffect(()=>{
+
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <View style={{flexDirection: 'row',alignItems:'center'}}>
+            <Antdesign name="star" size={px(14)} style={styles.star} color={colors.OrangeFresh}></Antdesign>
+            <Text style={styles.headerRightText}>
+              {(averageRating / count).toFixed(1)}
+            </Text>
+          </View>
+        );
+      },
+    });
+  },[])
 
   return (
     <ScrollView>
@@ -54,7 +57,7 @@ const ReviewProduct = () => {
           </View>
           <View style={styles.progressContainer}>
             <View style={styles.progressBarContainer}>
-              <Stars filled={5}></Stars>
+              <Stars key={Math.random()} filled={5}></Stars>
               <Progress.Bar
                 borderWidth={0}
                 color={colors.OrangeFresh}
@@ -63,7 +66,7 @@ const ReviewProduct = () => {
               <Text style={styles.textColor}>{countOfReviews[4]}</Text>
             </View>
             <View style={styles.progressBarContainer}>
-              <Stars filled={4}></Stars>
+              <Stars key={Math.random()} filled={4}></Stars>
               <Progress.Bar
                 borderWidth={0}
                 color={colors.OrangeFresh}
@@ -72,7 +75,7 @@ const ReviewProduct = () => {
               <Text style={styles.textColor}>{countOfReviews[3]}</Text>
             </View>
             <View style={styles.progressBarContainer}>
-              <Stars filled={3}></Stars>
+              <Stars key={Math.random()} filled={3}></Stars>
               <Progress.Bar
                 borderWidth={0}
                 color={colors.OrangeFresh}
@@ -81,7 +84,7 @@ const ReviewProduct = () => {
               <Text style={styles.textColor}>{countOfReviews[2]}</Text>
             </View>
             <View style={styles.progressBarContainer}>
-              <Stars filled={2}></Stars>
+              <Stars key={Math.random()} filled={2}></Stars>
               <Progress.Bar
                 borderWidth={0}
                 color={colors.OrangeFresh}
@@ -90,7 +93,7 @@ const ReviewProduct = () => {
               <Text style={styles.textColor}>{countOfReviews[1]}</Text>
             </View>
             <View style={styles.progressBarContainer}>
-              <Stars filled={1}></Stars>
+              <Stars key={Math.random()} filled={1}></Stars>
               <Progress.Bar
                 borderWidth={0}
                 color={colors.OrangeFresh}
