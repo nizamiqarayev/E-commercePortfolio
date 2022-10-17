@@ -22,13 +22,9 @@ const HomePage = ({route, navigation}) => {
   const focused = useIsFocused();
 
   const [seeAllCategories, setCategoriesModal] = useState(false);
-
   useEffect(() => {
     if (focused) {
-      async function getitem() {
-        let a = await AsyncStorage.getItem('username');
-      }
-      getitem();
+     
     }
   }, [focused]);
   return (

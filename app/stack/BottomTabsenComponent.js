@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 
@@ -12,12 +12,26 @@ import Order from '../components/Order/Order';
 import HomePage from '../components/HomePage/HomePage';
 
 import Login from '../components/Login/Login';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { get } from 'react-native/Libraries/Utilities/PixelRatio';
+
 
 
 
 const BottomTabs = createBottomTabNavigator();
 
 const BottomTabsenComponent = () => {
+  const [isLogin,setIsLogin]=useState(false)
+async function getToken(){
+  const token= await AsyncStorage.getItem('token')
+  if(token!==null){
+    setIsLogin(true)
+  }
+  return token
+}
+useEffect(()=>{
+  
+},[getToken().length])
   return (
     <BottomTabs.Navigator>
     <BottomTabs.Screen
@@ -59,9 +73,16 @@ const BottomTabsenComponent = () => {
           />
         ),
       }}></BottomTabs.Screen>
-    <BottomTabs.Screen
-      name="Login"
-      component={Login}
+      
+      <BottomTabs.Screen
+      name={isLogin?'Account':'Login'}
+      component={isLogin?()=>{}:Login}
+      listeners={{
+        tabPress:(e)=>{
+          if(isLogin===true){e.preventDefault()}
+        },
+        tabLongPress:undefined
+      }}
       options={{
         tabBarIcon: ({focused, color}) => (
           <Ionicons
@@ -72,6 +93,7 @@ const BottomTabsenComponent = () => {
         ),
       }}
     />
+    
     
   </BottomTabs.Navigator>
 );
