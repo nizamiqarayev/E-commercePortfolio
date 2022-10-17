@@ -16,7 +16,6 @@ import ProductCard from '../ProductCard/ProductCard';
 import colors from '../../config/colors';
 import CategoryCarousel from './Categories/CategoryCarousel';
 import AllCategories from './Categories/AllCategories';
-import FilterModal from './Categories/FilterAndSorting/FilterModal';
 
 const HomePage = ({route, navigation}) => {
   const focused = useIsFocused();
@@ -44,7 +43,8 @@ const HomePage = ({route, navigation}) => {
             <Text style={styles.title}>Categories</Text>
             <Pressable
               onPress={() => {
-                setCategoriesModal(true);
+                // setCategoriesModal(true);
+                navigation.navigate("Filter&Sorting")
               }}>
               <Text style={{color: colors.blue}}>See All</Text>
             </Pressable>
@@ -52,10 +52,10 @@ const HomePage = ({route, navigation}) => {
               seeAllCategories={seeAllCategories}
               setSeeAllCategories={setCategoriesModal}
             /> */}
-              <FilterModal
+              {/* <FilterModal
                 seeFilterModal={seeAllCategories}
                 setTheFilterScreen={setCategoriesModal}
-              />
+              /> */}
           </View>
           <CategoryCarousel />
         </View>
