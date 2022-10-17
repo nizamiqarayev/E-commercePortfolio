@@ -13,7 +13,7 @@ import Button from '../../UI/Button';
 import axios from 'axios';
 import LatestNewsListItem from '../LatestNews/LatestNewsListItem';
 import { useIsFocused } from '@react-navigation/native';
-const NewsDetail = ({route}) => {
+const NewsDetail = ({route,navigation}) => {
   const scrollref=useRef()
   const index = route.params.index;
   let randomindex = Math.floor(Math.random() * 7);
@@ -134,7 +134,9 @@ const NewsDetail = ({route}) => {
           {otherDatalength&&<OtherNews/>}
         </View>
         <View style={{flex: 1}}>
-          <Button color={colors.black} borderColor={colors.black}>
+          <Button onPress={()=>{
+            navigation.navigate('allnews')
+          }} color={colors.black} borderColor={colors.black}>
             See all News
           </Button>
         </View>
