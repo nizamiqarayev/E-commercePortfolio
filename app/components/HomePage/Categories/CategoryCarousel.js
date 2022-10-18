@@ -16,7 +16,6 @@ const CategoryCarousel = () => {
     const response = await axios.get('https://izzi-ecom.herokuapp.com/categories/')
     dispatch(setCategoriesArray({categories:response.data}))
   }
-   console.log(categoriesFromStore.content)
   useEffect(() => {
     if (categoriesFromStore.content.length == 0) {
       dataFetcherForCategories()
@@ -31,6 +30,7 @@ const CategoryCarousel = () => {
       renderItem={({item}) => (
         <CategoryItem
           key={item._id}
+          id={item._id}
           image={item.image}
           title={item.name}
           color={item.bgColor}

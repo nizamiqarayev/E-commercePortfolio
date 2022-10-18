@@ -44,7 +44,7 @@ const HomePage = ({route, navigation}) => {
             <Pressable
               onPress={() => {
                 // setCategoriesModal(true);
-                navigation.navigate("Filter&Sorting")
+                navigation.navigate("allcategories")
               }}>
               <Text style={{color: colors.blue}}>See All</Text>
             </Pressable>

@@ -21,7 +21,7 @@ const Register = () => {
 
   const [errMsg, setErrMsg] = useState(false);
 
-  const [buttonReady, setButtonReady] = useState('false');
+  const [buttonReady, setButtonReady] = useState(false);
 
   const emailInputHandler = text => {
     if (
@@ -29,7 +29,6 @@ const Register = () => {
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       )
     ) {
-      console.log('verif');
       setErrMsg(false);
       setEmail(text);
       setButtonReady(true)

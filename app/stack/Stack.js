@@ -16,6 +16,7 @@ import BottomTabsenComponent from './BottomTabsenComponent';
 import ReviewProduct from '../components/Reviews/ReviewProduct';
 import FilterTopTabs from './FilterTopTabs';
 import px from '../assets/utility/dimension';
+import CategorySpecificProducts from '../components/CategoriesProducts/CategorySpecificProducts';
 
 const Stack = createNativeStackNavigator();
 
@@ -68,7 +69,14 @@ const StackComponent = () => {
         }}
       />
 
-      <Stack.Screen name="allcategories" component={AllCategories} />
+      <Stack.Screen name="allcategories" component={AllCategories}   options={{presentation: 'modal',
+          animation: "fade",}} />
+      <Stack.Screen name="categoryproducts" component={CategorySpecificProducts}
+      options={{presentation: 'containedModal',
+      animation:"fade_from_bottom",}}
+      
+      />
+
       <Stack.Group screenOptions={{headerShown:false}}>
         <Stack.Screen name="Filter&Sorting" component={FilterTopTabs}
           options={{
