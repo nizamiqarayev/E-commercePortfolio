@@ -13,7 +13,7 @@ const products = createSlice({
     reducers: {
         setCategorySpecificProducts: (state, action) => {
             console.log(`https://izzi-ecom.herokuapp.com/products/product/${action.payload.id}`);
-            const response = axios.get(`https://izzi-ecom.herokuapp.com/products/product/${action.payload.id}`)
+            const response = axios.get(`https://izzi-ecom.herokuapp.com/products/0`)
             console.log(response);
             // state.content=
         },
