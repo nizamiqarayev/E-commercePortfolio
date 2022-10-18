@@ -8,5 +8,6 @@ export default{
   fontColor:'#0C1A30',
   OrangeFresh:'#FDA429',
   EarthGreen:'#3A9B7A',
+  softGray:'#EDEDED',
 
 };
