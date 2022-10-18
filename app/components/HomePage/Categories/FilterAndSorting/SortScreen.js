@@ -1,10 +1,18 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import Selection from './Selection'
 
 const SortScreen = () => {
   return (
     <View>
-      <Text>SortScreen</Text>
+      <Selection title={"Name (A / Z)"} value={"sad"} />
+      
+      <Selection title={"Name (A / Z)"} value={"sad"} />
+
+      <Selection title={"Name (A / Z)"} value={"sad"} />
+
+      <Selection title={"Name (A / Z)"} value={"sad"} />
+
     </View>
   )
 }

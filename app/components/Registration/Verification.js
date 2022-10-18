@@ -20,13 +20,13 @@ const dimension = Dimensions.get('screen').height / 830;
 let inputData = ['', '', '', ''];
 
 const Verification = ({route}) => {
-  console.log(route.params.email);
+  // console.log(route.params.email);
   const [enteredOtp, setEnteredOtp] = useState('');
   const [val, setVal] = useState(route.params.otp);
-  console.log('====================================');
-  console.log(val);
-  console.log('====================================');
-  console.log(val);
+  // console.log('====================================');
+  // console.log(val);
+  // console.log('====================================');
+  // console.log(val);
   const [otparr, setOtpArr] = useState([]);
 
   const [otpReadyforTest, setotpReadyforTest] = useState('false');
@@ -59,7 +59,7 @@ const Verification = ({route}) => {
 
   const dataVerifier = () => {
     let tempBool = false;
-    console.log(inputData);
+    // console.log(inputData);
     inputData.forEach(element => {
       if (element != '') {
         tempBool = true;
@@ -76,18 +76,18 @@ const Verification = ({route}) => {
         route.params.confirmType,
         {email: `${route.params.email}`},
       );
-      console.log(value.data.code);
+      // console.log(value.data.code);
 
       setVal(value.data.code);
       setResendAvailable(false);
       // setTimer(5*60)
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
   useEffect(() => {
-    console.log({email: route.params.email});
+    // console.log({email: route.params.email});
 
     inputData = ['', '', '', ''];
 
@@ -120,11 +120,11 @@ const Verification = ({route}) => {
     inputData.forEach(element => {
       inputValue += element;
     });
-    console.log('input', inputValue);
-    console.log('val', val);
-    console.log(inputValue == val);
+    // console.log('input', inputValue);
+    // console.log('val', val);
+    // console.log(inputValue == val);
     if (inputValue == val) {
-      console.log('input', inputValue);
+      // console.log('input', inputValue);
       return true;
     } else {
       return false;
@@ -242,7 +242,7 @@ const Verification = ({route}) => {
                             email: route.params.email,
                           });
                         } else {
-                          console.log('dsds');
+                          // console.log('dsds');
                         }
                       }
                     : () => {}

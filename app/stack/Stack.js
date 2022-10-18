@@ -11,24 +11,27 @@ import NewsDetail from '../components/HomePage/NewsDetail/NewsDetail';
 
 import AllNews from '../components/AllNews/AllNews';
 import AllCategories from '../components/HomePage/Categories/AllCategories';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BottomTabsenComponent from './BottomTabsenComponent';
 import ReviewProduct from '../components/Reviews/ReviewProduct';
-
-
+import FilterTopTabs from './FilterTopTabs';
+import px from '../assets/utility/dimension';
+import CategorySpecificProducts from '../components/CategoriesProducts/CategorySpecificProducts';
 
 const Stack = createNativeStackNavigator();
 
 const StackComponent = () => {
   return (
     <Stack.Navigator
-      screenOptions={{
-        contentStyle: {backgroundColor: 'white'},
-      }}>
+      // screenOptions={{
+      //   contentStyle: {backgroundColor: 'white'},
+      // }}
+    >
       <Stack.Screen
         name="main"
         options={{
           headerShown: false,
+          contentStyle: {backgroundColor: 'white'},
         }}
         component={BottomTabsenComponent}
       />
@@ -36,6 +39,7 @@ const StackComponent = () => {
       <Stack.Group
         screenOptions={{
           headerTitle: '',
+          contentStyle: {backgroundColor: 'white'},
         }}>
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen
@@ -65,7 +69,23 @@ const StackComponent = () => {
         }}
       />
 
-      <Stack.Screen name="allcategories" component={AllCategories} />
+      <Stack.Screen name="allcategories" component={AllCategories}   options={{presentation: 'modal',
+          animation: "fade",}} />
+      <Stack.Screen name="categoryproducts" component={CategorySpecificProducts}
+      options={{presentation: 'containedModal',
+      animation:"fade_from_bottom",}}
+      
+      />
+
+      <Stack.Group screenOptions={{headerShown:false}}>
+        <Stack.Screen name="Filter&Sorting" component={FilterTopTabs}
+          options={{
+          presentation: 'transparentModal',
+          animation: "fade",
+          // contentStyle: { paddingHorizontal: px(30) },
+          
+       }} />
+      </Stack.Group>
     </Stack.Navigator>
   );
 };
