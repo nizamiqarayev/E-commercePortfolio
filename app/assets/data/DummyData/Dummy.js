@@ -15,7 +15,7 @@ export default DUMMY = [
     coverPhoto:
       'https://res.cloudinary.com/dtokoknba/image/upload/v1648456244/service-photos/cl1agaa8s00020mxs51nta5fa.webp',
       date: '2022-10-27T20:00:00.000Z',
-      rating:2,
+      rating:0,
   },
   {
     id: 3,
@@ -62,5 +62,41 @@ export default DUMMY = [
       'https://res.cloudinary.com/dtokoknba/image/upload/v1645188023/service-photos/ckzsegyqq000c0mt98r33gvv1.jpg',
       date: '2022-08-27T20:00:00.000Z',
       rating:4,
+  },
+  {
+    id: 8,
+    title: 'Thor Odinson',
+    description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
+    coverPhoto:
+      'https://res.cloudinary.com/dtokoknba/image/upload/v1645188023/service-photos/ckzsegyqq000c0mt98r33gvv1.jpg',
+      date: '2022-08-27T20:00:00.000Z',
+      rating:5,
+  },
+  {
+    id: 9,
+    title: 'Steve Rogers',
+    description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
+    coverPhoto:
+      'https://res.cloudinary.com/dtokoknba/image/upload/v1645188023/service-photos/ckzsegyqq000c0mt98r33gvv1.jpg',
+      date: '2022-08-27T20:00:00.000Z',
+      rating:5,
+  },
+  {
+    id: 10,
+    title: 'Tom Marvolo Riddle',
+    description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
+    coverPhoto:
+      'https://res.cloudinary.com/dtokoknba/image/upload/v1645188023/service-photos/ckzsegyqq000c0mt98r33gvv1.jpg',
+      date: '2022-08-27T20:00:00.000Z',
+      rating:5,
+  },
+  {
+    id: 11,
+    title: 'Albus Pervical Wulfric Brian Dumbledor',
+    description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
+    coverPhoto:
+      'https://res.cloudinary.com/dtokoknba/image/upload/v1645188023/service-photos/ckzsegyqq000c0mt98r33gvv1.jpg',
+      date: '2022-08-27T20:00:00.000Z',
+      rating:5,
   },
 ];

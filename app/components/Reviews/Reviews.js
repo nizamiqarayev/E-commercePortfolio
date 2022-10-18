@@ -6,6 +6,7 @@ import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
 import Button from '../UI/Button';
 import ReviewItem from './ReviewItem';
+import Antdesign from 'react-native-vector-icons/AntDesign'
 
 
 const Reviews = () => {
@@ -17,15 +18,13 @@ const Reviews = () => {
           <Text style={styles.textColor}>Reviews (85)</Text>
         </View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Image
-            style={styles.star}
-            source={require('../../assets/data/ProductCartDummy/Vector.jpg')}
-          />
+        <Antdesign name="star" size={px(14)} style={styles.star} color={colors.OrangeFresh}></Antdesign>
           <Text style={[styles.textColor, {marginLeft: px(3)}]}>4.6</Text>
         </View>
       </View>
       <FlatList
         data={Dummy.slice(0, 3)}
+        key={(item)=>item.id}
         renderItem={({item}) => {
           return <ReviewItem data={item} />;
         }}></FlatList>
