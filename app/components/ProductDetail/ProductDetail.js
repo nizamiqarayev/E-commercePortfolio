@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, ScrollView, Text, Image} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Text,
+  Image,
+  ActivityIndicator,
+} from 'react-native';
 import px from '../../assets/utility/dimension';
 import Antdesign from 'react-native-vector-icons/AntDesign';
 import colors from '../../config/colors';
@@ -13,116 +20,140 @@ import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 const ProductDetail = ({id}) => {
   const [data, setData] = useState({});
   const [store, setStore] = useState({});
+  const [loading, setLoading]=useState(false);
 
   async function getData() {
-    const response = await base
+    try {
+        const response = await base
       .api()
       .get('/products/product/634e7c7036c97d5ab89eb226');
 
     setData(response.data);
     setStore(response.data.store);
+    setLoading(true);
+    } catch (error) {
+        setLoading(false)
+    }
+    
   }
 
   useEffect(() => {
     getData();
   }, []);
 
-  console.log(data.coverPhoto);
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.imageContainer}>
-        <Image style={styles.image} source={{uri: data.coverPhoto}}></Image>
-      </View>
-      <View style={styles.informationContainer}>
-        <Text style={styles.title}>{data.name}</Text>
-        <Text style={styles.price}>{data.price} $ </Text>
-        <View style={styles.reviewParentContainer}>
-          <View style={styles.reviewContainer}>
-            <>
-              <Antdesign
-                name="star"
-                size={px(14)}
-                style={styles.star}
-                color={colors.OrangeFresh}></Antdesign>
-              <Text style={styles.reviewAverage}>4.6</Text>
-            </>
-            <Text style={styles.simpleText}>{data.reviewsCount} Reviews</Text>
+    <>
+      {loading ? (
+        <ScrollView style={styles.container}>
+          <View style={styles.imageContainer}>
+            <Image style={styles.image} source={{uri: data.coverPhoto}}></Image>
           </View>
-          <View style={styles.stock}>
-            <Text style={styles.stockText}>Available: {data.stockCount}</Text>
-          </View>
-        </View>
-      </View>
-      <View style={styles.storeContainer}>
-        <View>
-          <Image style={styles.storePhoto} source={{uri: store.photo}}></Image>
-        </View>
-        <View style={styles.storeDescription}>
-          <Text style={styles.storename}>{store.name}</Text>
-          <View style={styles.isOfficial}>
-            {store.isOfficial ? (
-              <>
-                <Text style={styles.simpleText}>Official Store</Text>
-                <Octicons
-                  name="shield-check"
-                  size={px(24)}
-                  color={colors.blue}></Octicons>
-              </>
-            ) : (
-              <>
-                <Text style={styles.simpleText}>Non-official Store</Text>
-                <Octicons
-                  name="shield-x"
-                  size={px(24)}
-                  color={colors.darkgray}></Octicons>
-              </>
-            )}
-          </View>
-        </View>
-        <View>
-          <Octicons
-            name="chevron-right"
-            size={px(24)}
-            color={colors.darkgray}></Octicons>
-        </View>
-      </View>
-      <View style={styles.ProductDescription}>
-        <Text style={styles.ProductDescriptionTitle}>Description Product</Text>
-        <Text style={styles.ProductDescriptionText}>{data.description}</Text>
-      </View>
-      <View>
-        <Reviews></Reviews>
-      </View>
-      <View style={styles.FeatureProductsContainer}>
-        <View style={styles.FeatureProductsTitleContainer}>
-          <Text style={styles.FeatureProductsText}>Featured Product</Text>
-          <Pressable>
-            <Text style={styles.SeeAllProducts}>See all</Text>
-          </Pressable>
-        </View>
-        <View style={styles.FeatureProducts}>
-          <ProductCard></ProductCard>
-          <ProductCard></ProductCard>
-        </View>
-      </View>
-      <View style={styles.ButtonContainer}>
-        <View style={styles.AddedButton}>
-          <Button backgroundColor={colors.errorRed}>
-            <View style={styles.AddedButtonContainer}>
-              <Text>Added</Text>
-              <Octicons
-                name="heart-fill"
-                color={colors.white}
-                size={px(16)}></Octicons>
+          <View style={styles.informationContainer}>
+            <Text style={styles.title}>{data.name}</Text>
+            <Text style={styles.price}>{data.price} $ </Text>
+            <View style={styles.reviewParentContainer}>
+              <View style={styles.reviewContainer}>
+                <>
+                  <Antdesign
+                    name="star"
+                    size={px(14)}
+                    style={styles.star}
+                    color={colors.OrangeFresh}></Antdesign>
+                  <Text style={styles.reviewAverage}>4.6</Text>
+                </>
+                <Text style={styles.simpleText}>
+                  {data.reviewsCount} Reviews
+                </Text>
+              </View>
+              <View style={styles.stock}>
+                <Text style={styles.stockText}>
+                  Available: {data.stockCount}
+                </Text>
+              </View>
             </View>
-          </Button>
+          </View>
+          <View style={styles.storeContainer}>
+            <View>
+              <Image
+                style={styles.storePhoto}
+                source={{uri: store.photo}}></Image>
+            </View>
+            <View style={styles.storeDescription}>
+              <Text style={styles.storename}>{store.name}</Text>
+              <View style={styles.isOfficial}>
+                {store.isOfficial ? (
+                  <>
+                    <Text style={styles.simpleText}>Official Store</Text>
+                    <Octicons
+                      name="shield-check"
+                      size={px(24)}
+                      color={colors.blue}></Octicons>
+                  </>
+                ) : (
+                  <>
+                    <Text style={styles.simpleText}>Non-official Store</Text>
+                    <Octicons
+                      name="shield-x"
+                      size={px(24)}
+                      color={colors.darkgray}></Octicons>
+                  </>
+                )}
+              </View>
+            </View>
+            <View>
+              <Octicons
+                name="chevron-right"
+                size={px(24)}
+                color={colors.darkgray}></Octicons>
+            </View>
+          </View>
+          <View style={styles.ProductDescription}>
+            <Text style={styles.ProductDescriptionTitle}>
+              Description Product
+            </Text>
+            <Text style={styles.ProductDescriptionText}>
+              {data.description}
+            </Text>
+          </View>
+          <View>
+            <Reviews></Reviews>
+          </View>
+          <View style={styles.FeatureProductsContainer}>
+            <View style={styles.FeatureProductsTitleContainer}>
+              <Text style={styles.FeatureProductsText}>Featured Product</Text>
+              <Pressable>
+                <Text style={styles.SeeAllProducts}>See all</Text>
+              </Pressable>
+            </View>
+            <View style={styles.FeatureProducts}>
+              <ProductCard></ProductCard>
+              <ProductCard></ProductCard>
+            </View>
+          </View>
+          <View style={styles.ButtonContainer}>
+            <View style={styles.AddedButton}>
+              <Button backgroundColor={colors.errorRed}>
+                <View style={styles.AddedButtonContainer}>
+                  <Text>Added</Text>
+                  <Octicons
+                    name="heart-fill"
+                    color={colors.white}
+                    size={px(16)}></Octicons>
+                </View>
+              </Button>
+            </View>
+            <View style={styles.AddToCartButton}>
+              <Button backgroundColor={colors.blue}>Add to cart</Button>
+            </View>
+          </View>
+        </ScrollView>
+      ) : (
+        <View style={styles.loading}>
+          <ActivityIndicator size={'large'}></ActivityIndicator>
         </View>
-        <View style={styles.AddToCartButton}>
-          <Button backgroundColor={colors.blue}>Add to cart</Button>
-        </View>
-      </View>
-    </ScrollView>
+      )}
+    </>
   );
 };
 
@@ -130,6 +161,10 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: px(25),
     flex: 1,
+  },
+  loading:{
+    flex: 1,
+    justifyContent:'center'
   },
   imageContainer: {
     alignItems: 'center',

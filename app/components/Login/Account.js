@@ -31,7 +31,6 @@ const Account = ({navigation}) => {
 
     async function logOut(){
         await AsyncStorage.clear()
-        console.log(base.token);
         base.token=''
         Home()
     }
