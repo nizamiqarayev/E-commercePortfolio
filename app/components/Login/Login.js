@@ -14,7 +14,8 @@ import IconButton from '../UI/IconButton';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import px from '../../assets/utility/dimension';
 import axios from 'axios';
-import colors from '../../config/colors';;
+import colors from '../../config/colors';import base from '../../helpers/base';
+;
 
 const Login = ({navigation}) => {
   const [keyboard,setkeyboard]=useState()
@@ -74,6 +75,7 @@ const Login = ({navigation}) => {
       await AsyncStorage.setItem('username', response.data.username);
       await AsyncStorage.setItem('token', response.data.token);
       await AsyncStorage.setItem('_id', response.data._id);
+      base.token=response.data.token;
       Home();
     } catch (error) {
       setError(true);
