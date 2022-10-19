@@ -19,7 +19,6 @@ const FilterTopTabs = () => {
       <Pressable
         android_ripple={'#fff'}
         onPress={() => {
-          console.log("Amogus");
           navigator.goBack()
         }}
         style={{flex: 1, backgroundColor: 'rgba(101, 96, 96,0.1)'}}

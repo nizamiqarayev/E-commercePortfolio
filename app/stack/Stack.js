@@ -17,15 +17,16 @@ import ReviewProduct from '../components/Reviews/ReviewProduct';
 import FilterTopTabs from './FilterTopTabs';
 import px from '../assets/utility/dimension';
 import CategorySpecificProducts from '../components/CategoriesProducts/CategorySpecificProducts';
+import AddToCart from '../components/AddToCart/AddToCart';
 
 const Stack = createNativeStackNavigator();
 
 const StackComponent = () => {
   return (
     <Stack.Navigator
-      // screenOptions={{
-      //   contentStyle: {backgroundColor: 'white'},
-      // }}
+    // screenOptions={{
+    //   contentStyle: {backgroundColor: 'white'},
+    // }}
     >
       <Stack.Screen
         name="main"
@@ -69,22 +70,40 @@ const StackComponent = () => {
         }}
       />
 
-      <Stack.Screen name="allcategories" component={AllCategories}   options={{presentation: 'modal',
-          animation: "fade",}} />
-      <Stack.Screen name="categoryproducts" component={CategorySpecificProducts}
-      options={{presentation: 'containedModal',
-      animation:"fade_from_bottom",}}
-      
+      <Stack.Screen
+        name="allcategories"
+        component={AllCategories}
+        options={{presentation: 'modal', animation: 'fade'}}
       />
 
-      <Stack.Group screenOptions={{headerShown:false}}>
-        <Stack.Screen name="Filter&Sorting" component={FilterTopTabs}
+      <Stack.Screen
+        name="categoryproducts"
+        component={CategorySpecificProducts}
+        options={{
+          presentation: 'containedModal',
+          animation: 'fade_from_bottom',
+          title: "Catalog",
+          headerTitleAlign: "center",
+        
+        }}
+      />
+
+      <Stack.Screen
+        name="addtocart"
+        component={AddToCart}
+        options={{presentation: 'modal', animation: 'fade'}}
+      />
+
+      <Stack.Group screenOptions={{headerShown: false}}>
+        <Stack.Screen
+          name="Filter&Sorting"
+          component={FilterTopTabs}
           options={{
-          presentation: 'transparentModal',
-          animation: "fade",
-          // contentStyle: { paddingHorizontal: px(30) },
-          
-       }} />
+            presentation: 'transparentModal',
+            animation: 'fade',
+            // contentStyle: { paddingHorizontal: px(30) },
+          }}
+        />
       </Stack.Group>
     </Stack.Navigator>
   );

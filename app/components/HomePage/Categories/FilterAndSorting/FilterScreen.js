@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import RnRangeSlider from 'rn-range-slider';
 import Thumb from '../../../UI/Slider/Thumb';
 import Rail from '../../../UI/Slider/Rail';
@@ -7,8 +7,12 @@ import RailSelected from '../../../UI/Slider/RailSelected';
 import Label from '../../../UI/Slider/Label';
 import Notch from '../../../UI/Slider/Notch';
 import Selection from './Selection';
+import { useSelector } from 'react-redux';
 
 const FilterScreen = () => {
+
+
+  const data = useSelector((state) => state.products)
   const [low, setLow] = useState(0)
   const [high,setHigh] =useState(100)
   const renderThumb = useCallback(() => <Thumb />, []);
@@ -20,6 +24,24 @@ const FilterScreen = () => {
     setLow(low);
     setHigh(high);
   }, []);
+
+
+  const filter = () => {
+    const newData = data.categorySpecificProducts.filter((item) => {
+      console.log(item);
+      return item.price >=low && item.price<=high
+    })
+    console.log("newData");
+    console.log(newData);
+  }
+  useEffect(() => {
+    filter()
+  
+   
+  }, [])
+  
+ 
+
   return (
     <View>
       <View>
