@@ -76,7 +76,6 @@ const Login = ({navigation}) => {
       await AsyncStorage.setItem('token', response.data.token);
       await AsyncStorage.setItem('_id', response.data._id);
       base.token=response.data.token;
-      console.log('Base Token',base.token);
       Home();
     } catch (error) {
       setError(true);
