@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Pressable, Text} from 'react-native';
+import px from '../../assets/utility/dimension';
 
 const Button = ({children, backgroundColor, color, onPress, borderColor}) => {
   return (
@@ -10,7 +11,7 @@ const Button = ({children, backgroundColor, color, onPress, borderColor}) => {
           {backgroundColor: backgroundColor, borderColor: borderColor},
           borderColor && {borderWidth: 1},
         ]}>
-        <Text style={{color: color, textAlign: 'center'}}>{children}</Text>
+        <Text style={{color: color, textAlign: 'center',alignItems:'center'}}>{children}</Text>
       </View>
     </Pressable>
   );
@@ -19,9 +20,9 @@ const Button = ({children, backgroundColor, color, onPress, borderColor}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 12,
-    paddingHorizontal: 12,
-    borderRadius: 10,
+    paddingVertical: px(12),
+    paddingHorizontal: px(12),
+    borderRadius: px(12),
     justifyContent: 'center',
     alignItems: 'center',
   },

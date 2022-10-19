@@ -45,7 +45,7 @@ const Reviews = () => {
 const styles = StyleSheet.create({
   container: {
     marginVertical: px(10),
-    marginHorizontal: px(25),
+
   },
   textColor: {
     color: colors.fontColor,
