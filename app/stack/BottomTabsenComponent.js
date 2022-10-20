@@ -13,7 +13,10 @@ import HomePage from '../components/HomePage/HomePage';
 
 import Login from '../components/Login/Login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { get } from 'react-native/Libraries/Utilities/PixelRatio';
+
+import Account from '../components/Login/Account';
+import base from '../helpers/base';
+import { useNavigationState } from '@react-navigation/native';
 
 
 
@@ -22,16 +25,19 @@ const BottomTabs = createBottomTabNavigator();
 
 const BottomTabsenComponent = () => {
   const [isLogin,setIsLogin]=useState(false)
-async function getToken(){
-  const token= await AsyncStorage.getItem('token')
-  if(token!==null){
-    setIsLogin(true)
-  }
-  return token
-}
+  let token
+
 useEffect(()=>{
-  
-},[getToken().length])
+  async function getToken(){
+    token= await AsyncStorage.getItem('token')
+    if(token!==null){
+      setIsLogin(true)
+    }else{
+      setIsLogin(false)
+    }
+  }
+  getToken()
+},[AsyncStorage.getItem('token')])
   return (
     <BottomTabs.Navigator>
     <BottomTabs.Screen
@@ -76,13 +82,8 @@ useEffect(()=>{
       
       <BottomTabs.Screen
       name={isLogin?'Account':'Login'}
-      component={isLogin?()=>{}:Login}
-      listeners={{
-        tabPress:(e)=>{
-          if(isLogin===true){e.preventDefault()}
-        },
-        tabLongPress:undefined
-      }}
+      component={isLogin?Account:Login}
+      
       options={{
         tabBarIcon: ({focused, color}) => (
           <Ionicons

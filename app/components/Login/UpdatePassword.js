@@ -51,9 +51,9 @@ const UpdatePassword = ({navigation, route}) => {
     });
   }
   async function Update() {
-    console.log('entered');
+
     try {
-      console.log('try');
+
       const response = await axios.patch(
         'https://izzi-ecom.herokuapp.com/user/reset',
         {
@@ -70,7 +70,7 @@ const UpdatePassword = ({navigation, route}) => {
 
       Home();
     } catch (error) {
-      console.log(error);
+
     }
   }
   function Home() {
