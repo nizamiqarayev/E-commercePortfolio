@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, Image} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
@@ -11,17 +11,20 @@ const Account = ({navigation}) => {
 
     const[informations,setInformations]=useState({
         name:'',
-        email:''
+        email:'',
+        profilePicture:''
     })
 
    async function getNameEmail(){
 
     let name= await AsyncStorage.getItem('username')
     let email= await AsyncStorage.getItem('email')
+    let profilePicture= await AsyncStorage.getItem('profilePicture')
 
     setInformations({
         name:name,
-        email:email
+        email:email,
+        profilePicture:profilePicture
     })
     return informations
     }
@@ -42,11 +45,11 @@ const Account = ({navigation}) => {
     <View style={styles.container}>
       <View style={styles.AccountContainer}>
         <View style={styles.IconContainer}>
-          <Ionicons name="person-outline" size={72} color={colors.darkgray} />
+          <Image source={{uri:informations.profilePicture,width:px(100),height:px(100)}}></Image>
         </View>
         <View style={styles.textContainer}>
-          <Text style={styles.textStyle}>Username:{informations.name}</Text>
-          <Text style={styles.textStyle}>Email:{informations.email}</Text>
+          <Text style={styles.textStyle}>Username:{informations.name.toLocaleUpperCase()}</Text>
+          <Text style={styles.textStyle}>Email:{'\n'}{informations.email}</Text>
         </View>
       </View>
       <View style={styles.ButtonStyle}>
@@ -66,11 +69,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   IconContainer: {
-    borderWidth: 1,
-    borderColor: colors.darkgray,
-    borderRadius: px(20),
-    padding: px(10),
     backgroundColor: colors.white,
+    elevation:6
   },
   AccountContainer: {
     flexDirection: 'row',
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   },
   ButtonStyle: {
     marginTop:px(20),
-    height:px(40),
+    height:px(55),
   },
   textStyle:{
     fontFamily:'DMSans-Medium',
@@ -90,8 +90,9 @@ const styles = StyleSheet.create({
     color:colors.fontColor,
   },
   textContainer:{
+
     padding:px(15),
-    justifyContent:'space-around'
+    justifyContent:'space-between'
   },
 });
 

@@ -13,7 +13,7 @@ const ResetPassword = ({navigation}) => {
     email: '',
   });
   useEffect(() => {
-    if (inputs.email != '',inputs.email.includes('@',0)) {
+    if ((inputs.email != '', inputs.email.includes('@', 0))) {
       setButtonColor('#3669C9');
     } else {
       setButtonColor('#838589');
@@ -45,23 +45,26 @@ const ResetPassword = ({navigation}) => {
     });
   }
   return (
-    <KeyboardAwareScrollView style={{height: deviceHeight}} bounces={false}>
+    <KeyboardAwareScrollView
+      style={styles.KeyboardAwareScrollView}
+      bounces={false}>
       <View style={styles.container}>
-        <View style={{marginTop: deviceHeight * 150}}>
+        <View style={styles.mainContainer}>
           <View>
             <Text style={styles.welcomeText}>Reset Password</Text>
             <Text style={styles.descriptionText}>
               Enter Email / No. Mobile account to reset your password
             </Text>
           </View>
-          <View style={{marginTop: deviceHeight * 50}}>
-            <View style={{marginBottom: deviceHeight * 30}}>
+          <View style={styles.emailContainer}>
+            <View style={styles.emailInputContainer}>
               <Text style={styles.inputText}>Email/ Phone</Text>
               <TextInput
                 style={[styles.inputContainer, error]}
-                placeholderTextColor={'#C4C5C4'}
+                placeholderTextColor={colors.darkgray}
                 placeholder="Enter your email address/ phone number"
                 onChangeText={getInputs.bind(this, 'email')}
+                autoComplete={'off'}
               />
               {error ? (
                 <Text style={styles.errorText}>Please enter valid email</Text>
@@ -88,11 +91,22 @@ const screenheight = Dimensions.get('screen').height;
 const windowheight = Dimensions.get('window').height;
 const deviceHeight = screenheight / 1063;
 const styles = StyleSheet.create({
+  KeyboardAwareScrollView: {
+    flex: 1,
+  },
+  emailContainer: {
+    marginTop: px(50),
+  },
+  emailInputContainer:{
+    marginBottom: px(30)
+  },
   container: {
     flex: 1,
-    height: screenheight - deviceHeight * 160,
-    marginHorizontal: 25,
+    marginHorizontal: px(25),
     justifyContent: 'space-between',
+  },
+  mainContainer: {
+    marginTop: px(150)
   },
   errorText: {
     color: colors.errorRed,

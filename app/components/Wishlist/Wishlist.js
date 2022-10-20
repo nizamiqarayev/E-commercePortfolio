@@ -7,7 +7,7 @@ const Wishlist = () => {
     
     return (
         <View style={styles.container}>
-            <Reviews></Reviews>
+            
         </View>
     )
 };

@@ -6245,6 +6245,11 @@
     "react-freeze" "^1.0.0"
     "warn-once" "^0.1.0"
 
+"react-native-share@^7.9.1":
+  "integrity" "sha512-v4b6lD4YsiCJB14kjXons+d5cvvxgLv8OdBF0aP58X8Qqbcj81QNv1icAxiNmhxFx5OFYsu/E6v+o8S0GSaneQ=="
+  "resolved" "https://registry.npmjs.org/react-native-share/-/react-native-share-7.9.1.tgz"
+  "version" "7.9.1"
+
 "react-native-svg@*":
   "integrity" "sha512-Xr6+sTt8ioCRypCbIDMgfmc4l2s/7H8l7FfPoMZ8qMf0dVx8ZVCHRsQlrdmwgVKLJwKSAiwj7Tqqz8NPSEpwDw=="
   "resolved" "https://registry.npmjs.org/react-native-svg/-/react-native-svg-13.3.0.tgz"

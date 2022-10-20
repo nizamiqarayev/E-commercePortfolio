@@ -17,6 +17,7 @@ import ReviewProduct from '../components/Reviews/ReviewProduct';
 import FilterTopTabs from './FilterTopTabs';
 import px from '../assets/utility/dimension';
 import CategorySpecificProducts from '../components/CategoriesProducts/CategorySpecificProducts';
+import ProductDetail from '../components/ProductDetail/ProductDetail';
 
 const Stack = createNativeStackNavigator();
 
@@ -76,6 +77,7 @@ const StackComponent = () => {
       animation:"fade_from_bottom",}}
       
       />
+      <Stack.Screen name='ProductDetail' component={ProductDetail} ></Stack.Screen>
 
       <Stack.Group screenOptions={{headerShown:false}}>
         <Stack.Screen name="Filter&Sorting" component={FilterTopTabs}
