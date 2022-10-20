@@ -27,6 +27,7 @@ const ProductDetail = ({route}) => {
   const [store, setStore] = useState({});
   const [loading, setLoading] = useState(false);
 
+
   const navigation = useNavigation();
 
   const fun = async () => {
@@ -35,9 +36,7 @@ const ProductDetail = ({route}) => {
       
       const shareResponse = await Share.open({
         title:'Salam',
-        message:`*${data.name}*
-        ${data.description}`,
-        url:data.coverPhoto,
+        message:`${data.coverPhoto}\n\n*${data.name}*\n\n${data.description}\n`,
         failOnCancel:true,
         
       });
