@@ -1,9 +1,10 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 const {Platform, Dimensions} = require('react-native');
 
 class Base {
   constructor() {
-    this.token = '';
+    this.token = AsyncStorage.getItem('token')?AsyncStorage.getItem('token'):'';
     this.isIOS = Platform.OS === 'ios';
     this.isAndroid = Platform.OS === 'android';
     this.screenWidth = Dimensions.get('window').width;

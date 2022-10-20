@@ -25,19 +25,19 @@ const BottomTabs = createBottomTabNavigator();
 
 const BottomTabsenComponent = () => {
   const [isLogin,setIsLogin]=useState(false)
-
+  let token
 
 useEffect(()=>{
   async function getToken(){
-    let token= base.token
-    if(base.token.length!==0){
+    token= await AsyncStorage.getItem('token')
+    if(token!==null){
       setIsLogin(true)
     }else{
       setIsLogin(false)
     }
   }
   getToken()
-},[base.token])
+},[AsyncStorage.getItem('token')])
   return (
     <BottomTabs.Navigator>
     <BottomTabs.Screen

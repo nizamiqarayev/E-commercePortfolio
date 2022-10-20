@@ -9,5 +9,8 @@ export default{
   OrangeFresh:'#FDA429',
   EarthGreen:'#3A9B7A',
   softGray:'#EDEDED',
+  offGray:'#FAFAFA',
+  offGreen:'#EEFAF6',
+  
 
 };

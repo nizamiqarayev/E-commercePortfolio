@@ -37,18 +37,16 @@ const ProfilePassword = ({route}) => {
   }
 
   const submissionHandler = async () => {
-    // console.log(input.password);
-    // console.log(input.confirm);
+
     if (input.password == input.confirm) {
 
       try {
         const response = await axios.post("https://izzi-ecom.herokuapp.com/user/register",
           { username: input.name, email: route.params.email, password: input.password })
-        // console.log(response.data);
+
       }
       catch (error) {
-        // console.log("asdadd");
-        // console.log(error);
+
       }
     
     }

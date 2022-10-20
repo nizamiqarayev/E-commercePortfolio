@@ -88,7 +88,6 @@ const Login = ({navigation}) => {
 
     const keyboardListener=Keyboard.addListener('keyboardDidChangeFrame',(value)=>{
       setkeyboard(value.endCoordinates.height)
-      console.log(value.endCoordinates.height);
     })
   
     // console.log(keyboardListener);
