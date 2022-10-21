@@ -11,7 +11,7 @@ const CategoryItem = ({image,id, title, color}) => {
   // })
   return (
     <View style={styles.container}>
-      <Pressable style={styles.containerPressable} onPress={() => {navigation.navigate("categoryproducts",{id:id})}}>
+      <Pressable style={styles.containerPressable} onPress={() => {navigation.navigate("categoryproducts",{id:id,title:title})}}>
 
       <View style={[styles.backgroundContainer, {backgroundColor: color}]}>
         <Image style={styles.image} source={{uri: image}} />

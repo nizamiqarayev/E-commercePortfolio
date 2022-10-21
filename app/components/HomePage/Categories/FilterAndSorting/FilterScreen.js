@@ -1,5 +1,5 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React, {useCallback, useState} from 'react';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
 import RnRangeSlider from 'rn-range-slider';
 import Thumb from '../../../UI/Slider/Thumb';
 import Rail from '../../../UI/Slider/Rail';
@@ -7,10 +7,17 @@ import RailSelected from '../../../UI/Slider/RailSelected';
 import Label from '../../../UI/Slider/Label';
 import Notch from '../../../UI/Slider/Notch';
 import Selection from './Selection';
+import {useDispatch, useSelector} from 'react-redux';
+import {setFilteredProducts} from '../../../../store/slices/products';
+import px from '../../../../assets/utility/dimension';
+import colors from '../../../../config/colors';
+import Button from '../../../UI/Button';
+import { useNavigation } from '@react-navigation/native';
 
-const FilterScreen = () => {
-  const [low, setLow] = useState(0)
-  const [high,setHigh] =useState(100)
+const FilterScreen = ({navigation}) => {
+  const data = useSelector(state => state.products);
+  const [low, setLow] = useState(0);
+  const [high, setHigh] = useState(100);
   const renderThumb = useCallback(() => <Thumb />, []);
   const renderRail = useCallback(() => <Rail />, []);
   const renderRailSelected = useCallback(() => <RailSelected />, []);
@@ -20,33 +27,100 @@ const FilterScreen = () => {
     setLow(low);
     setHigh(high);
   }, []);
+
+  const dispatch = useDispatch();
+
+  const filter = () => {
+    const newData = data.categorySpecificProducts.filter(item => {
+      return item.price >= low && item.price <= high;
+    });
+    dispatch(
+      setFilteredProducts({
+        filteredProducts: newData,
+      }),
+    );
+  };
+  useEffect(() => {
+    filter();
+  }, [data.categorySpecificProducts]);
   return (
-    <View>
-      <View>
-      <RnRangeSlider
-        style={styles.slider}
-        min={0}
-        max={100}
-        step={1}
-        floatingLabel
-        renderThumb={renderThumb}
-        renderRail={renderRail}
-        renderRailSelected={renderRailSelected}
-        renderLabel={renderLabel}
-        renderNotch={renderNotch}
-        onValueChanged={handleValueChange}
-      />
+    <View style={styles.container}>
+      <View
+        style={{
+          paddingVertical: px(20),
+          borderBottomWidth: 1,
+          borderBottomColor: 'lightgray',
+        }}>
+        <Text>Price Range</Text>
+        <RnRangeSlider
+          style={styles.slider}
+          min={0}
+          max={100}
+          step={1}
+          floatingLabel
+          renderThumb={renderThumb}
+          renderRail={renderRail}
+          renderRailSelected={renderRailSelected}
+          renderLabel={renderLabel}
+          renderNotch={renderNotch}
+          onValueChanged={handleValueChange}
+        />
+
+        <View
+          style={{
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+            marginTop: 10,
+          }}>
+          <Text>0 $</Text>
+          <Text>100 $</Text>
+        </View>
       </View>
-      <Selection title={"Name (A / Z)"} value={"sad"} />
-      <Selection title={"Name (A / Z)"} value={"sad"} />
+      <View style={{height: '70%'}}>
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={true}
+        scrollEnabled={true}>
+          
+          <Selection title={'Category1'} value={'sad'} />
+          <Selection title={'Category1'} value={'sad'} />
 
-      <Selection title={"Name (A / Z)"} value={"sad"} />
+          <Selection title={'Category1'} value={'sad'} />
 
-      <Selection title={"Name (A / Z)"} value={"sad"} />
+          <Selection title={'Category1'} value={'sad'} />
+          <Selection title={'Category1'} value={'sad'} />
+
+          <Selection title={'Category1'} value={'sad'} />
+          <Selection title={'Category1'} value={'sad'} />
+          <Selection title={'Category1'} value={'sad'} />
+          <Selection title={'Category1'} value={'sad'} />
+          <Selection title={'Category1'} value={'sad'} />
+          <Selection title={'Category1'} value={'sad'} />
+          <Selection title={'Category1'} value={'sad'} />
+        </ScrollView>
+        <View style={{flexDirection: 'row'}}>
+          <View style={{height:px(50),flex:1, marginHorizontal:10}}>
+            <Button borderColor={"black"} color={colors.fontColor} onPress={() => {
+              setHigh(100),
+                setLow(0)
+            }} >reset</Button>
+          </View>
+          <View style={{height:px(50),flex:1, marginHorizontal:10}}>
+            <Button onPress={() => {
+              filter(),
+            navigation.goBack()}} borderColor={colors.blue} backgroundColor={colors.blue} color={'white'}>Apply</Button>
+          </View>
+        </View>
+      </View>
     </View>
   );
 };
 
 export default FilterScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: px(25),
+    marginVertical: px(20),
+  },
+});

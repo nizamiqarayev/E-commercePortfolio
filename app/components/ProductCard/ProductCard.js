@@ -4,7 +4,7 @@ import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
 
-const ProductCard = () => {
+const ProductCard = ({name,price}) => {
     const sale=true
   return (
     <View style={styles.container}>
