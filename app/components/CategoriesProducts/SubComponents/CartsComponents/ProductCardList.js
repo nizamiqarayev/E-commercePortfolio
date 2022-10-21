@@ -11,10 +11,7 @@ const ProductCardList = ({products}) => {
         <View style={styles.list}>
         <ProductCard
           key={item._id}
-            id={item._id}
-            name={item.name}
-            price={item.price}
-
+           data={item}
           />
         </View>
       )}
