@@ -7,6 +7,7 @@ import {
   ScrollView,
   Dimensions,
   Keyboard,
+  ActivityIndicator,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Button from '../UI/Button';
@@ -21,6 +22,7 @@ const Login = ({navigation}) => {
   const [iconName, setIconName] = useState('eye-outline');
   const [buttonColor, setButtonColor] = useState(colors.disabledButton);
   const [buttonHandler, setButtonHandler] = useState(false);
+  const [loading,setLoading]=useState(false)
   const [error, setError] = useState();
   const [inputs, setInputs] = useState({
     email: '',
@@ -41,9 +43,11 @@ const Login = ({navigation}) => {
     }
   }, [inputs]);
   function forgotPassword() {
+    setLoading(true)
     navigation.navigate('resetpassword');
   }
   function SignUp() {
+    setLoading(true)
     navigation.navigate('Register');
   }
   function changePasswordVisibility() {
@@ -61,6 +65,8 @@ const Login = ({navigation}) => {
     });
   }
   async function postRequest() {
+    Keyboard.dismiss()
+    setLoading(true)
     try {
       setError(false);
       let response = await axios.post(
@@ -78,6 +84,7 @@ const Login = ({navigation}) => {
       base.token = response.data.token;
       Home();
     } catch (error) {
+      setLoading(false)
       setError(true);
     }
     function Home() {
@@ -98,6 +105,10 @@ const Login = ({navigation}) => {
   }, []);
 
   return (
+    <>
+    {loading?<View style={styles.ActivityIndicator}>
+      <ActivityIndicator size={'large'}></ActivityIndicator>
+    </View>:<></>}
     <KeyboardAwareScrollView
       style={styles.scrollView}
       showsVerticalScrollIndicator={false}
@@ -177,6 +188,7 @@ const Login = ({navigation}) => {
         </View>
       </View>
     </KeyboardAwareScrollView>
+    </>
   );
 };
 const screen = Dimensions.get('window').height;
@@ -184,6 +196,15 @@ const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: colors.white,
   },
+  ActivityIndicator:{
+    position:'absolute',
+     zIndex:1,
+     right:0,
+     width:base.screenWidth,
+     height:base.screenHeight,
+     justifyContent:'center',
+     backgroundColor:colors.offGray,
+     opacity:0.5},
   errorText: {
     color: colors.errorRed,
   },
