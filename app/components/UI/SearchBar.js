@@ -14,7 +14,7 @@ const SearchBar = ({ data }) => {
     const dispatch = useDispatch()
     
     const filter = () => {
-       
+        
             const filteredData = data.filter((item) => {
                 const itemData = item.name
                     ? item.name.toUpperCase()

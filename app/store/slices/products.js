@@ -29,9 +29,14 @@ const products = createSlice({
     reducers: {
         setCategorySpecificProducts: (state, action) => {
             state.categorySpecificProducts = action.payload.products
-            if (state.categorySpecificProducts.length != 0) {
+            if (state.categorySpecificProducts != 0) {
                 state.categorySpecificProductsLoaded=true
             }
+            else {
+                state.categorySpecificProductsLoaded=false
+
+            }
+         
         },
         setFilteredProducts:  (state, action) => {
             state.filteredProducts = action.payload.filteredProducts

@@ -11,7 +11,10 @@ const ProductCardList = ({products}) => {
         <View style={styles.list}>
         <ProductCard
           key={item._id}
-          id={item._id}
+            id={item._id}
+            name={item.name}
+            price={item.price}
+
           />
         </View>
       )}
@@ -24,10 +27,8 @@ export default ProductCardList
 
 const styles = StyleSheet.create({
   container: {
-    height: "75%",
     alignItems: 'center',
     paddingHorizontal: px(10),
-    marginBottom: px(10)
   },
   list: {
     marginHorizontal: px(10),

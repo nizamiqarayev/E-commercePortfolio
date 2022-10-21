@@ -1,5 +1,6 @@
 import React, {memo} from 'react';
 import {View, StyleSheet} from 'react-native';
+import colors from '../../../config/colors';
 
 const THUMB_RADIUS_LOW = 12;
 const THUMB_RADIUS_HIGH = 16;
@@ -13,9 +14,9 @@ const styles = StyleSheet.create({
     width: THUMB_RADIUS_LOW * 2,
     height: THUMB_RADIUS_LOW * 2,
     borderRadius: THUMB_RADIUS_LOW,
-    borderWidth: 2,
-    borderColor: '#7f7f7f',
-    backgroundColor: '#aaaaaa',
+    borderWidth: 5,
+    borderColor: colors.blue,
+    backgroundColor: 'white',
   },
   rootHigh: {
     width: THUMB_RADIUS_HIGH * 2,

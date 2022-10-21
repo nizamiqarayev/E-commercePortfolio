@@ -8,9 +8,23 @@ import Button from '../UI/Button';
 import ReviewItem from './ReviewItem';
 import Antdesign from 'react-native-vector-icons/AntDesign'
 
+const ReviewItems=()=>{
+  const element=[]
+  for (let index = 0; index < 3; index++) {
+    element.push(Math.floor(Math.random()*(Dummy.length-1)));
+  }
+  return(
+    <View>
+      <ReviewItem data={Dummy[element[0]]} key={0}></ReviewItem>
+      <ReviewItem data={Dummy[element[1]]} key={1}></ReviewItem>
+      <ReviewItem data={Dummy[element[2]]} key={2}></ReviewItem>
+    </View>
+  )
+}
 
 const Reviews = () => {
   const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -22,12 +36,7 @@ const Reviews = () => {
           <Text style={[styles.textColor, {marginLeft: px(3)}]}>4.6</Text>
         </View>
       </View>
-      <FlatList
-        data={Dummy.slice(0, 3)}
-        key={(item)=>item.id}
-        renderItem={({item}) => {
-          return <ReviewItem data={item} />;
-        }}></FlatList>
+      <ReviewItems></ReviewItems>
       <View style={{height: px(50), marginTop: px(25)}}>
         <Button
           color={colors.fontColor}

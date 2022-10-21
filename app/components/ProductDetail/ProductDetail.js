@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import px from '../../assets/utility/dimension';
+import Share from 'react-native-share'
 import Antdesign from 'react-native-vector-icons/AntDesign';
 import colors from '../../config/colors';
 import Reviews from '../Reviews/Reviews';
@@ -16,31 +17,70 @@ import Button from '../UI/Button';
 import base from '../../helpers/base';
 import Octicons from 'react-native-vector-icons/Octicons';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
+import AddedButton from '../UI/AddedButton';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
 
-const ProductDetail = ({id}) => {
+const ProductDetail = ({route}) => {
+  const id = route.params?.id?route.params.id:''
   const [data, setData] = useState({});
   const [store, setStore] = useState({});
-  const [loading, setLoading]=useState(false);
+  const [loading, setLoading] = useState(false);
+
+
+  const navigation = useNavigation();
+
+  const fun = async () => {
+    setLoading(false)
+    try {
+      
+      const shareResponse = await Share.open({
+        title:'Salam',
+        message:`${data.coverPhoto}\n\n*${data.name}*\n\n${data.description}\n`,
+        failOnCancel:true,
+        
+      });
+    } catch (error) {
+      setLoading(true)
+    }
+    setLoading(true)
+
+  };
+useEffect(()=>{
+
+  navigation.setOptions({
+    headerRight: () => {
+      return (
+        <View>
+        <AddedButton onPress={fun}>
+          <Ionicons
+            name="md-arrow-redo-outline"
+            size={px(16)}
+            color={colors.black}></Ionicons>
+        </AddedButton>
+        </View>
+      );
+    },
+  });
+},[data])
 
   async function getData() {
     try {
-        const response = await base
-      .api()
-      .get('/products/product/634e7c7036c97d5ab89eb226');
+      const response = await base
+        .api()
+        .get(`/products/product/${id?id:'634e54d30e434937aa55060c'}`);
 
-    setData(response.data);
-    setStore(response.data.store);
-    setLoading(true);
+      setData(response.data);
+      setStore(response.data.store);
+      setLoading(true);
     } catch (error) {
-        setLoading(false)
+      setLoading(false);
     }
-    
   }
 
   useEffect(() => {
     getData();
   }, []);
-
 
   return (
     <>
@@ -133,18 +173,20 @@ const ProductDetail = ({id}) => {
           </View>
           <View style={styles.ButtonContainer}>
             <View style={styles.AddedButton}>
-              <Button backgroundColor={colors.errorRed}>
+              <AddedButton backgroundColor={colors.errorRed}>
                 <View style={styles.AddedButtonContainer}>
-                  <Text>Added</Text>
+                  <Text style={styles.ButtonText}>Added</Text>
                   <Octicons
                     name="heart-fill"
                     color={colors.white}
-                    size={px(16)}></Octicons>
+                    size={px(18)}></Octicons>
                 </View>
-              </Button>
+              </AddedButton>
             </View>
             <View style={styles.AddToCartButton}>
-              <Button backgroundColor={colors.blue}>Add to cart</Button>
+              <Button backgroundColor={colors.blue}>
+                <Text style={styles.ButtonText}>Add to cart</Text>
+              </Button>
             </View>
           </View>
         </ScrollView>
@@ -161,10 +203,11 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: px(25),
     flex: 1,
+    backgroundColor: colors.white,
   },
-  loading:{
+  loading: {
     flex: 1,
-    justifyContent:'center'
+    justifyContent: 'center',
   },
   imageContainer: {
     alignItems: 'center',
@@ -306,6 +349,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  ButtonText: {
+    color: colors.white,
+    fontSize: px(14),
+    fontFamily: 'DMSans-Medium',
   },
 });
 

@@ -14,11 +14,10 @@ import IconButton from '../UI/IconButton';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import px from '../../assets/utility/dimension';
 import axios from 'axios';
-import colors from '../../config/colors';import base from '../../helpers/base';
-;
-
+import colors from '../../config/colors';
+import base from '../../helpers/base';
 const Login = ({navigation}) => {
-  const [keyboard,setkeyboard]=useState()
+  const [keyboard, setkeyboard] = useState();
   const [iconName, setIconName] = useState('eye-outline');
   const [buttonColor, setButtonColor] = useState(colors.disabledButton);
   const [buttonHandler, setButtonHandler] = useState(false);
@@ -75,7 +74,8 @@ const Login = ({navigation}) => {
       await AsyncStorage.setItem('username', response.data.username);
       await AsyncStorage.setItem('token', response.data.token);
       await AsyncStorage.setItem('_id', response.data._id);
-      base.token=response.data.token;
+      await AsyncStorage.setItem('profilePicture', response.data.profilePicture);
+      base.token = response.data.token;
       Home();
     } catch (error) {
       setError(true);
@@ -84,38 +84,38 @@ const Login = ({navigation}) => {
       navigation.navigate('HomePage');
     }
   }
-  useEffect(()=>{
+  useEffect(() => {
+    const keyboardListener = Keyboard.addListener(
+      'keyboardDidChangeFrame',
+      value => {
+        setkeyboard(value.endCoordinates.height);
+      },
+    );
 
-    const keyboardListener=Keyboard.addListener('keyboardDidChangeFrame',(value)=>{
-      setkeyboard(value.endCoordinates.height)
-    })
-  
     // console.log(keyboardListener);
-    
-    return()=>keyboardListener.remove();
-    
-  },[])
+
+    return () => keyboardListener.remove();
+  }, []);
 
   return (
     <KeyboardAwareScrollView
       style={styles.scrollView}
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={keyboard>0?{flexGrow:0}:{flexGrow:1}}
+      contentContainerStyle={keyboard > 0 ? {flexGrow: 0} : {flexGrow: 1}}
       enableOnAndroid={true}
       overScrollMode={'never'}
-      keyboardShouldPersistTaps="always"
-      >
+      keyboardShouldPersistTaps="always">
       <View style={styles.container}>
-        <View style={{marginTop: px(20)}}>
+        <View style={styles.headerStyle}>
           <View>
             <Text style={styles.welcomeText}>Welcome back to Mega Mall</Text>
             <Text style={styles.descriptionText}>
               Please enter data to login
             </Text>
           </View>
-          <View style={{marginTop: px(50)}}>
-            <View style={{marginBottom: px(30)}}>
-              <Text style={styles.inputText}>Email/ Phone</Text>
+          <View style={styles.mainContainer}>
+            <View style={styles.emailContainer}>
+              <Text style={styles.inputText}>Email</Text>
               <TextInput
                 style={[
                   styles.inputContainer,
@@ -128,12 +128,7 @@ const Login = ({navigation}) => {
             </View>
             <View>
               <Text style={styles.inputText}>Password</Text>
-              <View
-                style={{
-                  width: '100%',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
+              <View style={styles.passwordContainer}>
                 <TextInput
                   style={[
                     styles.inputContainer,
@@ -145,7 +140,7 @@ const Login = ({navigation}) => {
                   onChangeText={getInputs.bind(this, 'password')}
                   secureTextEntry={passwordType}
                 />
-                <View style={{position: 'absolute', right: 0}}>
+                <View style={styles.eyeStyle}>
                   <IconButton
                     size={24}
                     color={colors.darkgray}
@@ -156,9 +151,9 @@ const Login = ({navigation}) => {
               </View>
             </View>
           </View>
-          <View style={{marginTop: px(20)}}>
+          <View style={styles.wrongEmail}>
             {error && (
-              <Text style={{color: colors.errorRed}}>
+              <Text style={styles.errorText}>
                 Email or password is incorrect
               </Text>
             )}
@@ -184,17 +179,40 @@ const Login = ({navigation}) => {
     </KeyboardAwareScrollView>
   );
 };
-const screen=Dimensions.get('window').height
+const screen = Dimensions.get('window').height;
 const styles = StyleSheet.create({
-  scrollView: { 
-    backgroundColor:colors.white,
-    
+  scrollView: {
+    backgroundColor: colors.white,
+  },
+  errorText: {
+    color: colors.errorRed,
+  },
+  headerStyle: {
+    marginTop: px(20),
+  },
+  emailContainer: {
+    marginBottom: px(30),
+  },
+  wrongEmail: {
+    marginTop: px(20),
+  },
+  eyeStyle: {
+    position: 'absolute',
+    right: 0,
+  },
+  mainContainer: {
+    marginTop: px(50),
+  },
+  passwordContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   container: {
-    flex:1,
+    flex: 1,
     marginHorizontal: px(25),
     justifyContent: 'space-between',
-    backgroundColor:colors.white
+    backgroundColor: colors.white,
   },
   welcomeText: {
     fontSize: px(25),

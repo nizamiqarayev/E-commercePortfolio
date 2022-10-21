@@ -17,7 +17,11 @@ import ReviewProduct from '../components/Reviews/ReviewProduct';
 import FilterTopTabs from './FilterTopTabs';
 import px from '../assets/utility/dimension';
 import CategorySpecificProducts from '../components/CategoriesProducts/CategorySpecificProducts';
+<<<<<<< HEAD
 import AddToCart from '../components/AddToCart/AddToCart';
+=======
+import ProductDetail from '../components/ProductDetail/ProductDetail';
+>>>>>>> 49755c31aeca3e3a34508557d9e8d68095b3c2eb
 
 const Stack = createNativeStackNavigator();
 
@@ -75,6 +79,7 @@ const StackComponent = () => {
         component={AllCategories}
         options={{presentation: 'modal', animation: 'fade'}}
       />
+      <Stack.Screen name='ProductDetail' component={ProductDetail} ></Stack.Screen>
 
       <Stack.Screen
         name="categoryproducts"

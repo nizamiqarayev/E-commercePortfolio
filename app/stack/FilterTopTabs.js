@@ -63,7 +63,7 @@ const FilterTopTabs = () => {
           sceneContainerStyle={{
             maxHeight: "90%", backgroundColor: 'white',
             borderBottomLeftRadius: 20,
-            borderBottomRightRadius:20
+            borderBottomRightRadius: 20,
           }}>
           <Tab.Screen options={{backgroundColor:'white'}} name="Filter" component={FilterScreen} />
           <Tab.Screen name="Sort" options={{backgroundColor:'white'}} component={SortScreen} />
