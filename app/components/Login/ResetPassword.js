@@ -1,25 +1,35 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Text, TextInput, Dimensions} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  Dimensions,
+  ActivityIndicator,
+} from 'react-native';
 import Button from '../UI/Button';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import axios from 'axios';
 import colors from '../../config/colors';
+import base from '../../helpers/base';
 import px from '../../assets/utility/dimension';
 
 const ResetPassword = ({navigation}) => {
   const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
   const [buttonColor, setButtonColor] = useState('#C4C5C4');
   const [inputs, setInputs] = useState({
     email: '',
   });
   useEffect(() => {
     if ((inputs.email != '', inputs.email.includes('@', 0))) {
-      setButtonColor('#3669C9');
+      setButtonColor(colors.blue);
     } else {
-      setButtonColor('#838589');
+      setButtonColor(colors.darkgray);
     }
   }, [inputs]);
   async function verification() {
+    setLoading(true);
     try {
       const response = await axios.post(
         'https://izzi-ecom.herokuapp.com/user/reset/emailConfirm',
@@ -34,7 +44,9 @@ const ResetPassword = ({navigation}) => {
         confirmType: 'https://izzi-ecom.herokuapp.com/user/reset/emailConfirm',
         path: 'updatepassword',
       });
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       setError({borderWidth: 1, borderColor: colors.errorRed});
     }
   }
@@ -45,45 +57,54 @@ const ResetPassword = ({navigation}) => {
     });
   }
   return (
-    <KeyboardAwareScrollView
-      style={styles.KeyboardAwareScrollView}
-      bounces={false}>
-      <View style={styles.container}>
-        <View style={styles.mainContainer}>
-          <View>
-            <Text style={styles.welcomeText}>Reset Password</Text>
-            <Text style={styles.descriptionText}>
-              Enter Email / No. Mobile account to reset your password
-            </Text>
-          </View>
-          <View style={styles.emailContainer}>
-            <View style={styles.emailInputContainer}>
-              <Text style={styles.inputText}>Email/ Phone</Text>
-              <TextInput
-                style={[styles.inputContainer, error]}
-                placeholderTextColor={colors.darkgray}
-                placeholder="Enter your email address/ phone number"
-                onChangeText={getInputs.bind(this, 'email')}
-                autoComplete={'off'}
-              />
-              {error ? (
-                <Text style={styles.errorText}>Please enter valid email</Text>
-              ) : (
-                <></>
-              )}
+    <>
+      {loading ? (
+        <View style={styles.ActivityIndicator}>
+          <ActivityIndicator size={'large'}></ActivityIndicator>
+        </View>
+      ) : (
+        <></>
+      )}
+      <KeyboardAwareScrollView
+        style={styles.KeyboardAwareScrollView}
+        bounces={false}>
+        <View style={styles.container}>
+          <View style={styles.mainContainer}>
+            <View>
+              <Text style={styles.welcomeText}>Reset Password</Text>
+              <Text style={styles.descriptionText}>
+                Enter Email / No. Mobile account to reset your password
+              </Text>
+            </View>
+            <View style={styles.emailContainer}>
+              <View style={styles.emailInputContainer}>
+                <Text style={styles.inputText}>Email/ Phone</Text>
+                <TextInput
+                  style={[styles.inputContainer, error]}
+                  placeholderTextColor={colors.darkgray}
+                  placeholder="Enter your email address/ phone number"
+                  onChangeText={getInputs.bind(this, 'email')}
+                  autoComplete={'off'}
+                />
+                {error ? (
+                  <Text style={styles.errorText}>Please enter valid email</Text>
+                ) : (
+                  <></>
+                )}
+              </View>
+            </View>
+            <View style={styles.signin}>
+              <Button
+                onPress={verification}
+                color={'white'}
+                backgroundColor={buttonColor}>
+                Reset
+              </Button>
             </View>
           </View>
-          <View style={styles.signin}>
-            <Button
-              onPress={verification}
-              color={'white'}
-              backgroundColor={buttonColor}>
-              Reset
-            </Button>
-          </View>
         </View>
-      </View>
-    </KeyboardAwareScrollView>
+      </KeyboardAwareScrollView>
+    </>
   );
 };
 
@@ -94,11 +115,21 @@ const styles = StyleSheet.create({
   KeyboardAwareScrollView: {
     flex: 1,
   },
+  ActivityIndicator: {
+    position: 'absolute',
+    zIndex: 1,
+    right: 0,
+    width: base.screenWidth,
+    height: base.screenHeight,
+    justifyContent: 'center',
+    backgroundColor: colors.offGray,
+    opacity: 0.5,
+  },
   emailContainer: {
     marginTop: px(50),
   },
-  emailInputContainer:{
-    marginBottom: px(30)
+  emailInputContainer: {
+    marginBottom: px(30),
   },
   container: {
     flex: 1,
@@ -106,7 +137,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   mainContainer: {
-    marginTop: px(150)
+    marginTop: px(150),
   },
   errorText: {
     color: colors.errorRed,

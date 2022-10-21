@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  ScrollView,
   Dimensions,
   Keyboard,
   ActivityIndicator,
@@ -22,7 +21,7 @@ const Login = ({navigation}) => {
   const [iconName, setIconName] = useState('eye-outline');
   const [buttonColor, setButtonColor] = useState(colors.disabledButton);
   const [buttonHandler, setButtonHandler] = useState(false);
-  const [loading,setLoading]=useState(false)
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
   const [inputs, setInputs] = useState({
     email: '',
@@ -43,11 +42,9 @@ const Login = ({navigation}) => {
     }
   }, [inputs]);
   function forgotPassword() {
-    setLoading(true)
     navigation.navigate('resetpassword');
   }
   function SignUp() {
-    setLoading(true)
     navigation.navigate('Register');
   }
   function changePasswordVisibility() {
@@ -65,8 +62,8 @@ const Login = ({navigation}) => {
     });
   }
   async function postRequest() {
-    Keyboard.dismiss()
-    setLoading(true)
+    Keyboard.dismiss();
+    setLoading(true);
     try {
       setError(false);
       let response = await axios.post(
@@ -80,11 +77,14 @@ const Login = ({navigation}) => {
       await AsyncStorage.setItem('username', response.data.username);
       await AsyncStorage.setItem('token', response.data.token);
       await AsyncStorage.setItem('_id', response.data._id);
-      await AsyncStorage.setItem('profilePicture', response.data.profilePicture);
+      await AsyncStorage.setItem(
+        'profilePicture',
+        response.data.profilePicture,
+      );
       base.token = response.data.token;
       Home();
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
       setError(true);
     }
     function Home() {
@@ -106,88 +106,92 @@ const Login = ({navigation}) => {
 
   return (
     <>
-    {loading?<View style={styles.ActivityIndicator}>
-      <ActivityIndicator size={'large'}></ActivityIndicator>
-    </View>:<></>}
-    <KeyboardAwareScrollView
-      style={styles.scrollView}
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={keyboard > 0 ? {flexGrow: 0} : {flexGrow: 1}}
-      enableOnAndroid={true}
-      overScrollMode={'never'}
-      keyboardShouldPersistTaps="always">
-      <View style={styles.container}>
-        <View style={styles.headerStyle}>
-          <View>
-            <Text style={styles.welcomeText}>Welcome back to Mega Mall</Text>
-            <Text style={styles.descriptionText}>
-              Please enter data to login
-            </Text>
-          </View>
-          <View style={styles.mainContainer}>
-            <View style={styles.emailContainer}>
-              <Text style={styles.inputText}>Email</Text>
-              <TextInput
-                style={[
-                  styles.inputContainer,
-                  error && {borderWidth: 1, borderColor: colors.errorRed},
-                ]}
-                placeholderTextColor={colors.darkgray}
-                placeholder="Enter your email address/ phone number"
-                onChangeText={getInputs.bind(this, 'email')}
-              />
-            </View>
+      {loading ? (
+        <View style={styles.ActivityIndicator}>
+          <ActivityIndicator size={'large'}></ActivityIndicator>
+        </View>
+      ) : (
+        <></>
+      )}
+      <KeyboardAwareScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={keyboard > 0 ? {flexGrow: 0} : {flexGrow: 1}}
+        enableOnAndroid={true}
+        overScrollMode={'never'}
+        keyboardShouldPersistTaps="always">
+        <View style={styles.container}>
+          <View style={styles.headerStyle}>
             <View>
-              <Text style={styles.inputText}>Password</Text>
-              <View style={styles.passwordContainer}>
+              <Text style={styles.welcomeText}>Welcome back to Mega Mall</Text>
+              <Text style={styles.descriptionText}>
+                Please enter data to login
+              </Text>
+            </View>
+            <View style={styles.mainContainer}>
+              <View style={styles.emailContainer}>
+                <Text style={styles.inputText}>Email</Text>
                 <TextInput
                   style={[
                     styles.inputContainer,
-                    {flex: 1},
                     error && {borderWidth: 1, borderColor: colors.errorRed},
                   ]}
                   placeholderTextColor={colors.darkgray}
-                  placeholder="Enter your password"
-                  onChangeText={getInputs.bind(this, 'password')}
-                  secureTextEntry={passwordType}
+                  placeholder="Enter your email address/ phone number"
+                  onChangeText={getInputs.bind(this, 'email')}
                 />
-                <View style={styles.eyeStyle}>
-                  <IconButton
-                    size={24}
-                    color={colors.darkgray}
-                    onPress={changePasswordVisibility}
-                    name={iconName}
+              </View>
+              <View>
+                <Text style={styles.inputText}>Password</Text>
+                <View style={styles.passwordContainer}>
+                  <TextInput
+                    style={[
+                      styles.inputContainer,
+                      {flex: 1},
+                      error && {borderWidth: 1, borderColor: colors.errorRed},
+                    ]}
+                    placeholderTextColor={colors.darkgray}
+                    placeholder="Enter your password"
+                    onChangeText={getInputs.bind(this, 'password')}
+                    secureTextEntry={passwordType}
                   />
+                  <View style={styles.eyeStyle}>
+                    <IconButton
+                      size={24}
+                      color={colors.darkgray}
+                      onPress={changePasswordVisibility}
+                      name={iconName}
+                    />
+                  </View>
                 </View>
               </View>
             </View>
+            <View style={styles.wrongEmail}>
+              {error && (
+                <Text style={styles.errorText}>
+                  Email or password is incorrect
+                </Text>
+              )}
+            </View>
+            <View style={styles.signin}>
+              <Button
+                color={'white'}
+                onPress={buttonHandler ? postRequest : () => {}}
+                backgroundColor={buttonColor}>
+                Sign In
+              </Button>
+            </View>
           </View>
-          <View style={styles.wrongEmail}>
-            {error && (
-              <Text style={styles.errorText}>
-                Email or password is incorrect
-              </Text>
-            )}
-          </View>
-          <View style={styles.signin}>
-            <Button
-              color={'white'}
-              onPress={buttonHandler ? postRequest : () => {}}
-              backgroundColor={buttonColor}>
-              Sign In
+          <View style={[styles.forgotPassword]}>
+            <Button color={'black'} onPress={forgotPassword}>
+              Forgot Password
+            </Button>
+            <Button onPress={SignUp} color={colors.blue}>
+              Sign Up
             </Button>
           </View>
         </View>
-        <View style={[styles.forgotPassword]}>
-          <Button color={'black'} onPress={forgotPassword}>
-            Forgot Password
-          </Button>
-          <Button onPress={SignUp} color={colors.blue}>
-            Sign Up
-          </Button>
-        </View>
-      </View>
-    </KeyboardAwareScrollView>
+      </KeyboardAwareScrollView>
     </>
   );
 };
@@ -196,15 +200,16 @@ const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: colors.white,
   },
-  ActivityIndicator:{
-    position:'absolute',
-     zIndex:1,
-     right:0,
-     width:base.screenWidth,
-     height:base.screenHeight,
-     justifyContent:'center',
-     backgroundColor:colors.offGray,
-     opacity:0.5},
+  ActivityIndicator: {
+    position: 'absolute',
+    zIndex: 1,
+    right: 0,
+    width: base.screenWidth,
+    height: base.screenHeight,
+    justifyContent: 'center',
+    backgroundColor: colors.offGray,
+    opacity: 0.5,
+  },
   errorText: {
     color: colors.errorRed,
   },
