@@ -4,6 +4,7 @@ import CategoryItem from './CategoryItem';
 import {useSelector} from 'react-redux';
 import px from '../../../assets/utility/dimension';
 import IconButton from '../../UI/IconButton';
+import colors from '../../../config/colors';
 
 const AllCategories = ({onPress, navigation}) => {
   const categoriesFromStore = useSelector(state => state.categories);
@@ -11,17 +12,10 @@ const AllCategories = ({onPress, navigation}) => {
   const renderItems = ({item, index}) => {};
 
   return (
-    <Modal visible={true} animationType="slide">
+    <View style={styles.parent}>
       <View style={styles.container}>
-        <Text
-          style={{
-            textAlign: 'center',
-            fontWeight: '700',
-            fontSize: 28,
-            marginRight: 20,
-          }}>
-          All Categories
-        </Text>
+        
+       
         <View
           style={{
             flexDirection: 'row',
@@ -35,9 +29,20 @@ const AllCategories = ({onPress, navigation}) => {
             color={'black'}
             onPress={() => navigation.goBack()}
           />
+           <Text
+          style={{
+            textAlign: 'center',
+            fontWeight: '700',
+            fontSize: 28,
+              marginRight: 20,
+              color: colors.fontColor
+          }}>
+          All Categories
+        </Text>
         </View>
         <View style={styles.allNewsContainer}>
           <FlatList
+            style={styles.flatlist}
             data={categoriesFromStore.content}
             renderItem={({ item }) => {
               return (
@@ -50,8 +55,9 @@ const AllCategories = ({onPress, navigation}) => {
                 />
               );
             }}
+            numColumns={3}
             
-            numColumns={4}
+            
           />
           {/* {categoriesFromStore.content.map(item => (
             <CategoryItem
@@ -62,22 +68,34 @@ const AllCategories = ({onPress, navigation}) => {
             />
           ))} */}
         </View>
+        </View>
       </View>
-    </Modal>
   );
 };
 
 export default AllCategories;
 
 const styles = StyleSheet.create({
+  parent: {
+    flex:1,
+    marginTop: '20%',
+    marginBottom:'40%',
+   marginHorizontal:px(20)
+  },
   container: {
-    flex: 1,
-    marginTop: 30,
     justifyContent: 'flex-start',
     alignItems: 'center',
+    backgroundColor: colors.offGray,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#644F98",
+    padding:px(5)
   },
   allNewsContainer: {
     marginTop: 10,
+
  
   },
+  flatlist: {
+  }
 });

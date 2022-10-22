@@ -83,20 +83,20 @@ const FilterScreen = ({navigation}) => {
         scrollEnabled={true}>
           
           <Selection title={'Category1'} value={'sad'} />
-          <Selection title={'Category1'} value={'sad'} />
+          <Selection title={'Category2'} value={'sad'} />
 
-          <Selection title={'Category1'} value={'sad'} />
+          <Selection title={'Category3'} value={'sad'} />
 
-          <Selection title={'Category1'} value={'sad'} />
-          <Selection title={'Category1'} value={'sad'} />
+          <Selection title={'Category4'} value={'sad'} />
+          <Selection title={'Category5'} value={'sad'} />
 
-          <Selection title={'Category1'} value={'sad'} />
-          <Selection title={'Category1'} value={'sad'} />
-          <Selection title={'Category1'} value={'sad'} />
-          <Selection title={'Category1'} value={'sad'} />
-          <Selection title={'Category1'} value={'sad'} />
-          <Selection title={'Category1'} value={'sad'} />
-          <Selection title={'Category1'} value={'sad'} />
+          <Selection title={'Category6'} value={'sad'} />
+          <Selection title={'Category7'} value={'sad'} />
+          <Selection title={'Category8'} value={'sad'} />
+          <Selection title={'Category9'} value={'sad'} />
+          <Selection title={'Category10'} value={'sad'} />
+          <Selection title={'Category11'} value={'sad'} />
+          <Selection title={'Category12'} value={'sad'} />
         </ScrollView>
         <View style={{flexDirection: 'row'}}>
           <View style={{height:px(50),flex:1, marginHorizontal:10}}>

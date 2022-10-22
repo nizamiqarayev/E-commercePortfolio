@@ -40,15 +40,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: px(24),
-    height: px(24),
+    width: px(35),
+    height: px(35),
   },
   backgroundContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    width: px(48),
-    height: px(48),
+    width: px(80),
+    height: px(72),
   },
   text: {
     fontFamily: 'DMSans-regular',

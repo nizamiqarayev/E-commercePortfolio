@@ -14,7 +14,7 @@ import IconButton from '../UI/IconButton';
 import Button from '../UI/Button';
 import colors from '../../config/colors';
 import {useIsFocused} from '@react-navigation/native';
-import { Sorting } from '../../assets/utility/Sorting';
+import {Sorting} from '../../assets/utility/Sorting';
 const CategorySpecificProducts = ({route, navigation}) => {
   const dispatch = useDispatch();
 
@@ -63,12 +63,10 @@ const CategorySpecificProducts = ({route, navigation}) => {
   };
 
   useEffect(() => {
-    if(productsAllData.productsForDisplay.length!==0)
-    Sorting(productsAllData.productsForDisplay,"A-Z","price-L-H")
-
-  },[productsAllData.productsForDisplay])
-
-  
+    if (productsAllData.productsForDisplay.length !== 0) {
+      Sorting(productsAllData.productsForDisplay, 'A-Z', 'price-L-H');
+    }
+  }, [productsAllData.productsForDisplay]);
 
   return (
     <View style={styles.container}>
@@ -86,14 +84,15 @@ const CategorySpecificProducts = ({route, navigation}) => {
           {productsAllData.categorySpecificProducts.length == 0 ? (
             <></>
           ) : (
-            
-              <SearchBar data={productsAllData.filteredProducts} />
-              
-           
+            <SearchBar data={productsAllData.filteredProducts} />
           )}
-          {  productsAllData.categorySpecificProducts.length == 0 ? <></> :<View style={styles.searchIcon}>
-                <IconButton name={'search'} size={20} />
-              </View>}
+          {productsAllData.categorySpecificProducts.length == 0 ? (
+            <></>
+          ) : (
+            <View style={styles.searchIcon}>
+              <IconButton name={'search'} size={px(20)} color={colors.black} />
+            </View>
+          )}
         </View>
       </View>
       <View style={{height: '70%', paddingBottom: px(10)}}>
@@ -127,11 +126,16 @@ const styles = StyleSheet.create({
     marginVertical: px(10),
   },
   searchBarContainer: {
-    height: px(50),
+    height: px(45),
   },
   searchIcon: {
     position: 'absolute',
+    top: 0,
+    left: 0,
     right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
   },
   buttonContainer: {
     height: px(60),

@@ -72,18 +72,13 @@ const StackComponent = () => {
         }}
       />
 
-      <Stack.Screen
-        name="allcategories"
-        component={AllCategories}
-        options={{presentation: 'modal', animation: 'fade'}}
-      />
+     
       <Stack.Screen name='ProductDetail' component={ProductDetail} ></Stack.Screen>
 
       <Stack.Screen
         name="categoryproducts"
         component={CategorySpecificProducts}
         options={{
-          presentation: 'containedModal',
           animation: 'fade_from_bottom',
           title: "Catalog",
           headerTitleAlign: "center",
@@ -97,7 +92,12 @@ const StackComponent = () => {
         options={{presentation: 'modal', animation: 'fade'}}
       />
 
-      <Stack.Group screenOptions={{headerShown: false}}>
+      <Stack.Group screenOptions={{ headerShown: false }}>
+      <Stack.Screen
+        name="allcategories"
+        component={AllCategories}
+        options={{presentation: 'transparentModal', animation: 'fade'}}
+      />
         <Stack.Screen
           name="Filter&Sorting"
           component={FilterTopTabs}

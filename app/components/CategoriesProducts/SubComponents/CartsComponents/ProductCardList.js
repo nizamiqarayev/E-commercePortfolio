@@ -2,6 +2,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import ProductCard from '../../../ProductCard/ProductCard'
 import px from '../../../../assets/utility/dimension'
+import colors from '../../../../config/colors'
 
 const ProductCardList = ({products}) => {
   
@@ -24,8 +25,9 @@ export default ProductCardList
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
+    alignItems:'center',
     paddingHorizontal: px(10),
+    backgroundColor:colors.offGray
   },
   list: {
     marginHorizontal: px(10),

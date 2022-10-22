@@ -1,26 +1,46 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {View, StyleSheet, Image, Text} from 'react-native';
 import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
 
-const ProductCard = ({name,price}) => {
-    const sale=true
+const ProductCard = ({ data }) => {
+  const [starReview , setStarReview] = useState(0)
+
+  const sale = data.isSale
+  useEffect(() => {
+    reviewCounter()
+  },[])
+  
+  const reviewCounter = () => {
+    let count = 0
+    //   console.log(data.reviews[0].starCount);
+    // for (let i = 0; i < data.reviews; i++){
+    //  count=count+ data.reviews[i].starCount
+    // }
+    if (data.reviews.length != 0) {
+      data.reviews.forEach(item => {
+        count += item.starCount
+      });
+      setStarReview(count/data.reviews.length)
+    }
+    
+}
   return (
     <View style={styles.container}>
       <View>
         <Image style={{width:px(40),height:px(20),position:'absolute',bottom:0}} source={require('../../assets/data/ProductCartDummy/Group634.jpg')}/>
         <Image
           style={styles.image}
-          source={require('../../assets/data/ProductCartDummy/image5.png')}
+          source={{uri:data.coverPhoto}}
         />
       </View>
       <View style={{marginBottom:px(15), marginTop:px(25)}}>
         <View style={{marginBottom:px(4)}}>
-          <Text style={styles.title}>TMA-2 HD Wireless</Text>
+          <Text style={styles.title}>{data.name}</Text>
         </View>
         <View style={{marginBottom:px(10)}}>
-          <Text style={styles.price}>Rp. 1.500.000</Text>
+          <Text style={styles.price}>$ {sale ? data.salePrice :data.price}</Text>
         </View>
         <View
           style={{
@@ -33,9 +53,9 @@ const ProductCard = ({name,price}) => {
               style={styles.star}
               source={require('../../assets/data/ProductCartDummy/Vector.jpg')}
             />
-            <Text style={styles.text}>4.6</Text>
+            <Text style={styles.text}>{Number.isInteger(starReview)? starReview:starReview.toFixed(1)}</Text>
           <View style={{marginLeft:px(10)}}>
-            <Text style={styles.text}>86 Reviews</Text>
+            <Text style={styles.text}>{data.reviews.length}  Reviews</Text>
           </View>
           </View>
           <View>
