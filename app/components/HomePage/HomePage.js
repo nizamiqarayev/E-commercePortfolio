@@ -16,20 +16,69 @@ import ProductCard from '../ProductCard/ProductCard';
 import colors from '../../config/colors';
 import CategoryCarousel from './Categories/CategoryCarousel';
 import AllCategories from './Categories/AllCategories';
+import ProductsCarousel from './Products/ProductsCarousel';
+import {useSelector} from 'react-redux';
+import SearchBar from '../UI/SearchBar';
+import {setAllProductsDisplay} from '../../store/slices/products';
+import IconButton from '../UI/IconButton';
 
 const HomePage = ({route, navigation}) => {
   const focused = useIsFocused();
 
-  const [seeAllCategories, setCategoriesModal] = useState(false);
+  const productsAllData = useSelector(state => state.products);
+
   useEffect(() => {
     if (focused) {
-     
     }
   }, [focused]);
   return (
     <ScrollView>
       <View style={styles.container}>
         <View>
+          <View>
+            <View style={styles.searchBarContainer}>
+              {productsAllData.products.length == 0 ? (
+                <></>
+              ) : (
+                <SearchBar
+                  data={productsAllData.products}
+                  finalAction={setAllProductsDisplay}
+                />
+              )}
+              {productsAllData.products.length == 0 ? (
+                <></>
+              ) : (
+                <View style={styles.searchIcon}>
+                  <IconButton
+                    name={'search'}
+                    size={px(20)}
+                    color={colors.black}
+                  />
+                </View>
+              )}
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <Text style={styles.title}>All Products</Text>
+              <Pressable
+                onPress={() => {
+                  // setCategoriesModal(true);
+                  navigation.navigate('categoryproducts', {
+                    id: "",
+                    title: 'All Products',
+                  });
+                }}>
+                <Text style={{color: colors.blue}}>See All</Text>
+              </Pressable>
+            </View>
+            <View>
+              <ProductsCarousel />
+            </View>
+          </View>
           <View
             style={{
               flexDirection: 'row',
@@ -40,18 +89,10 @@ const HomePage = ({route, navigation}) => {
             <Pressable
               onPress={() => {
                 // setCategoriesModal(true);
-                navigation.navigate("allcategories")
+                navigation.navigate('allcategories');
               }}>
               <Text style={{color: colors.blue}}>See All</Text>
             </Pressable>
-            {/* <AllCategories
-              seeAllCategories={seeAllCategories}
-              setSeeAllCategories={setCategoriesModal}
-            /> */}
-              {/* <FilterModal
-                seeFilterModal={seeAllCategories}
-                setTheFilterScreen={setCategoriesModal}
-              /> */}
           </View>
           <CategoryCarousel />
         </View>
@@ -88,7 +129,7 @@ export default HomePage;
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 25,
+    marginHorizontal: px(20),
   },
   latestNewsHeaderText: {fontWeight: '700', fontSize: px(25), color: '#0C1A30'},
   title: {
@@ -98,5 +139,17 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: px(25),
     color: '#0C1A30',
+  },
+  searchBarContainer: {
+    height: px(60),
+  },
+  searchIcon: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
   },
 });

@@ -8,8 +8,10 @@ import {
 } from '../../store/slices/products';
 
 //sorts by title
-const SearchBar = ({data}) => {
-  const [input, setInput] = useState('');
+const SearchBar = ({ data,finalAction }) => {
+
+    const [input, setInput] = useState("")
+   
 
   const dispatch = useDispatch();
 
@@ -20,12 +22,15 @@ const SearchBar = ({data}) => {
       return itemData.indexOf(textData) > -1;
     });
 
-    dispatch(setProductsForDisplay({final: filteredData}));
-  };
+          
+            dispatch(finalAction({final:filteredData}))
 
-  useEffect(() => {
-    filter();
-  }, [input, data]);
+        
+    }
+   
+    useEffect(() => {
+        filter()
+    },[input,data])
 
   return (
     <View style={styles.container}>

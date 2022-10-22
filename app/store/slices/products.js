@@ -13,6 +13,15 @@ const products = createSlice({
     initialState: {
         products: [],
 
+
+        allProductsScreenData:[],
+
+        allProductsDisplay: [],
+
+
+
+
+
         categorySpecificProducts: [],
         categorySpecificProductsLoaded:false,
 
@@ -46,6 +55,11 @@ const products = createSlice({
           
 
             state.productsForDisplay = action.payload.final
+        },
+        setDisplayForAllProducts: (state, action) => {
+          
+
+            state.allProductsDisplay = action.payload.final
         }
 
     },
@@ -68,7 +82,9 @@ const products = createSlice({
 
 export const setCategorySpecificProductsDispatch = products.actions.setCategorySpecificProducts
 export const setFilteredProducts = products.actions.setFilteredProducts
-export const setProductsForDisplay= products.actions.setProductsForDisplay
+export const setProductsForDisplay = products.actions.setProductsForDisplay
+export const setAllProductsDisplay= products.actions.setDisplayForAllProducts
+
 
 
 

@@ -20,6 +20,7 @@ import CategorySpecificProducts from '../components/CategoriesProducts/CategoryS
 import AddToCart from '../components/AddToCart/AddToCart';
 
 import ProductDetail from '../components/ProductDetail/ProductDetail';
+import AllProducts from '../components/HomePage/Products/AllProducts';
 
 const Stack = createNativeStackNavigator();
 
@@ -91,13 +92,21 @@ const StackComponent = () => {
         component={AddToCart}
         options={{presentation: 'modal', animation: 'fade'}}
       />
+       <Stack.Screen
+        name="All Products"
+        component={AllProducts}
+        />
 
       <Stack.Group screenOptions={{ headerShown: false }}>
       <Stack.Screen
         name="allcategories"
         component={AllCategories}
         options={{presentation: 'transparentModal', animation: 'fade'}}
-      />
+        />
+        
+
+       
+        
         <Stack.Screen
           name="Filter&Sorting"
           component={FilterTopTabs}
