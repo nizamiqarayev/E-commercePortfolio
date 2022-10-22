@@ -23,14 +23,17 @@ const CategorySpecificProducts = ({route, navigation}) => {
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    if (productsAllData.allproductsloaded == false) {
+    if (productsAllData.allproductsloaded == false ) {
       dispatch(fetchProducts());
     }
   }, []);
 
   useEffect(() => {
-    if (productsAllData.allproductsloaded == true) {
+    if (productsAllData.allproductsloaded == true && route.params.id!="") {
       pickCategorySpecificProducts();
+    }
+    else {
+      dispatch(setCategorySpecificProductsDispatch({products: productsAllData.products}));
     }
   }, [productsAllData.products]);
 
@@ -84,7 +87,7 @@ const CategorySpecificProducts = ({route, navigation}) => {
           {productsAllData.categorySpecificProducts.length == 0 ? (
             <></>
           ) : (
-            <SearchBar data={productsAllData.filteredProducts} />
+            <SearchBar data={productsAllData.filteredProducts} finalAction={setProductsForDisplay} />
           )}
           {productsAllData.categorySpecificProducts.length == 0 ? (
             <></>
@@ -126,7 +129,7 @@ const styles = StyleSheet.create({
     marginVertical: px(10),
   },
   searchBarContainer: {
-    height: px(45),
+    height: px(60),
   },
   searchIcon: {
     position: 'absolute',

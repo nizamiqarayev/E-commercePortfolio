@@ -6,7 +6,7 @@ import { setFilteredProducts, setProductsForDisplay } from '../../store/slices/p
 
 
 //sorts by title
-const SearchBar = ({ data }) => {
+const SearchBar = ({ data,finalAction }) => {
 
     const [input, setInput] = useState("")
    
@@ -24,7 +24,7 @@ const SearchBar = ({ data }) => {
             });
 
           
-            dispatch(setProductsForDisplay({final:filteredData}))
+            dispatch(finalAction({final:filteredData}))
 
         
     }
