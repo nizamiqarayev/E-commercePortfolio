@@ -39,14 +39,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: px(40),
-    height: px(40),
+    width: px(35),
+    height: px(35),
   },
   backgroundContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    width: px(72),
+    width: px(80),
     height: px(72),
   },
   text: {

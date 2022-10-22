@@ -46,10 +46,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.softGray,
-        borderRadius:10
+        borderRadius: 10,
+        justifyContent: "center",
     },
     input: {
         marginLeft: 10,
-        marginRight:40
+        marginRight: 40,
+        color:colors.fontColor
     }
 })
