@@ -1,15 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Text, TextInput, Dimensions} from 'react-native';
+import {View, StyleSheet, Text, TextInput, Dimensions,ActivityIndicator} from 'react-native';
 import Button from '../UI/Button';
 import IconButton from '../UI/IconButton';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import axios from 'axios';
+import base from '../../helpers/base';
 import colors from '../../config/colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import px from '../../assets/utility/dimension';
 const UpdatePassword = ({navigation, route}) => {
   const [iconName, setIconName] = useState('eye-outline');
   const [confirmIconName, setConfirmIconName] = useState('eye-outline');
+  const [loading,setLoading]=useState(false)
   const [buttonColor, setButtonColor] = useState(colors.disabledButton);
   const [inputs, setInputs] = useState({
     newpassword: '',
@@ -51,7 +53,7 @@ const UpdatePassword = ({navigation, route}) => {
     });
   }
   async function Update() {
-
+      setLoading(true)
     try {
 
       const response = await axios.patch(
@@ -70,6 +72,7 @@ const UpdatePassword = ({navigation, route}) => {
 
       Home();
     } catch (error) {
+      setLoading(false)
 
     }
   }
@@ -77,6 +80,10 @@ const UpdatePassword = ({navigation, route}) => {
     navigation.navigate('HomePage');
   }
   return (
+    <>
+    {loading?<View style={styles.ActivityIndicator}>
+      <ActivityIndicator size={'large'}></ActivityIndicator>
+    </View>:<></>}
     <KeyboardAwareScrollView
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{flexGrow:1}}
@@ -164,6 +171,7 @@ const UpdatePassword = ({navigation, route}) => {
         </View>
       </View>
     </KeyboardAwareScrollView>
+    </>
   );
 };
 
@@ -173,6 +181,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 25,
     justifyContent: 'space-between',
   },
+  ActivityIndicator:{
+    position:'absolute',
+     zIndex:1,
+     right:0,
+     width:base.screenWidth,
+     height:base.screenHeight,
+     justifyContent:'center',
+     backgroundColor:colors.offGray,
+     opacity:0.5},
   welcomeText: {
     fontSize: px(24),
     fontWeight: '700',

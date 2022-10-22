@@ -31,7 +31,7 @@ const ProductDetail = ({route}) => {
   const navigation = useNavigation();
 
   const fun = async () => {
-    setLoading(false)
+    setLoading(true)
     try {
       
       const shareResponse = await Share.open({
@@ -41,9 +41,10 @@ const ProductDetail = ({route}) => {
         
       });
     } catch (error) {
-      setLoading(true)
+      setLoading(false)
     }
-    setLoading(true)
+    setLoading(false)
+  
 
   };
 useEffect(()=>{
@@ -65,6 +66,7 @@ useEffect(()=>{
 },[data])
 
   async function getData() {
+    setLoading(true)
     try {
       const response = await base
         .api()
@@ -72,19 +74,25 @@ useEffect(()=>{
 
       setData(response.data);
       setStore(response.data.store);
-      setLoading(true);
+
+     setLoading(false)
     } catch (error) {
-      setLoading(false);
+      setLoading(false)
     }
   }
 
   useEffect(() => {
+    
     getData();
+    
   }, []);
 
   return (
     <>
-      {loading ? (
+    {loading?<View style={styles.ActivityIndicator}>
+      <ActivityIndicator size={'large'}></ActivityIndicator>
+    </View>:<></>}
+      
         <ScrollView style={styles.container}>
           <View style={styles.imageContainer}>
             <Image style={styles.image} source={{uri: data.coverPhoto}}></Image>
@@ -190,11 +198,7 @@ useEffect(()=>{
             </View>
           </View>
         </ScrollView>
-      ) : (
-        <View style={styles.loading}>
-          <ActivityIndicator size={'large'}></ActivityIndicator>
-        </View>
-      )}
+      
     </>
   );
 };
@@ -209,6 +213,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
+  ActivityIndicator:{
+    position:'absolute',
+     zIndex:2,
+     right:0,
+     width:base.screenWidth,
+     height:base.screenHeight,
+     justifyContent:'center',
+     backgroundColor:colors.offGray,
+     opacity:0.5},
   imageContainer: {
     alignItems: 'center',
     padding: px(10),
