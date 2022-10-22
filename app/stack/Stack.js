@@ -79,7 +79,6 @@ const StackComponent = () => {
         name="categoryproducts"
         component={CategorySpecificProducts}
         options={{
-          presentation: 'containedModal',
           animation: 'fade_from_bottom',
           title: "Catalog",
           headerTitleAlign: "center",
