@@ -1,27 +1,28 @@
 import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
-import React, {useEffect} from 'react';
+import React from 'react';
 import px from '../../../assets/utility/dimension';
 import colors from '../../../config/colors';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
-const CategoryItem = ({image,id, title, color}) => {
-
-  const navigation = useNavigation()
+const CategoryItem = ({image, id, title, color}) => {
+  const navigation = useNavigation();
   // useEffect(() => {
   // })
   return (
     <View style={styles.container}>
-      <Pressable style={styles.containerPressable} onPress={() => {navigation.navigate("categoryproducts",{id:id,title:title})}}>
-
-      <View style={[styles.backgroundContainer, {backgroundColor: color}]}>
-        <Image style={styles.image} source={{uri: image}} />
-      </View>
-      <View>
-        <Text style={styles.text}>{title}</Text>
+      <Pressable
+        style={styles.containerPressable}
+        onPress={() => {
+          navigation.navigate('categoryproducts', {id: id, title: title});
+        }}>
+        <View style={[styles.backgroundContainer, {backgroundColor: color}]}>
+          <Image style={styles.image} source={{uri: image}} />
         </View>
-        </Pressable>
+        <View>
+          <Text style={styles.text}>{title}</Text>
+        </View>
+      </Pressable>
     </View>
-    
   );
 };
 
@@ -39,19 +40,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: px(40),
-    height: px(40),
+    width: px(24),
+    height: px(24),
   },
   backgroundContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    width: px(72),
-    height: px(72),
+    width: px(48),
+    height: px(48),
   },
   text: {
     fontFamily: 'DMSans-regular',
     color: colors.fontColor,
     marginVertical: 8,
+    fontSize: px(14),
   },
 });

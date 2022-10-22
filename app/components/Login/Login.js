@@ -132,6 +132,9 @@ const Login = ({navigation}) => {
               <View style={styles.emailContainer}>
                 <Text style={styles.inputText}>Email</Text>
                 <TextInput
+                  autoCapitalize="none"
+                  autoComplete="off"
+                  autoCorrect={false}
                   style={[
                     styles.inputContainer,
                     error && {borderWidth: 1, borderColor: colors.errorRed},
@@ -145,6 +148,9 @@ const Login = ({navigation}) => {
                 <Text style={styles.inputText}>Password</Text>
                 <View style={styles.passwordContainer}>
                   <TextInput
+                    autoCapitalize="none"
+                    autoComplete="off"
+                    autoCorrect={false}
                     style={[
                       styles.inputContainer,
                       {flex: 1},
