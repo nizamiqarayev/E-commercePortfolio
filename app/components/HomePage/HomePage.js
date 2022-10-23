@@ -32,7 +32,7 @@ const HomePage = ({route, navigation}) => {
     }
   }, [focused]);
   return (
-    <ScrollView>
+    <ScrollView style={styles.ScrollView}>
       <View style={styles.container}>
         <View>
           <View>
@@ -130,6 +130,10 @@ export default HomePage;
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: px(20),
+
+  },
+  ScrollView:{
+    backgroundColor:colors.white
   },
   latestNewsHeaderText: {fontWeight: '700', fontSize: px(25), color: '#0C1A30'},
   title: {
