@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Text, Image,ActivityIndicator} from 'react-native';
+import {View, StyleSheet, Text, Image, ActivityIndicator} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
@@ -8,7 +8,7 @@ import base from '../../helpers/base';
 import Button from '../UI/Button';
 
 const Account = ({navigation}) => {
-  const [loading,setLoading]=useState(false)
+  const [loading, setLoading] = useState(false);
   const [informations, setInformations] = useState({
     name: '',
     email: '',
@@ -16,7 +16,6 @@ const Account = ({navigation}) => {
   });
 
   async function getNameEmail() {
-   
     let name = await AsyncStorage.getItem('username');
     let email = await AsyncStorage.getItem('email');
     let profilePicture = await AsyncStorage.getItem('profilePicture');
@@ -29,14 +28,20 @@ const Account = ({navigation}) => {
     return informations;
   }
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     getNameEmail();
-    setLoading(false)
+    setLoading(false);
   }, []);
 
   async function logOut() {
-    setLoading(true)
+    setLoading(true);
+    const userId = await AsyncStorage.getItem('_id');
+
+    const response = await base.api().get(`wishlists/${userId}`);
+    const data = await response.data;
+    const products = data.data.products;
     await AsyncStorage.clear();
+    await AsyncStorage.setItem('wishlist', JSON.stringify(products));
     base.token = '';
     Home();
   }
@@ -46,35 +51,39 @@ const Account = ({navigation}) => {
 
   return (
     <>
-    {loading?<View style={styles.ActivityIndicator}>
-      <ActivityIndicator size={'large'}></ActivityIndicator>
-    </View>:<></>}
-    <View style={styles.container}>
-      <View style={styles.AccountContainer}>
-        <View style={styles.IconContainer}>
-          <Image
-            style={{width: px(100), height: px(100)}}
-            source={{uri: informations.profilePicture}}></Image>
+      {loading ? (
+        <View style={styles.ActivityIndicator}>
+          <ActivityIndicator size={'large'}></ActivityIndicator>
         </View>
-        <View style={styles.textContainer}>
-          <Text style={styles.textStyle}>
-            Username:{informations.name.toLocaleUpperCase()}
-          </Text>
-          <Text style={styles.textStyle}>
-            Email:{'\n'}
-            {informations.email}
-          </Text>
+      ) : (
+        <></>
+      )}
+      <View style={styles.container}>
+        <View style={styles.AccountContainer}>
+          <View style={styles.IconContainer}>
+            <Image
+              style={{width: px(100), height: px(100)}}
+              source={{uri: informations.profilePicture}}></Image>
+          </View>
+          <View style={styles.textContainer}>
+            <Text style={styles.textStyle}>
+              Username:{informations.name.toUpperCase()}
+            </Text>
+            <Text style={styles.textStyle}>
+              Email:{'\n'}
+              {informations.email}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.ButtonStyle}>
+          <Button
+            onPress={logOut}
+            color={colors.errorRed}
+            borderColor={colors.errorRed}>
+            <Text style={styles.Logout}>Log Out</Text>
+          </Button>
         </View>
       </View>
-      <View style={styles.ButtonStyle}>
-        <Button
-          onPress={logOut}
-          color={colors.errorRed}
-          borderColor={colors.errorRed}>
-          <Text style={styles.Logout}>Log Out</Text>
-        </Button>
-      </View>
-    </View>
     </>
   );
 };
@@ -85,15 +94,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     flex: 1,
   },
-  ActivityIndicator:{
-    position:'absolute',
-     zIndex:1,
-     right:0,
-     width:base.screenWidth,
-     height:base.screenHeight,
-     justifyContent:'center',
-     backgroundColor:colors.offGray,
-     opacity:0.5},
+  ActivityIndicator: {
+    position: 'absolute',
+    zIndex: 1,
+    right: 0,
+    width: base.screenWidth,
+    height: base.screenHeight,
+    justifyContent: 'center',
+    backgroundColor: colors.offGray,
+    opacity: 0.5,
+  },
   IconContainer: {
     backgroundColor: colors.white,
     elevation: 6,

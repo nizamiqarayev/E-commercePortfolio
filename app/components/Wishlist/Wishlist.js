@@ -28,8 +28,13 @@ const Wishlist = () => {
     setLoading(true);
     const token = await AsyncStorage.getItem('token');
     if (!token) {
-      setData([]);
-      //eger token yoxdusa AsyncStorage den oxusun wishliste atdiqlarimi
+      let wishlist = await AsyncStorage.getItem('wishlist');
+      if (wishlist) wishlist = JSON.parse(wishlist);
+      else {
+        setData([]);
+        return setLoading(false);
+      }
+      setData(wishlist);
       return setLoading(false);
     }
     const userId = await AsyncStorage.getItem('_id');

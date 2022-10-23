@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import px from '../../assets/utility/dimension';
-import Share from 'react-native-share'
+import Share from 'react-native-share';
 import Antdesign from 'react-native-vector-icons/AntDesign';
 import colors from '../../config/colors';
 import Reviews from '../Reviews/Reviews';
@@ -20,191 +20,262 @@ import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import AddedButton from '../UI/AddedButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import ProductsCarousel from '../HomePage/Products/ProductsCarousel';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ProductDetail = ({route}) => {
-  const id = route.params?.id?route.params.id:''
+  const id = route.params?.id ? route.params.id : '';
   const [data, setData] = useState({});
   const [store, setStore] = useState({});
   const [loading, setLoading] = useState(false);
-
+  const [addedWish, setAddedWish] = useState(false);
 
   const navigation = useNavigation();
 
   const productsAllData = useSelector(state => state.products);
 
+  /// Wishlist
+
+  //mentiqi tam dogru deyil, wishlist store da saxlanilmalidi login olduqda, ordan check olunmalidi;
+
+  const deleteFromWishList = async () => {
+    try {
+      const userId = await AsyncStorage.getItem('_id');
+      if (!userId) {
+        let wishlist = await AsyncStorage.getItem('wishlist');
+        if (wishlist) wishlist = JSON.parse(wishlist);
+        else return setAddedWish(false);
+        const filtered = wishlist.filter(item => item._id !== id);
+        await AsyncStorage.setItem('wishlist', JSON.stringify(filtered));
+        return setAddedWish(false);
+      }
+      await base.api().delete('wishlists/delete', {
+        data: {
+          userId,
+          productId: id,
+        },
+      });
+      setAddedWish(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const addToWishlist = async () => {
+    if (addedWish) return deleteFromWishList();
+    try {
+      const userId = await AsyncStorage.getItem('_id');
+      if (!userId) {
+        let wishlist = await AsyncStorage.getItem('wishlist');
+        if (wishlist) {
+          wishlist = JSON.parse(wishlist);
+          wishlist.push(data);
+          await AsyncStorage.setItem('wishlist', JSON.stringify(wishlist));
+        } else await AsyncStorage.setItem('wishlist', JSON.stringify([data]));
+        return setAddedWish(true);
+      }
+      await base.api().post('wishlists/create', {
+        userId,
+        productId: id,
+      });
+      setAddedWish(true);
+    } catch (error) {
+      console.log({error});
+    }
+  };
+
+  const getWishlist = async () => {
+    try {
+      const userId = await AsyncStorage.getItem('_id');
+      const token = await AsyncStorage.getItem('token');
+      base.token = token;
+      const res = await base.api().get(`wishlists/${userId}`);
+      const data = await res.data;
+      const productIds = data.data.products.map(item => item._id);
+      if (productIds.includes(id)) return setAddedWish(true);
+      setAddedWish(false);
+    } catch (error) {
+      const errCode = error.response?.data?.code;
+      if (errCode === 'auth') {
+        let wishlist = await AsyncStorage.getItem('wishlist');
+        if (wishlist) wishlist = JSON.parse(wishlist);
+        else return setAddedWish(false);
+        const ids = wishlist.map(item => item._id);
+        if (ids?.includes(id)) return setAddedWish(true);
+        setAddedWish(false);
+      }
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getWishlist();
+  }, [id]);
+  /////Wishlist ^^
 
   const fun = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-      
       const shareResponse = await Share.open({
-        title:'Salam',
-        message:`${data.coverPhoto}\n\n*${data.name}*\n\n${data.description}\n`,
-        failOnCancel:true,
-        
+        title: 'Salam',
+        message: `${data.coverPhoto}\n\n*${data.name}*\n\n${data.description}\n`,
+        failOnCancel: true,
       });
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
     }
-    setLoading(false)
-  
-
+    setLoading(false);
   };
-useEffect(()=>{
-
-  navigation.setOptions({
-    headerRight: () => {
-      return (
-        <View>
-        <AddedButton onPress={fun}>
-          <Ionicons
-            name="md-arrow-redo-outline"
-            size={px(16)}
-            color={colors.black}></Ionicons>
-        </AddedButton>
-        </View>
-      );
-    },
-  });
-},[data])
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <View>
+            <AddedButton onPress={fun}>
+              <Ionicons
+                name="md-arrow-redo-outline"
+                size={px(16)}
+                color={colors.black}></Ionicons>
+            </AddedButton>
+          </View>
+        );
+      },
+    });
+  }, [data]);
 
   async function getData() {
-    setLoading(true)
+    setLoading(true);
     try {
       const response = await base
         .api()
-        .get(`/products/product/${id?id:'634e54d30e434937aa55060c'}`);
+        .get(`/products/product/${id ? id : '634e54d30e434937aa55060c'}`);
 
       setData(response.data);
       setStore(response.data.store);
 
-     setLoading(false)
+      setLoading(false);
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
   useEffect(() => {
-    
     getData();
-    
   }, []);
 
   return (
     <>
-    {loading?<View style={styles.ActivityIndicator}>
-      <ActivityIndicator size={'large'}></ActivityIndicator>
-    </View>:<></>}
-      
-        <ScrollView style={styles.container}>
-          <View style={styles.imageContainer}>
-            <Image style={styles.image} source={{uri: data.coverPhoto}}></Image>
+      {loading ? (
+        <View style={styles.ActivityIndicator}>
+          <ActivityIndicator size={'large'}></ActivityIndicator>
+        </View>
+      ) : (
+        <></>
+      )}
+
+      <ScrollView style={styles.container}>
+        <View style={styles.imageContainer}>
+          <Image style={styles.image} source={{uri: data.coverPhoto}}></Image>
+        </View>
+        <View style={styles.informationContainer}>
+          <Text style={styles.title}>{data.name}</Text>
+          <Text style={styles.price}>{data.price} $ </Text>
+          <View style={styles.reviewParentContainer}>
+            <View style={styles.reviewContainer}>
+              <>
+                <Antdesign
+                  name="star"
+                  size={px(14)}
+                  style={styles.star}
+                  color={colors.OrangeFresh}></Antdesign>
+                <Text style={styles.reviewAverage}>4.6</Text>
+              </>
+              <Text style={styles.simpleText}>{data.reviewsCount} Reviews</Text>
+            </View>
+            <View style={styles.stock}>
+              <Text style={styles.stockText}>Available: {data.stockCount}</Text>
+            </View>
           </View>
-          <View style={styles.informationContainer}>
-            <Text style={styles.title}>{data.name}</Text>
-            <Text style={styles.price}>{data.price} $ </Text>
-            <View style={styles.reviewParentContainer}>
-              <View style={styles.reviewContainer}>
+        </View>
+        <View style={styles.storeContainer}>
+          <View>
+            <Image
+              style={styles.storePhoto}
+              source={{uri: store.photo}}></Image>
+          </View>
+          <View style={styles.storeDescription}>
+            <Text style={styles.storename}>{store.name}</Text>
+            <View style={styles.isOfficial}>
+              {store.isOfficial ? (
                 <>
-                  <Antdesign
-                    name="star"
-                    size={px(14)}
-                    style={styles.star}
-                    color={colors.OrangeFresh}></Antdesign>
-                  <Text style={styles.reviewAverage}>4.6</Text>
+                  <Text style={styles.simpleText}>Official Store</Text>
+                  <Octicons
+                    name="shield-check"
+                    size={px(24)}
+                    color={colors.blue}></Octicons>
                 </>
-                <Text style={styles.simpleText}>
-                  {data.reviewsCount} Reviews
-                </Text>
-              </View>
-              <View style={styles.stock}>
-                <Text style={styles.stockText}>
-                  Available: {data.stockCount}
-                </Text>
-              </View>
+              ) : (
+                <>
+                  <Text style={styles.simpleText}>Non-official Store</Text>
+                  <Octicons
+                    name="shield-x"
+                    size={px(24)}
+                    color={colors.darkgray}></Octicons>
+                </>
+              )}
             </View>
-          </View>
-          <View style={styles.storeContainer}>
-            <View>
-              <Image
-                style={styles.storePhoto}
-                source={{uri: store.photo}}></Image>
-            </View>
-            <View style={styles.storeDescription}>
-              <Text style={styles.storename}>{store.name}</Text>
-              <View style={styles.isOfficial}>
-                {store.isOfficial ? (
-                  <>
-                    <Text style={styles.simpleText}>Official Store</Text>
-                    <Octicons
-                      name="shield-check"
-                      size={px(24)}
-                      color={colors.blue}></Octicons>
-                  </>
-                ) : (
-                  <>
-                    <Text style={styles.simpleText}>Non-official Store</Text>
-                    <Octicons
-                      name="shield-x"
-                      size={px(24)}
-                      color={colors.darkgray}></Octicons>
-                  </>
-                )}
-              </View>
-            </View>
-            <View>
-              <Octicons
-                name="chevron-right"
-                size={px(24)}
-                color={colors.darkgray}></Octicons>
-            </View>
-          </View>
-          <View style={styles.ProductDescription}>
-            <Text style={styles.ProductDescriptionTitle}>
-              Description Product
-            </Text>
-            <Text style={styles.ProductDescriptionText}>
-              {data.description}
-            </Text>
           </View>
           <View>
-            <Reviews></Reviews>
+            <Octicons
+              name="chevron-right"
+              size={px(24)}
+              color={colors.darkgray}></Octicons>
           </View>
-          <View style={styles.FeatureProductsContainer}>
-            <View style={styles.FeatureProductsTitleContainer}>
-              <Text style={styles.FeatureProductsText}>Featured Product</Text>
-              <Pressable>
-                <Text style={styles.SeeAllProducts}>See all</Text>
-              </Pressable>
-            </View>
-            <View style={styles.FeatureProducts}>
-             
+        </View>
+        <View style={styles.ProductDescription}>
+          <Text style={styles.ProductDescriptionTitle}>
+            Description Product
+          </Text>
+          <Text style={styles.ProductDescriptionText}>{data.description}</Text>
+        </View>
+        <View>
+          <Reviews></Reviews>
+        </View>
+        <View style={styles.FeatureProductsContainer}>
+          <View style={styles.FeatureProductsTitleContainer}>
+            <Text style={styles.FeatureProductsText}>Featured Product</Text>
+            <Pressable>
+              <Text style={styles.SeeAllProducts}>See all</Text>
+            </Pressable>
+          </View>
+          <View style={styles.FeatureProducts}>
             <ProductsCarousel inProductDetails={true} inProductId={data._id} />
-
-            </View>
           </View>
-          <View style={styles.ButtonContainer}>
-            <View style={styles.AddedButton}>
-              <AddedButton backgroundColor={colors.errorRed}>
-                <View style={styles.AddedButtonContainer}>
-                  <Text style={styles.ButtonText}>Added</Text>
-                  <Octicons
-                    name="heart-fill"
-                    color={colors.white}
-                    size={px(18)}></Octicons>
-                </View>
-              </AddedButton>
-            </View>
-            <View style={styles.AddToCartButton}>
-              <Button backgroundColor={colors.blue}>
-                <Text style={styles.ButtonText}>Add to cart</Text>
-              </Button>
-            </View>
+        </View>
+        <View style={styles.ButtonContainer}>
+          <View style={styles.AddedButton}>
+            <AddedButton
+              onPress={() => addToWishlist()}
+              backgroundColor={addedWish ? colors.errorRed : colors.black}>
+              <View style={styles.AddedButtonContainer}>
+                <Text style={styles.ButtonText}>
+                  {addedWish ? 'Added' : 'Add'}
+                </Text>
+                <Octicons
+                  name="heart-fill"
+                  color={colors.white}
+                  size={px(18)}></Octicons>
+              </View>
+            </AddedButton>
           </View>
-        </ScrollView>
-      
+          <Pressable style={styles.AddToCartButton}>
+            <Button backgroundColor={colors.blue}>
+              <Text style={styles.ButtonText}>Add to cart</Text>
+            </Button>
+          </Pressable>
+        </View>
+      </ScrollView>
     </>
   );
 };
@@ -219,15 +290,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
-  ActivityIndicator:{
-    position:'absolute',
-     zIndex:2,
-     right:0,
-     width:base.screenWidth,
-     height:base.screenHeight,
-     justifyContent:'center',
-     backgroundColor:colors.offGray,
-     opacity:0.5},
+  ActivityIndicator: {
+    position: 'absolute',
+    zIndex: 2,
+    right: 0,
+    width: base.screenWidth,
+    height: base.screenHeight,
+    justifyContent: 'center',
+    backgroundColor: colors.offGray,
+    opacity: 0.5,
+  },
   imageContainer: {
     alignItems: 'center',
     padding: px(10),

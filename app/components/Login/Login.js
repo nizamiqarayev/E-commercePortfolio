@@ -73,15 +73,29 @@ const Login = ({navigation}) => {
           password: inputs.password,
         },
       );
-      await AsyncStorage.setItem('email', response.data.email);
-      await AsyncStorage.setItem('username', response.data.username);
-      await AsyncStorage.setItem('token', response.data.token);
-      await AsyncStorage.setItem('_id', response.data._id);
+      const data = await response.data;
+      await AsyncStorage.setItem('email', data.email);
+      await AsyncStorage.setItem('username', data.username);
+      await AsyncStorage.setItem('token', data.token);
+      await AsyncStorage.setItem('_id', data._id);
       await AsyncStorage.setItem(
         'profilePicture',
         response.data.profilePicture,
       );
       base.token = response.data.token;
+      // send wishlist
+      let wishStoreIds;
+      let wishlist = await AsyncStorage.getItem('wishlist');
+      if (wishlist) {
+        wishlist = JSON.parse(wishlist);
+        wishStoreIds = wishlist.map(item => item._id);
+      } else wishStoreIds = [];
+
+      await base.api().post('wishlists/send', {
+        userId: data._id,
+        wishlist: wishStoreIds,
+      });
+
       Home();
     } catch (error) {
       setLoading(false);
