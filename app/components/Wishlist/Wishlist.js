@@ -14,6 +14,8 @@ import colors from '../../config/colors';
 import Reviews from '../Reviews/Reviews';
 import base from '../../helpers/base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ProductCard from '../ProductCard/ProductCard';
+import px from '../../assets/utility/dimension';
 
 const Wishlist = () => {
   const [data, setData] = useState([]);
@@ -51,11 +53,10 @@ const Wishlist = () => {
     }, []),
   );
 
-  const ProductItem = useCallback(({item: {coverPhoto, name}}) => {
+  const ProductItem = useCallback(({item}) => {
     return (
-      <View>
-        <Image style={{width: 100, height: 100}} source={{uri: coverPhoto}} />
-        <Text>{name}</Text>
+      <View style={styles.cardContainer}>
+        <ProductCard data={item} />
       </View>
     );
   }, []);
@@ -86,6 +87,13 @@ const Wishlist = () => {
       ) : (
         <FlatList
           data={data}
+          style={styles.list}
+          numColumns={2}
+          contentContainerStyle={{padding: px(20)}}
+          columnWrapperStyle={{
+            justifyContent: 'space-between',
+            marginTop: px(20),
+          }}
           showsVerticalScrollIndicator={false}
           keyExtractor={item => item._id}
           renderItem={ProductItem}
