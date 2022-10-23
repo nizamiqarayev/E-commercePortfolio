@@ -57,27 +57,6 @@ const HomePage = ({route, navigation}) => {
                 </View>
               )}
             </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
-              <Text style={styles.title}>All Products</Text>
-              <Pressable
-                onPress={() => {
-                  // setCategoriesModal(true);
-                  navigation.navigate('categoryproducts', {
-                    id: "",
-                    title: 'All Products',
-                  });
-                }}>
-                <Text style={{color: colors.blue}}>See All</Text>
-              </Pressable>
-            </View>
-            <View>
-              <ProductsCarousel />
-            </View>
           </View>
           <View
             style={{
@@ -95,6 +74,27 @@ const HomePage = ({route, navigation}) => {
             </Pressable>
           </View>
           <CategoryCarousel />
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+          <Text style={styles.title}>All Products</Text>
+          <Pressable
+            onPress={() => {
+              // setCategoriesModal(true);
+              navigation.navigate('categoryproducts', {
+                id: '',
+                title: 'All Products',
+              });
+            }}>
+            <Text style={{color: colors.blue}}>See All</Text>
+          </Pressable>
+        </View>
+        <View>
+          <ProductsCarousel />
         </View>
         <View style={{paddingVertical: px(30)}}>
           <View>
