@@ -4,21 +4,43 @@ import px from '../../../assets/utility/dimension';
 import {useDispatch, useSelector} from 'react-redux';
 import ProductCard from '../../ProductCard/ProductCard';
 import {fetchProducts, setAllProductsDisplay} from '../../../store/slices/products';
+import { useIsFocused } from '@react-navigation/native';
 
-const ProductsCarousel = () => {
+const ProductsCarousel = ({ inProductDetails, inProductId}) => {
   const productsAllData = useSelector(state => state.products);
   const dispatch = useDispatch();
+
+
+  const [inDetailsViewData, setInDetailsViewData]=useState([])
+
+  const focus = useIsFocused()
+  
+
 
   useEffect(() => {
     if (productsAllData.allproductsloaded == false) {
       dispatch(fetchProducts());
       }
   }, []);
-    useEffect(() => {
-        if (productsAllData.allproductsloaded == true) {
-            dispatch(setAllProductsDisplay({final: productsAllData.products}));
-            }
-    },[productsAllData.allproductsloaded])
+  useEffect(() => {
+    if (productsAllData.allproductsloaded == true) {
+      if (inProductDetails == false || inProductDetails == null) {
+        dispatch(setAllProductsDisplay({ final: productsAllData.products }));
+      }
+      else {
+       
+        const tempdata = productsAllData.products.filter((item) => {
+          return item._id != inProductId
+        })
+       
+
+        dispatch(setAllProductsDisplay({ final: tempdata }));
+
+      }
+        
+    }
+  }, [productsAllData.allproductsloaded, focus,inProductId])
+  
 
   return (
     <FlatList

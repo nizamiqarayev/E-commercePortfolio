@@ -20,6 +20,8 @@ import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import AddedButton from '../UI/AddedButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+import ProductsCarousel from '../HomePage/Products/ProductsCarousel';
 
 const ProductDetail = ({route}) => {
   const id = route.params?.id?route.params.id:''
@@ -29,6 +31,9 @@ const ProductDetail = ({route}) => {
 
 
   const navigation = useNavigation();
+
+  const productsAllData = useSelector(state => state.products);
+
 
   const fun = async () => {
     setLoading(true)
@@ -175,8 +180,9 @@ useEffect(()=>{
               </Pressable>
             </View>
             <View style={styles.FeatureProducts}>
-              <ProductCard></ProductCard>
-              <ProductCard></ProductCard>
+             
+            <ProductsCarousel inProductDetails={true} inProductId={data._id} />
+
             </View>
           </View>
           <View style={styles.ButtonContainer}>
