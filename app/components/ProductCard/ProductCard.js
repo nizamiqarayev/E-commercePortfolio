@@ -9,7 +9,6 @@ const ProductCard = ({ data }) => {
 
   const navigation = useNavigation()
   const [starReview , setStarReview] = useState(0)
-console.log(data);
   const [sale,setIsSale] = useState(data.isSale)
   useEffect(() => {
     reviewCounter()
