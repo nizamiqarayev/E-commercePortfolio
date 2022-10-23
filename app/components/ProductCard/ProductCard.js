@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import {View, StyleSheet, Image, Text} from 'react-native';
+import {View, StyleSheet, Image, Text, Pressable} from 'react-native';
 import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
+import { useNavigation } from '@react-navigation/native';
 
 const ProductCard = ({ data }) => {
-  const [starReview , setStarReview] = useState(0)
 
-  const sale = data.isSale
+  const navigation = useNavigation()
+  const [starReview , setStarReview] = useState(0)
+console.log(data);
+  const [sale,setIsSale] = useState(data.isSale)
   useEffect(() => {
     reviewCounter()
   },[])
@@ -28,6 +31,9 @@ const ProductCard = ({ data }) => {
 }
   return (
     <View style={styles.container}>
+      <Pressable onPress={() => {
+        navigation.navigate("ProductDetail",)
+      }}>
       <View>
         <Image style={{width:px(40),height:px(20),position:'absolute',bottom:0}} source={require('../../assets/data/ProductCartDummy/Group634.jpg')}/>
         <Image
@@ -65,7 +71,8 @@ const ProductCard = ({ data }) => {
               color={colors.darkgray}></Entypo>
           </View>
         </View>
-      </View>
+        </View>
+        </Pressable>
     </View>
   );
 };
