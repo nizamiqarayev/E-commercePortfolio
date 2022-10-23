@@ -3,12 +3,16 @@ import axios from 'axios';
 const {Platform, Dimensions} = require('react-native');
 
 class Base {
-  constructor() {
-    this.token = AsyncStorage.getItem('token')?AsyncStorage.getItem('token'):'';
+ constructor() {
+    this.token = '';
     this.isIOS = Platform.OS === 'ios';
     this.isAndroid = Platform.OS === 'android';
     this.screenWidth = Dimensions.get('window').width;
     this.screenHeight = Dimensions.get('window').height;
+    this.setToken()
+  }
+  async setToken(){
+    this.token = await AsyncStorage.getItem('token')? await AsyncStorage.getItem('token'):'';
   }
 
   api({headers = {}} = {}) {
