@@ -5,11 +5,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const categories = createSlice({
     name: "categories",
     initialState: {
-        content:[]
+        content: [],
+        categoriesSet:false,
     },
     reducers: {
         setCategories: (state,action) => {
-            state.content=action.payload.categories
+            state.content = action.payload.categories
+            state.categoriesSet=true
         }
     }
 })
