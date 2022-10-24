@@ -6,12 +6,12 @@ import {
   setFilteredProducts,
   setProductsForDisplay,
 } from '../../store/slices/products';
+import px from '../../assets/utility/dimension';
+import Feather from 'react-native-vector-icons/Feather';
 
 //sorts by title
-const SearchBar = ({ data,finalAction }) => {
-
-    const [input, setInput] = useState("")
-   
+const SearchBar = ({data, finalAction}) => {
+  const [input, setInput] = useState('');
 
   const dispatch = useDispatch();
 
@@ -22,19 +22,23 @@ const SearchBar = ({ data,finalAction }) => {
       return itemData.indexOf(textData) > -1;
     });
 
-          
-            dispatch(finalAction({final:filteredData}))
+    dispatch(finalAction({final: filteredData}));
+  };
 
-        
-    }
-   
-    useEffect(() => {
-        filter()
-    },[input,data])
+  useEffect(() => {
+    filter();
+  }, [input, data]);
 
   return (
     <View style={styles.container}>
-      <TextInput style={styles.input} onChangeText={text => setInput(text)} />
+      <TextInput
+        autoCapitalize="none"
+        autoComplete="off"
+        autoCorrect={false}
+        style={styles.input}
+        onChangeText={text => setInput(text)}
+      />
+      <Feather name="search" color={colors.black} size={px(20)} />
     </View>
   );
 };
@@ -43,15 +47,17 @@ export default SearchBar;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: colors.softGray,
     borderRadius: 10,
-    justifyContent: 'center',
+    zIndex: 99,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: px(15),
   },
   input: {
-    marginLeft: 10,
-    marginRight: 40,
     color: colors.fontColor,
+    height: px(50),
     flex: 1,
   },
 });

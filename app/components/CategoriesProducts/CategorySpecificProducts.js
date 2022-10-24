@@ -23,17 +23,20 @@ const CategorySpecificProducts = ({route, navigation}) => {
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    if (productsAllData.allproductsloaded == false ) {
+    if (productsAllData.allproductsloaded == false) {
       dispatch(fetchProducts());
     }
   }, []);
 
   useEffect(() => {
-    if (productsAllData.allproductsloaded == true && route.params.id!="") {
+    if (productsAllData.allproductsloaded == true && route.params.id != '') {
       pickCategorySpecificProducts();
-    }
-    else {
-      dispatch(setCategorySpecificProductsDispatch({products: productsAllData.products}));
+    } else {
+      dispatch(
+        setCategorySpecificProductsDispatch({
+          products: productsAllData.products,
+        }),
+      );
     }
   }, [productsAllData.products]);
 
@@ -87,14 +90,10 @@ const CategorySpecificProducts = ({route, navigation}) => {
           {productsAllData.categorySpecificProducts.length == 0 ? (
             <></>
           ) : (
-            <SearchBar data={productsAllData.filteredProducts} finalAction={setProductsForDisplay} />
-          )}
-          {productsAllData.categorySpecificProducts.length == 0 ? (
-            <></>
-          ) : (
-            <View style={styles.searchIcon}>
-              <IconButton name={'search'} size={px(20)} color={colors.black} />
-            </View>
+            <SearchBar
+              data={productsAllData.filteredProducts}
+              finalAction={setProductsForDisplay}
+            />
           )}
         </View>
       </View>

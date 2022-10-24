@@ -22,8 +22,6 @@ import SearchBar from '../UI/SearchBar';
 import {setAllProductsDisplay} from '../../store/slices/products';
 import IconButton from '../UI/IconButton';
 
-
-
 const HomePage = ({route, navigation}) => {
   const focused = useIsFocused();
 
@@ -38,27 +36,14 @@ const HomePage = ({route, navigation}) => {
       <View style={styles.container}>
         <View>
           <View>
-            <View style={styles.searchBarContainer}>
-              {productsAllData.products.length == 0 ? (
-                <></>
-              ) : (
-                <SearchBar
-                  data={productsAllData.products}
-                  finalAction={setAllProductsDisplay}
-                />
-              )}
-              {productsAllData.products.length == 0 ? (
-                <></>
-              ) : (
-                <View style={styles.searchIcon}>
-                  <IconButton
-                    name={'search'}
-                    size={px(20)}
-                    color={colors.black}
-                  />
-                </View>
-              )}
-            </View>
+            {productsAllData.products.length == 0 ? (
+              <></>
+            ) : (
+              <SearchBar
+                data={productsAllData.products}
+                finalAction={setAllProductsDisplay}
+              />
+            )}
           </View>
           <View
             style={{
@@ -144,17 +129,5 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: px(25),
     color: '#0C1A30',
-  },
-  searchBarContainer: {
-    height: px(60),
-  },
-  searchIcon: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'flex-end',
   },
 });
