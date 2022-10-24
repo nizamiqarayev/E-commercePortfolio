@@ -16,12 +16,11 @@ const ProductsCarousel = ({inProductDetails, inProductId}) => {
       <SkeletonPlaceholder>
         <SkeletonPlaceholder.Item
           padding={10}
-          shadowOffset={{ width: 0, height: 5 }}
-          shadowColor={"#000"}
-          shadowOpacity={ 0.34}
-          shadowRadius= {6.27}
-      
-          elevation= {10}
+          shadowOffset={{width: 0, height: 5}}
+          shadowColor={'#000'}
+          shadowOpacity={0.34}
+          shadowRadius={6.27}
+          elevation={10}
           flexDirection="column"
           alignItems="center">
           <SkeletonPlaceholder.Item
@@ -72,10 +71,11 @@ const ProductsCarousel = ({inProductDetails, inProductId}) => {
           contentContainerStyle={{
             paddingVertical: px(10),
           }}
+          keyExtractor={item => item._id}
           data={productsAllData.allProductsDisplay}
           renderItem={({item}) => (
             <View style={{marginHorizontal: px(15)}}>
-              <ProductCard key={item._id} data={item} />
+              <ProductCard data={item} />
             </View>
           )}
           horizontal={true}
@@ -86,19 +86,11 @@ const ProductsCarousel = ({inProductDetails, inProductId}) => {
           horizontal
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}>
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
+          {Array(10)
+            .fill(null)
+            .map((_, index) => {
+              return <Skeleton key={`index ${index}`} />;
+            })}
         </ScrollView>
       )}
     </>
