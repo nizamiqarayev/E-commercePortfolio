@@ -1,82 +1,110 @@
-import {FlatList, StyleSheet, Text, View,ActivityIndicator} from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  ActivityIndicator,
+  ScrollView,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import base from '../../../helpers/base';
 import colors from '../../../config/colors';
 import LatestNewsListItem from './LatestNewsListItem';
 import Dummy from '../../../assets/data/DummyData/Dummy';
 import axios from 'axios';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import px from '../../../assets/utility/dimension';
 
 let renderedListMaxIndex = 0;
-const LatestNewsList = ({ homepage,amountOfNews, extraRender}) => {
+const LatestNewsList = ({homepage, amountOfNews, extraRender}) => {
   const [newsArr, setnewsArr] = useState([]);
   const [newsData, setNewsData] = useState([]);
-  const [loading,setLoading]=useState(false)
+  const [loading, setLoading] = useState(false);
   const [loadedNews, setLoadedNews] = useState([]);
 
-  const [counter, setCounter] = useState(1)
+  const [counter, setCounter] = useState(1);
 
-  const [nextAvailable , setNextAvailable] = useState(false)
+  const [nextAvailable, setNextAvailable] = useState(false);
 
   useEffect(() => {
     datafetcher(1);
   }, []);
 
   const datafetcher = async index => {
-    setLoading(true)
+    setLoading(true);
     if (!loadedNews.includes(index)) {
       const response = await axios.get(
         `https://izzi-ecom.herokuapp.com/news/${index}`,
       );
-      
-      setNextAvailable(response.data.next)
+
+      setNextAvailable(response.data.next);
       setNewsData(response.data.data);
     }
-    setLoading(false)
+    setLoading(false);
   };
 
   const newsInjector = () => {
-
-
     const temparr = [];
-    if (amountOfNews == null && newsData.length!=0) {
+    if (amountOfNews == null && newsData.length != 0) {
       for (let index = 0; index < newsData.length; index++) {
-        temparr.push(<LatestNewsListItem key={newsData[index]._id} data={newsData[index]} index={counter} />);
+        temparr.push(
+          <LatestNewsListItem
+            key={newsData[index]._id}
+            data={newsData[index]}
+            index={counter}
+          />,
+        );
       }
     } else {
-
       if (newsData.length != 0) {
-       
         for (let index = 0; index < amountOfNews; index++) {
-      
-          temparr.push(<LatestNewsListItem key={index} data={newsData[index]} />);
+          temparr.push(
+            <LatestNewsListItem key={index} data={newsData[index]} />,
+          );
         }
-     }
-      
-     
+      }
     }
-    
-    const finaltemparr=newsArr.concat(temparr)
+
+    const finaltemparr = newsArr.concat(temparr);
 
     setnewsArr(finaltemparr);
-
   };
   useEffect(() => {
     newsInjector();
   }, [newsData]);
 
+  const SkeletonNews = () => {
+    return (
+      <SkeletonPlaceholder>
+        <SkeletonPlaceholder.Item flexDirection="row" justifyContent='space-between' alignItems='center' marginVertical={px(15)} width={px(340)}>
+          <SkeletonPlaceholder.Item>
+            <SkeletonPlaceholder.Item height={px(20)} width={px(180)} borderRadius={5} />
+            <SkeletonPlaceholder.Item height={px(20)} width={px(120)} borderRadius={5} marginVertical={px(10)} />
+            <SkeletonPlaceholder.Item  height={px(20)} width={px(150)} borderRadius={5} />
+          </SkeletonPlaceholder.Item>
+          <SkeletonPlaceholder.Item height={px(80)} width={px(120)}  borderRadius={5} />
+        </SkeletonPlaceholder.Item>
+      </SkeletonPlaceholder>
+    );
+  };
+
   return (
     <>
-    {loading?<View style={styles.ActivityIndicator}>
-      <ActivityIndicator size={'large'}></ActivityIndicator>
-    </View>:<></>}
-    <View>
-      <FlatList
+      {loading ? (
+        <View style={styles.ActivityIndicator}>
+          <ActivityIndicator size={'large'} />
+        </View>
+      ) : (
+        <></>
+      )}
+      <View style={{flex:1}}>
+        <FlatList
         showsVerticalScrollIndicator={false}
         data={newsArr}
         scrollEnabled={homepage? false:true}
         onEndReached={() => {
           if (nextAvailable == true && extraRender ==true) {
-     
+
             datafetcher(counter + 1)
             setCounter(counter+1)
           }
@@ -84,9 +112,31 @@ const LatestNewsList = ({ homepage,amountOfNews, extraRender}) => {
         onEndReachedThreshold={0.5}
         renderItem={({item}) => {
           return item;
-        }}
-      />
-    </View>
+          }}
+
+        />
+        {loading ? (
+          <>
+            <ScrollView>
+              <SkeletonNews />
+              <SkeletonNews />
+              <SkeletonNews />
+              <SkeletonNews />
+              <SkeletonNews />
+              <SkeletonNews />
+              <SkeletonNews />
+              <SkeletonNews />
+              <SkeletonNews />
+              <SkeletonNews />
+              <SkeletonNews />
+              <SkeletonNews />
+              <SkeletonNews />
+            </ScrollView>
+          </>
+        ) : (
+          <></>
+        )}
+      </View>
     </>
   );
 };
