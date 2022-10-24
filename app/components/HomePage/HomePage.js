@@ -22,6 +22,8 @@ import SearchBar from '../UI/SearchBar';
 import {setAllProductsDisplay} from '../../store/slices/products';
 import IconButton from '../UI/IconButton';
 
+
+
 const HomePage = ({route, navigation}) => {
   const focused = useIsFocused();
 
