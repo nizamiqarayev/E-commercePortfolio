@@ -87,7 +87,6 @@ const Wishlist = () => {
       ) : (
         <FlatList
           data={data}
-          style={styles.list}
           numColumns={2}
           contentContainerStyle={{padding: px(20)}}
           columnWrapperStyle={{

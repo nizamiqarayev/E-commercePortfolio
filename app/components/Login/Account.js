@@ -37,12 +37,17 @@ const Account = ({navigation}) => {
     setLoading(true);
     const userId = await AsyncStorage.getItem('_id');
 
-    const response = await base.api().get(`wishlists/${userId}`);
-    const data = await response.data;
-    const products = data.data.products;
+    const wishRes = await base.api().get(`wishlists/${userId}`);
+    const wishData = await wishRes.data;
+    const products = wishData.data.products;
+    const cardRes = await base.api().get(`cards/${userId}`);
+    const cardData = await cardRes.data;
+    const cards = cardData.products;
     await AsyncStorage.clear();
     await AsyncStorage.setItem('wishlist', JSON.stringify(products));
+    await AsyncStorage.setItem('card', JSON.stringify(cards));
     base.token = '';
+
     Home();
   }
   function Home() {

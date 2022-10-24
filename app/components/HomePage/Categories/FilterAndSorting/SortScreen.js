@@ -12,13 +12,9 @@ const SortScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
   const productsAllData = useSelector(state => state.products);
-  console.log(productsAllData.productsForDisplay);
 
   const [SortType, setSortType] = useState('A-Z');
   const [sortedValue, setSortedValue] = useState([]);
-  // console.log(SortType);
-
-  // console.log(sortedValue);
 
   useEffect(() => {
     if (sortedValue.length) {
@@ -82,8 +78,7 @@ const SortScreen = ({navigation}) => {
                 Sorting(productsAllData.productsForDisplay, SortType),
               );
 
-            navigation.pop(1)
-
+              navigation.pop(1);
             }}
             borderColor={colors.blue}
             backgroundColor={colors.blue}

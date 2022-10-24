@@ -4,16 +4,22 @@ import IconButton from '../../../UI/IconButton';
 import px from '../../../../assets/utility/dimension';
 import colors from '../../../../config/colors';
 
-export default function Selection({title, value,selectedValue, valuesetter,alternateValue}) {
+export default function Selection({
+  title,
+  value,
+  selectedValue,
+  valuesetter,
+  alternateValue,
+}) {
   return (
-    <Pressable onPress={() => {
-      if (value==selectedValue){
-        valuesetter("")
-      }
-      else {
-        valuesetter(value)
-      }
-    }}>
+    <Pressable
+      onPress={() => {
+        if (value == selectedValue) {
+          valuesetter('');
+        } else {
+          valuesetter(value);
+        }
+      }}>
       <View
         style={{
           flexDirection: 'row',
@@ -27,11 +33,10 @@ export default function Selection({title, value,selectedValue, valuesetter,alter
           style={{
             fontSize: 18,
             color: colors.fontColor,
-            fontWeight: 'DMSans-Bold',
           }}>
           {title}
         </Text>
-        {value ==selectedValue ? (
+        {value == selectedValue ? (
           <IconButton
             name="checkmark-circle-outline"
             size={20}

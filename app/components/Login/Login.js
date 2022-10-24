@@ -82,7 +82,7 @@ const Login = ({navigation}) => {
         'profilePicture',
         response.data.profilePicture,
       );
-      base.token = response.data.token;
+      base.token = data.token;
       // send wishlist
       let wishStoreIds;
       let wishlist = await AsyncStorage.getItem('wishlist');
@@ -95,6 +95,22 @@ const Login = ({navigation}) => {
         userId: data._id,
         wishlist: wishStoreIds,
       });
+      //
+
+      // send cards
+      let cardStoreIds;
+      let card = await AsyncStorage.getItem('card');
+      if (card) {
+        card = JSON.parse(card);
+        cardStoreIds = card.map(item => item._id);
+      } else cardStoreIds = [];
+
+      await base.api().post('cards/send', {
+        userId: data._id,
+        products: cardStoreIds,
+      });
+
+      //
 
       Home();
     } catch (error) {
@@ -112,8 +128,6 @@ const Login = ({navigation}) => {
         setkeyboard(value.endCoordinates.height);
       },
     );
-
-    // console.log(keyboardListener);
 
     return () => keyboardListener.remove();
   }, []);

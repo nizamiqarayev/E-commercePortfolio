@@ -16,6 +16,7 @@ import ProductCard from '../ProductCard/ProductCard';
 import Button from '../UI/Button';
 import base from '../../helpers/base';
 import Octicons from 'react-native-vector-icons/Octicons';
+import Feather from 'react-native-vector-icons/Feather';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import AddedButton from '../UI/AddedButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -30,6 +31,7 @@ const ProductDetail = ({route}) => {
   const [store, setStore] = useState({});
   const [loading, setLoading] = useState(false);
   const [addedWish, setAddedWish] = useState(false);
+  const [inCard, setInCard] = useState(false);
 
   const navigation = useNavigation();
 
@@ -108,11 +110,106 @@ const ProductDetail = ({route}) => {
       console.log(error);
     }
   };
+  /////Wishlist ^^
+
+  ///Cards
+  const deleteFromCardStore = async () => {
+    try {
+      let card = await AsyncStorage.getItem('card');
+      if (card) {
+        card = JSON.parse(card);
+        card = card.filter(item => item._id !== id);
+        await AsyncStorage.setItem('card', JSON.stringify(card));
+      }
+      setInCard(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteFromCard = async () => {
+    try {
+      const userId = await AsyncStorage.getItem('_id');
+      if (!userId) return deleteFromCardStore();
+      await base.api().delete('cards/delete', {
+        data: {
+          userId,
+          productId: id,
+        },
+      });
+      setInCard(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const addToStoreCard = async () => {
+    try {
+      let card = await AsyncStorage.getItem('card');
+      if (card) {
+        card = JSON.parse(card);
+        card.push(data);
+        await AsyncStorage.setItem('card', JSON.stringify(card));
+        return setInCard(true);
+      }
+      await AsyncStorage.setItem('card', JSON.stringify([data]));
+      setInCard(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const addToCard = async () => {
+    if (inCard) return deleteFromCard();
+    try {
+      const userId = await AsyncStorage.getItem('_id');
+      if (!userId) return addToStoreCard();
+      await base.api().post('cards', {
+        userId,
+        productId: id,
+      });
+      setInCard(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getStoreCards = async () => {
+    let card = await AsyncStorage.getItem('card');
+    if (card) {
+      card = JSON.parse(card);
+      const ids = card.map(item => item._id);
+      if (ids.includes(id)) return setInCard(true);
+    }
+    setInCard(false);
+  };
+
+  const getCards = async () => {
+    try {
+      const userId = await AsyncStorage.getItem('_id');
+      if (!userId) return getStoreCards();
+      const response = await base.api().get(`cards/${userId}`);
+      const data = await response.data;
+      const ids = data.products.map(item => item._id);
+      if (ids?.includes(id)) return setInCard(true);
+      setInCard(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  ///Cards ^^
+
+  const getCardAndWish = async () => {
+    setLoading(true);
+    await getWishlist();
+    await getCards();
+    setLoading(false);
+  };
 
   useEffect(() => {
-    getWishlist();
+    getCardAndWish();
   }, [id]);
-  /////Wishlist ^^
 
   const fun = async () => {
     setLoading(true);
@@ -211,16 +308,18 @@ const ProductDetail = ({route}) => {
                 <>
                   <Text style={styles.simpleText}>Official Store</Text>
                   <Octicons
+                    style={{marginLeft: 10}}
                     name="shield-check"
-                    size={px(24)}
+                    size={px(20)}
                     color={colors.blue}></Octicons>
                 </>
               ) : (
                 <>
                   <Text style={styles.simpleText}>Non-official Store</Text>
                   <Octicons
+                    style={{marginLeft: 10}}
                     name="shield-x"
-                    size={px(24)}
+                    size={px(20)}
                     color={colors.darkgray}></Octicons>
                 </>
               )}
@@ -240,7 +339,7 @@ const ProductDetail = ({route}) => {
           <Text style={styles.ProductDescriptionText}>{data.description}</Text>
         </View>
         <View>
-          <Reviews></Reviews>
+          <Reviews />
         </View>
         <View style={styles.FeatureProductsContainer}>
           <View style={styles.FeatureProductsTitleContainer}>
@@ -269,11 +368,11 @@ const ProductDetail = ({route}) => {
               </View>
             </AddedButton>
           </View>
-          <Pressable style={styles.AddToCartButton}>
-            <Button backgroundColor={colors.blue}>
-              <Text style={styles.ButtonText}>Add to cart</Text>
-            </Button>
-          </Pressable>
+          <Button onPress={() => addToCard()} backgroundColor={colors.blue}>
+            <Text style={styles.ButtonText}>
+              {inCard ? 'In card' : 'Add to cart'}
+            </Text>
+          </Button>
         </View>
       </ScrollView>
     </>

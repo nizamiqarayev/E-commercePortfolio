@@ -19,7 +19,7 @@ const FilterTopTabs = () => {
       <Pressable
         android_ripple={'#fff'}
         onPress={() => {
-          navigator.goBack()
+          navigator.goBack();
         }}
         style={{flex: 1, backgroundColor: 'rgba(101, 96, 96,0.1)'}}
       />
@@ -30,7 +30,6 @@ const FilterTopTabs = () => {
           width: '100%',
           height: '100%',
           paddingHorizontal: px(20),
-          
         }}>
         <View
           style={{
@@ -43,34 +42,44 @@ const FilterTopTabs = () => {
             paddingHorizontal: px(25),
             paddingBottom: px(10),
             borderTopLeftRadius: 20,
-            borderTopRightRadius:20
+            borderTopRightRadius: 20,
           }}>
           <Text
             style={{
               color: colors.fontColor,
-              fontWeight: '700',
               fontFamily: 'DMSans-Bold',
               fontSize: 20,
             }}>
             Filter & Sorting
           </Text>
-          <IconButton name="close" color={colors.darkgray} size={27} onPress={navigator.goBack} />
+          <IconButton
+            name="close"
+            color={colors.darkgray}
+            size={27}
+            onPress={navigator.goBack}
+          />
         </View>
-        
-          
+
         <Tab.Navigator
           screenOptions={{swipeEnabled: false}}
           sceneContainerStyle={{
-            maxHeight: "90%", backgroundColor: 'white',
+            maxHeight: '90%',
+            backgroundColor: 'white',
             borderBottomLeftRadius: 20,
             borderBottomRightRadius: 20,
           }}>
-          <Tab.Screen options={{backgroundColor:'white'}} name="Filter" component={FilterScreen} />
-          <Tab.Screen name="Sort" options={{backgroundColor:'white'}} component={SortScreen} />
+          <Tab.Screen
+            options={{backgroundColor: 'white'}}
+            name="Filter"
+            component={FilterScreen}
+          />
+          <Tab.Screen
+            name="Sort"
+            options={{backgroundColor: 'white'}}
+            component={SortScreen}
+          />
         </Tab.Navigator>
-        </View>
-        
-      
+      </View>
     </>
   );
 };

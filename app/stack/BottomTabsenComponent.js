@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View,Image} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
@@ -23,7 +23,7 @@ const BottomTabs = createBottomTabNavigator();
 const BottomTabsenComponent = () => {
   const [isLogin, setIsLogin] = useState(false);
   let token;
-  const [profilePicture,setProfilePicture]=useState()
+  const [profilePicture, setProfilePicture] = useState();
 
   useEffect(() => {
     async function getToken() {
@@ -31,7 +31,7 @@ const BottomTabsenComponent = () => {
       if (token !== null) {
         setIsLogin(true);
         let picture = await AsyncStorage.getItem('profilePicture');
-        setProfilePicture(picture)
+        setProfilePicture(picture);
       } else {
         setIsLogin(false);
       }
@@ -67,13 +67,13 @@ const BottomTabsenComponent = () => {
           ),
         }}></BottomTabs.Screen>
       <BottomTabs.Screen
-        name="Order"
+        name="Card"
         component={Order}
         options={{
-          tabBarLabel: 'ORDER',
+          tabBarLabel: 'CARD',
           tabBarIcon: ({focused, color}) => (
             <Feather
-              name="shopping-bag"
+              name="credit-card"
               size={24}
               color={focused ? color : colors.darkgray}
             />
@@ -86,11 +86,20 @@ const BottomTabsenComponent = () => {
         options={{
           tabBarIcon: ({focused, color}) => (
             <View>
-              {isLogin?<Image  source={{uri:profilePicture,width:px(24),height:px(24)}}></Image> :<Ionicons
-                name="person-outline"
-                size={24}
-                color={focused ? color : colors.darkgray}
-              />}
+              {isLogin ? (
+                <Image
+                  source={{
+                    uri: profilePicture,
+                    width: px(24),
+                    height: px(24),
+                  }}></Image>
+              ) : (
+                <Ionicons
+                  name="person-outline"
+                  size={24}
+                  color={focused ? color : colors.darkgray}
+                />
+              )}
             </View>
           ),
         }}

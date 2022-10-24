@@ -22,19 +22,12 @@ const dimension = Dimensions.get('screen').height / 830;
 let inputData = ['', '', '', ''];
 
 const Verification = ({route}) => {
-  // console.log(route.params.email);
   const [enteredOtp, setEnteredOtp] = useState('');
-  console.log(route.params.otp);
-  const [errorMsg, setErrorMsg] = useState(false)
+  const [errorMsg, setErrorMsg] = useState(false);
   const [val, setVal] = useState(route.params.otp);
-  // console.log('====================================');
-  // console.log(val);
-  // console.log('====================================');
-  // console.log(val);
   const [otparr, setOtpArr] = useState([]);
 
   const [otpReadyforTest, setotpReadyforTest] = useState('false');
-
 
   const [resendAvailable, setResendAvailable] = useState(false);
 
@@ -45,7 +38,7 @@ const Verification = ({route}) => {
       }
 
       if (errorMsg == true) {
-        setErrorMsg(false)
+        setErrorMsg(false);
       }
 
       inputData[index] = text;
@@ -64,7 +57,6 @@ const Verification = ({route}) => {
 
   const dataVerifier = () => {
     let tempBool = false;
-    // console.log(inputData);
     inputData.forEach(element => {
       if (element != '') {
         tempBool = true;
@@ -77,27 +69,21 @@ const Verification = ({route}) => {
 
   const resendCode = async () => {
     try {
-      const value = await axios.post(
-        route.params.confirmType,
-        {email: `${route.params.email}`},
-      );
-      // console.log(value.data.code);
+      const value = await axios.post(route.params.confirmType, {
+        email: `${route.params.email}`,
+      });
 
       setVal(value.data.code);
       setResendAvailable(false);
-      // setTimer(5*60)
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     }
   };
 
   useEffect(() => {
-    // console.log({email: route.params.email});
-
     inputData = ['', '', '', ''];
 
     setotpReadyforTest(false);
-  
 
     const temparr = [];
     for (let i = 0; i < 4; i++) {
@@ -125,11 +111,7 @@ const Verification = ({route}) => {
     inputData.forEach(element => {
       inputValue += element;
     });
-    // console.log('input', inputValue);
-    // console.log('val', val);
-    // console.log(inputValue == val);
     if (inputValue == val) {
-      // console.log('input', inputValue);
       return true;
     } else {
       return false;
@@ -210,41 +192,52 @@ const Verification = ({route}) => {
                 {otparr.map(input => {
                   return input;
                 })}
-
               </View>
-              <View style={{ alignSelf: 'flex-start', marginTop:5}}>
-                {
-                  resendAvailable ? <></> :<View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text
-                    style={{ fontWeight: '700', fontSize: 15, color: '#0C1A30' }}>
-                    Resend Available in:  
-                  </Text>
-                    <CustomTimer initialMinutes={5} initialSeconds={0} onFinish={setResendAvailable}/>
-                  
-                </View>
-                }
-                {errorMsg? <View style={styles.errorView}>
-                <Ionicons
-                  name={'alert-circle-outline'}
-                  size={24}
-                  color={colors.errorRed}
-                />
-                <Text
-                  style={{
-                    color: colors.errorRed,
-                    fontSize: px(16),
-                    fontWeight: '400',
-                    marginLeft: 5,
-                  }}>
-                  Entered Code is Invalid
-                </Text>
-              </View> : <></>}
-                
+              <View style={{alignSelf: 'flex-start', marginTop: 5}}>
+                {resendAvailable ? (
+                  <></>
+                ) : (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <Text
+                      style={{
+                        fontWeight: '700',
+                        fontSize: 15,
+                        color: '#0C1A30',
+                      }}>
+                      Resend Available in:
+                    </Text>
+                    <CustomTimer
+                      initialMinutes={5}
+                      initialSeconds={0}
+                      onFinish={setResendAvailable}
+                    />
+                  </View>
+                )}
+                {errorMsg ? (
+                  <View style={styles.errorView}>
+                    <Ionicons
+                      name={'alert-circle-outline'}
+                      size={24}
+                      color={colors.errorRed}
+                    />
+                    <Text
+                      style={{
+                        color: colors.errorRed,
+                        fontSize: px(16),
+                        fontWeight: '400',
+                        marginLeft: 5,
+                      }}>
+                      Entered Code is Invalid
+                    </Text>
+                  </View>
+                ) : (
+                  <></>
+                )}
               </View>
             </View>
           </View>
@@ -264,9 +257,7 @@ const Verification = ({route}) => {
                             email: route.params.email,
                           });
                         } else {
-
-                          setErrorMsg(true)
-                          // console.log('dsds');
+                          setErrorMsg(true);
                         }
                       }
                     : () => {}
@@ -298,9 +289,9 @@ const styles = StyleSheet.create({
   },
   errorView: {
     flexDirection: 'row',
-    marginTop:10,
-    alignItems: "center",
-  }
+    marginTop: 10,
+    alignItems: 'center',
+  },
 });
 
 export default Verification;
