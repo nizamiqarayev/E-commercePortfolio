@@ -6,6 +6,7 @@ import {
   Text,
   Image,
   ActivityIndicator,
+  FlatList,
 } from 'react-native';
 import px from '../../assets/utility/dimension';
 import Share from 'react-native-share';
@@ -273,11 +274,40 @@ const ProductDetail = ({route}) => {
 
       <ScrollView style={styles.container}>
         <View style={styles.imageContainer}>
-          <Image style={styles.image} source={{uri: data.coverPhoto}}></Image>
+          <FlatList
+            data={data.photos}
+            keyExtractor={(_, index) => `indexx ${index}`}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            renderItem={({item}) => {
+              return <Image style={styles.image} source={{uri: item.image}} />;
+            }}
+          />
         </View>
         <View style={styles.informationContainer}>
           <Text style={styles.title}>{data.name}</Text>
-          <Text style={styles.price}>{data.price} $ </Text>
+          {data.isSale ? (
+            <View>
+              <Text style={[styles.price, {marginBottom: 0}]}>
+                $ {data.salePrice}
+              </Text>
+              <Text
+                style={[
+                  styles.price,
+                  {
+                    textDecorationLine: 'line-through',
+                    color: colors.disabledButton,
+                    fontSize: px(12),
+                    marginTop: 2,
+                  },
+                ]}>
+                $ {data.price}
+              </Text>
+            </View>
+          ) : (
+            <Text style={styles.price}>$ {data.price}</Text>
+          )}
           <View style={styles.reviewParentContainer}>
             <View style={styles.reviewContainer}>
               <>

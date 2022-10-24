@@ -1,10 +1,16 @@
 import {
+  
   FlatList,
+ 
   StyleSheet,
+ 
   Text,
+ 
   View,
+  
   ActivityIndicator,
   ScrollView,
+
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import base from '../../../helpers/base';
@@ -82,7 +88,7 @@ const LatestNewsList = ({homepage, amountOfNews, extraRender}) => {
             <SkeletonPlaceholder.Item height={px(20)} width={px(120)} borderRadius={5} marginVertical={px(10)} />
             <SkeletonPlaceholder.Item  height={px(20)} width={px(150)} borderRadius={5} />
           </SkeletonPlaceholder.Item>
-          <SkeletonPlaceholder.Item height={px(80)} width={px(120)}  borderRadius={5} />
+          <SkeletonPlaceholder.Item height={px(80)} width={px(80)}  borderRadius={5} />
         </SkeletonPlaceholder.Item>
       </SkeletonPlaceholder>
     );
@@ -97,7 +103,7 @@ const LatestNewsList = ({homepage, amountOfNews, extraRender}) => {
       ) : (
         <></>
       )}
-      <View style={{flex:1}}>
+      <View >
         <FlatList
         showsVerticalScrollIndicator={false}
         data={newsArr}

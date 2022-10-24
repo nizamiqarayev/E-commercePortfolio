@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Image, Text, Pressable} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  Pressable,
+  ImageBackground,
+} from 'react-native';
 import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -111,16 +118,26 @@ const ProductCard = ({data}) => {
         }}>
         <View>
           {sale ? (
-            <Image
+            <ImageBackground
               style={{
                 width: px(40),
                 height: px(20),
                 position: 'absolute',
                 bottom: 0,
                 zIndex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
-              source={require('../../assets/data/ProductCartDummy/Group634.jpg')}
-            />
+              source={require('../../assets/images/sale.png')}>
+              <Text
+                style={{
+                  fontSize: px(10),
+                  color: colors.white,
+                  fontFamily: 'DMSans-Bold',
+                }}>
+                SALE
+              </Text>
+            </ImageBackground>
           ) : (
             <></>
           )}
@@ -142,12 +159,30 @@ const ProductCard = ({data}) => {
         </View>
         <View style={{marginBottom: px(15), marginTop: px(25)}}>
           <View style={{marginBottom: px(4)}}>
-            <Text style={styles.title}>{data.name}</Text>
+            <Text numberOfLines={1} style={styles.title}>
+              {data.name}
+            </Text>
           </View>
           <View style={{marginBottom: px(10)}}>
-            <Text style={styles.price}>
-              $ {sale ? data.salePrice : data.price}
-            </Text>
+            {sale ? (
+              <View>
+                <Text style={styles.price}>$ {data.salePrice}</Text>
+                <Text
+                  style={[
+                    styles.price,
+                    {
+                      color: colors.disabledButton,
+                      fontSize: px(10),
+                      textDecorationLine: 'line-through',
+                      marginTop: 5,
+                    },
+                  ]}>
+                  $ {data.price}
+                </Text>
+              </View>
+            ) : (
+              <Text style={styles.price}>$ {data.price}</Text>
+            )}
           </View>
           <View
             style={{
