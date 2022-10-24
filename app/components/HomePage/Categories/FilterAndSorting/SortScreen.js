@@ -8,7 +8,7 @@ import colors from '../../../../config/colors';
 import {useDispatch, useSelector} from 'react-redux';
 import {setProductsForDisplay} from '../../../../store/slices/products';
 
-const SortScreen = () => {
+const SortScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
   const productsAllData = useSelector(state => state.products);
@@ -16,9 +16,9 @@ const SortScreen = () => {
 
   const [SortType, setSortType] = useState('A-Z');
   const [sortedValue, setSortedValue] = useState([]);
-  console.log(SortType);
+  // console.log(SortType);
 
-  console.log(sortedValue);
+  // console.log(sortedValue);
 
   useEffect(() => {
     if (sortedValue.length) {
@@ -81,6 +81,9 @@ const SortScreen = () => {
               setSortedValue(
                 Sorting(productsAllData.productsForDisplay, SortType),
               );
+
+            navigation.pop(1)
+
             }}
             borderColor={colors.blue}
             backgroundColor={colors.blue}

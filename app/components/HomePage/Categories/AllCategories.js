@@ -14,8 +14,7 @@ const AllCategories = ({onPress, navigation}) => {
   return (
     <View style={styles.parent}>
       <View style={styles.container}>
-        
-       
+        {/*
         <View
           style={{
             flexDirection: 'row',
@@ -39,25 +38,25 @@ const AllCategories = ({onPress, navigation}) => {
           }}>
           All Categories
         </Text>
-        </View>
+        </View> */}
         <View style={styles.allNewsContainer}>
           <FlatList
-            style={styles.flatlist}
+            contentContainerStyle={styles.flatlist}
             data={categoriesFromStore.content}
-            renderItem={({ item }) => {
+            renderItem={({item}) => {
               return (
-                <CategoryItem
-                  key={item._id}
-                  id={item._id}
-                  image={item.image}
-                  title={item.name}
-                  color={item.bgColor}
-                />
+                <View style={{ marginHorizontal:px(5), paddingVertical:15, marginVertical:px(10)}}>
+                  <CategoryItem
+                    key={item._id}
+                    id={item._id}
+                    image={item.image}
+                    title={item.name}
+                    color={item.bgColor}
+                  />
+                </View>
               );
             }}
-            numColumns={3}
-            
-            
+            numColumns={4}
           />
           {/* {categoriesFromStore.content.map(item => (
             <CategoryItem
@@ -68,8 +67,8 @@ const AllCategories = ({onPress, navigation}) => {
             />
           ))} */}
         </View>
-        </View>
       </View>
+    </View>
   );
 };
 
@@ -77,25 +76,17 @@ export default AllCategories;
 
 const styles = StyleSheet.create({
   parent: {
-    flex:1,
-    marginTop: '20%',
-    marginBottom:'40%',
-   marginHorizontal:px(20)
   },
   container: {
-    justifyContent: 'flex-start',
-    alignItems: 'center',
     backgroundColor: colors.offGray,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#644F98",
-    padding:px(5)
   },
   allNewsContainer: {
     marginTop: 10,
-
- 
   },
   flatlist: {
-  }
+    justifyContent: 'space-evenly',
+    alignItems:'center'
+
+    // backgroundColor:"red"
+  },
 });

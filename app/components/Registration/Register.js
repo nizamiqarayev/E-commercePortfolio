@@ -11,6 +11,8 @@ import {
   Dimensions,
   PixelRatio,
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
 import Button from '../UI/Button';
@@ -31,9 +33,9 @@ const Register = () => {
     ) {
       setErrMsg(false);
       setEmail(text);
-      setButtonReady(true)
+      setButtonReady(true);
     } else {
-      setButtonReady(false)
+      setButtonReady(false);
       setErrMsg(true);
     }
   };
@@ -85,35 +87,55 @@ const Register = () => {
               underlineColorAndroid={'transparent'}
               onChangeText={emailInputHandler}
             />
+            {errMsg ? (
+              <View style={styles.errorView}>
+                <Ionicons
+                  name={'alert-circle-outline'}
+                  size={24}
+                  color={colors.errorRed}
+                />
+                <Text
+                  style={{
+                    color: colors.errorRed,
+                    fontSize: px(16),
+                    fontWeight: '400',
+                    marginLeft: 5,
+                  }}>
+                  Please Enter A Valid Email
+                </Text>
+              </View>
+            ) : (
+              <></>
+            )}
           </View>
 
           <View style={{marginTop: 150 * dimension}}>
             <View style={{height: px(50)}}>
               <Button
-                backgroundColor={buttonReady? "#3669c9" : '#C4C5C4'}
+                backgroundColor={buttonReady ? '#3669c9' : '#C4C5C4'}
                 color={'white'}
-                onPress={email != "" ? async () => {
-                  try {
-                    const value = await axios.post(
-                      'https://izzi-ecom.herokuapp.com/user/emailConfirm',
-                      {email: email},
-                    );
+                onPress={
+                  email != ''
+                    ? async () => {
+                        try {
+                          const value = await axios.post(
+                            'https://izzi-ecom.herokuapp.com/user/emailConfirm',
+                            {email: email},
+                          );
 
-                    navigate.navigate('verification', {
-                      path: 'Profile Password',
-                      email: email,
-                      otp: value.data.code,
-                      confirmType: 'https://izzi-ecom.herokuapp.com/user/emailConfirm'
-                    });
-                    
-
-
-                  } catch (error) {
-                    console.log(error);
-                  }
-
-                  
-                } : () =>{}}>
+                          navigate.navigate('verification', {
+                            path: 'Profile Password',
+                            email: email,
+                            otp: value.data.code,
+                            confirmType:
+                              'https://izzi-ecom.herokuapp.com/user/emailConfirm',
+                          });
+                        } catch (error) {
+                          console.log(error);
+                        }
+                      }
+                    : () => {}
+                }>
                 Continue
               </Button>
             </View>
@@ -127,7 +149,10 @@ const Register = () => {
               <Text style={{marginRight: 5 * dimension, color: '#838589'}}>
                 Have an account?
               </Text>
-              <Pressable onPress={() => {navigate.goBack()}}>
+              <Pressable
+                onPress={() => {
+                  navigate.goBack();
+                }}>
                 <Text style={{color: '#3669c9'}}> Sign In</Text>
               </Pressable>
             </View>
@@ -141,16 +166,22 @@ const Register = () => {
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 25 * dimension,
+    backgroundColor:colors.offGray,
     flex: 1,
   },
   textInput: {
     paddingVertical: 16 * dimension,
     paddingHorizontal: 20 * dimension,
-    backgroundColor: '#FAFAFA',
+    backgroundColor: colors.softGray,
     borderRadius: 10,
-    color:colors.fontColor,
+    color: colors.fontColor,
     marginTop: 20 * dimension,
   },
+  errorView: {
+    flexDirection: 'row',
+    marginTop:10,
+    alignItems: "center",
+  }
 });
 
 export default Register;

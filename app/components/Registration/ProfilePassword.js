@@ -11,6 +11,8 @@ import IconButton from '../UI/IconButton';
 import Button from '../UI/Button';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
+import px from '../../assets/utility/dimension';
+import colors from '../../config/colors';
 
 const dimension = Dimensions.get('screen').height / 830;
 
@@ -18,7 +20,9 @@ const ProfilePassword = ({route}) => {
   const [passwordType, setPasswordType] = useState(true);
   const [confirmType, setConfirm] = useState(true)
 
-  const [warning, setWarning] = useState(false);
+  const [passwordWarning, setPasswordWarning] = useState(false);
+  const [nameWarning, setNameWarning] = useState(false);
+
 
   const [unmatchedpwErr, setUnMErr] = useState(false)
 
@@ -56,9 +60,15 @@ const ProfilePassword = ({route}) => {
 
   const inputHandler = (text, inputType) => {
     if (inputType == 'password' && text.length < 6 && text.length != 0) {
-      setWarning(true);
+      setPasswordWarning(true);
     } else {
-      setWarning(false);
+      setPasswordWarning(false);
+    }
+    if (inputType == 'name' && text.length < 3 && text.length != 0) {
+      setNameWarning(true)
+    }
+    else {
+      setNameWarning(false);
     }
 
     setInput({
@@ -94,6 +104,18 @@ const ProfilePassword = ({route}) => {
                   inputHandler(text, 'name');
                 }}
               />
+               {nameWarning ? (
+                <View style={styles.warning}>
+                  <Ionicons
+                    name={'alert-circle-outline'}
+                    size={24}
+                    color={'#838589'}
+                  />
+                  <Text style={{color:"#838589"}}>Name must be 3 characters or more</Text>
+                </View>
+              ) : (
+                <></>
+              )}
             </View>
             <View style={styles.inputCellContainer}>
               <Text style={styles.label}>Password</Text>
@@ -127,7 +149,7 @@ const ProfilePassword = ({route}) => {
                   />}
                 </View>
               </View>
-              {warning ? (
+              {passwordWarning ? (
                 <View style={styles.warning}>
                   <Ionicons
                     name={'alert-circle-outline'}
@@ -173,7 +195,7 @@ const ProfilePassword = ({route}) => {
                   />}
                 </View>
               </View>
-              {warning ? (
+              {passwordWarning ? (
                 <View style={styles.warning}>
                   <Ionicons
                     name={'alert-circle-outline'}
@@ -187,7 +209,7 @@ const ProfilePassword = ({route}) => {
               )}
             </View>
           </View>
-          <View style={{width: '100%'}}>
+          <View style={{height:px(60),marginBottom:px(20)}}>
             <Button backgroundColor={'#3669C9'} color={'white'} onPress={submissionHandler}>
               Confirmation
             </Button>
@@ -203,37 +225,37 @@ export default ProfilePassword;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: 25 * dimension,
+    marginHorizontal: px(25),
   },
   headerContainer: {
-    marginTop: 65 * dimension,
+    marginTop: px(30),
   },
   headerText: {
     fontWeight: '700',
-    fontSize: 25 * dimension,
-    marginBottom: 20 * dimension,
+    fontSize: px(25),
+    marginBottom: px(20),
     color: '#0C1A30',
   },
   inputContainer: {
-    marginTop: 50 * dimension,
+    marginTop: px(50),
     flex: 1,
   },
   input: {
-    backgroundColor: '#FAFAFA',
+    backgroundColor: colors.softGray,
     borderRadius: 10,
     paddingHorizontal: 20,
     paddingVertical: 16,
   },
   label: {
-    marginBottom: 20 * dimension,
+    marginBottom: px(20),
     color: "#0C1A30"
   },
   inputCellContainer: {
-    marginBottom: 30 * dimension,
+    marginBottom: px(30),
   },
   warning: {
     flexDirection: 'row',
-    marginTop: 10 * dimension,
+    marginTop: px(10),
     alignItems: 'center',
   },
 });

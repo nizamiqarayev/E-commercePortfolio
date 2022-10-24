@@ -48,6 +48,10 @@ export const Sorting = (data, sortType) => {
             break;
         default: 
     }
+    console.log("returndata");
+    console.log(returnData);
+    console.log("returndata");
+
     return returnData
     
 
