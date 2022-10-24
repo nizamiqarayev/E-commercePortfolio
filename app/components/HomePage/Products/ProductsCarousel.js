@@ -8,8 +8,36 @@ import {
   setAllProductsDisplay,
 } from '../../../store/slices/products';
 import {useIsFocused} from '@react-navigation/native';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 const ProductsCarousel = ({inProductDetails, inProductId}) => {
+  const Skeleton = () => {
+    return (
+      <SkeletonPlaceholder>
+        <SkeletonPlaceholder.Item
+          padding={10}
+          shadowOffset={{ width: 0, height: 5 }}
+          shadowColor={"#000"}
+          shadowOpacity={ 0.34}
+          shadowRadius= {6.27}
+      
+          elevation= {10}
+          flexDirection="column"
+          alignItems="center">
+          <SkeletonPlaceholder.Item
+            width={px(150)}
+            height={px(180)}
+            borderRadius={10}
+          />
+          <SkeletonPlaceholder.Item marginLeft={0} marginTop={10}>
+            <SkeletonPlaceholder.Item width={150} height={20} />
+            <SkeletonPlaceholder.Item marginTop={6} width={100} height={20} />
+          </SkeletonPlaceholder.Item>
+        </SkeletonPlaceholder.Item>
+      </SkeletonPlaceholder>
+    );
+  };
+
   const productsAllData = useSelector(state => state.products);
   const dispatch = useDispatch();
 
@@ -37,20 +65,43 @@ const ProductsCarousel = ({inProductDetails, inProductId}) => {
   }, [productsAllData.allproductsloaded, focus, inProductId]);
 
   return (
-    <FlatList
-      style={styles.scrollView}
-      contentContainerStyle={{
-        paddingVertical: px(10),
-      }}
-      data={productsAllData.allProductsDisplay}
-      renderItem={({item}) => (
-        <View style={{marginHorizontal: px(15)}}>
-          <ProductCard key={item._id} data={item} />
-        </View>
+    <>
+      {productsAllData.allproductsloaded ? (
+        <FlatList
+          style={styles.scrollView}
+          contentContainerStyle={{
+            paddingVertical: px(10),
+          }}
+          data={productsAllData.allProductsDisplay}
+          renderItem={({item}) => (
+            <View style={{marginHorizontal: px(15)}}>
+              <ProductCard key={item._id} data={item} />
+            </View>
+          )}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+        />
+      ) : (
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}>
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+        </ScrollView>
       )}
-      horizontal={true}
-      showsHorizontalScrollIndicator={false}
-    />
+    </>
   );
 };
 
