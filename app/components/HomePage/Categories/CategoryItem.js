@@ -31,7 +31,8 @@ export default CategoryItem;
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 10,
-
+    // width: px(60),
+    flex:1,
     justifyContent: 'center',
     alignItems: 'center',
   },

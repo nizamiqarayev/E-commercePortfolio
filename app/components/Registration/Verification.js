@@ -10,11 +10,13 @@ import {
   Dimensions,
   Pressable,
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Button from '../UI/Button';
 import px from '../../assets/utility/dimension';
 import CountDown from 'react-native-countdown-component';
 import CustomTimer from '../UI/CustomTimer';
+import colors from '../../config/colors';
 const dimension = Dimensions.get('screen').height / 830;
 
 let inputData = ['', '', '', ''];
@@ -22,6 +24,8 @@ let inputData = ['', '', '', ''];
 const Verification = ({route}) => {
   // console.log(route.params.email);
   const [enteredOtp, setEnteredOtp] = useState('');
+  console.log(route.params.otp);
+  const [errorMsg, setErrorMsg] = useState(false)
   const [val, setVal] = useState(route.params.otp);
   // console.log('====================================');
   // console.log(val);
@@ -31,16 +35,17 @@ const Verification = ({route}) => {
 
   const [otpReadyforTest, setotpReadyforTest] = useState('false');
 
-  const [minutes, setMinutes] = useState(5);
 
-  const [seconds, setSeconds] = useState(0);
-  const [timer, setTimer] = useState(10);
   const [resendAvailable, setResendAvailable] = useState(false);
 
   const changeHandler = (index, text) => {
     if (index <= 3 && text != '') {
       if (index < 3) {
         this[`input${index + 1}`].focus();
+      }
+
+      if (errorMsg == true) {
+        setErrorMsg(false)
       }
 
       inputData[index] = text;
@@ -205,6 +210,7 @@ const Verification = ({route}) => {
                 {otparr.map(input => {
                   return input;
                 })}
+
               </View>
               <View style={{ alignSelf: 'flex-start', marginTop:5}}>
                 {
@@ -222,6 +228,22 @@ const Verification = ({route}) => {
                   
                 </View>
                 }
+                {errorMsg? <View style={styles.errorView}>
+                <Ionicons
+                  name={'alert-circle-outline'}
+                  size={24}
+                  color={colors.errorRed}
+                />
+                <Text
+                  style={{
+                    color: colors.errorRed,
+                    fontSize: px(16),
+                    fontWeight: '400',
+                    marginLeft: 5,
+                  }}>
+                  Entered Code is Invalid
+                </Text>
+              </View> : <></>}
                 
               </View>
             </View>
@@ -242,6 +264,8 @@ const Verification = ({route}) => {
                             email: route.params.email,
                           });
                         } else {
+
+                          setErrorMsg(true)
                           // console.log('dsds');
                         }
                       }
@@ -272,6 +296,11 @@ const styles = StyleSheet.create({
     marginTop: px(20),
     elevation: 2,
   },
+  errorView: {
+    flexDirection: 'row',
+    marginTop:10,
+    alignItems: "center",
+  }
 });
 
 export default Verification;

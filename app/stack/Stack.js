@@ -21,6 +21,7 @@ import AddToCart from '../components/AddToCart/AddToCart';
 
 import ProductDetail from '../components/ProductDetail/ProductDetail';
 import AllProducts from '../components/HomePage/Products/AllProducts';
+import colors from '../config/colors';
 
 const Stack = createNativeStackNavigator();
 
@@ -60,6 +61,18 @@ const StackComponent = () => {
             headerShadowVisible: false,
           }}
         />
+
+<Stack.Screen
+        name="allcategories"
+        component={AllCategories}
+          options={{
+            headerRight: (()=><Text style={{fontFamily:"DMSans-Bold", fontSize:32, color:colors.fontColor}}>All Categories</Text>),
+            animation:"fade_from_bottom"
+           
+        }}
+        />
+
+
         <Stack.Screen name="updatepassword" component={UpdatePassword} />
         <Stack.Screen name="resetpassword" component={ResetPassword} />
         <Stack.Screen name="allnews" component={AllNews} />
@@ -98,11 +111,7 @@ const StackComponent = () => {
         />
 
       <Stack.Group screenOptions={{ headerShown: false }}>
-      <Stack.Screen
-        name="allcategories"
-        component={AllCategories}
-        options={{presentation: 'transparentModal', animation: 'fade'}}
-        />
+     
         
 
        
