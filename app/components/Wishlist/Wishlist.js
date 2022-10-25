@@ -56,7 +56,7 @@ const Wishlist = () => {
   const ProductItem = useCallback(({item}) => {
     return (
       <View style={styles.cardContainer}>
-        <ProductCard data={item} />
+        <ProductCard inWish={true} data={item} />
       </View>
     );
   }, []);
