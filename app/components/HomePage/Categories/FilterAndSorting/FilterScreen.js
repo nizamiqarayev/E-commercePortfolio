@@ -35,13 +35,10 @@ const FilterScreen = ({navigation}) => {
     
   {
 
-    data.categorySpecificProducts.reduce((previous, current) => {
-    console.log(current.price);
-      return current.price > previous.price ? current : previous;
-    }).price;
+   
     return parseInt(data.categorySpecificProducts.reduce((previous, current) => {
       return current.price > previous.price ? current : previous;
-    }).price)
+    }).price.replace(/\s/g, ''))+1
   
 
     }
