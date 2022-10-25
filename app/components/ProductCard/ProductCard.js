@@ -20,6 +20,7 @@ const ProductCard = ({data}) => {
   const [sale, setIsSale] = useState(data.isSale);
   const [favorite, setFavorite] = useState(false);
   const [haveWish, setHavewish] = useState(false);
+  const [datas, setDatas] = useState('');
 
   async function getWishlist() {
     const userId = await AsyncStorage.getItem('_id');
@@ -47,14 +48,33 @@ const ProductCard = ({data}) => {
     }
   }
 
-  // useEffect(() => {
-  //   getWishlist();
-  // }, []);
+  async function checkWishlist() {
+    const datas = JSON.parse(await AsyncStorage.getItem('wishlist'));
+    if (datas) {
+      datas.forEach(item => {
+        if (item._id === data._id) {
+          setFavorite(true);
+        }
+      });
+    }
+    setDatas(datas);
+  }
+
+  useEffect(() => {
+    checkWishlist();
+  }, [datas]);
 
   async function setWish() {
     const userId = await AsyncStorage.getItem('_id');
-    const wishes = JSON.parse(await AsyncStorage.getItem('wishlist'));
-    wishes.push(data);
+    let wishes = JSON.parse(await AsyncStorage.getItem('wishlist'));
+    if (!wishes) {
+      wishes = [];
+    }
+    wishes.forEach(item => {
+      if (item._id!== data._id) {
+        wishes.push(data);
+      }
+    });
     await AsyncStorage.setItem('wishlist', JSON.stringify(wishes));
     if (base.token.length === 0) {
     } else {
@@ -142,7 +162,7 @@ const ProductCard = ({data}) => {
             <></>
           )}
           <Image style={styles.image} source={{uri: data.coverPhoto}} />
-          {/* <Pressable
+          <Pressable
             onPress={() => {
               if (favorite) {
                 delWish();
@@ -155,7 +175,7 @@ const ProductCard = ({data}) => {
               name={favorite ? 'md-heart-sharp' : 'md-heart-outline'}
               size={px(24)}
               color={colors.errorRed}></Ionicons>
-          </Pressable> */}
+          </Pressable>
         </View>
         <View style={{marginBottom: px(15), marginTop: px(25)}}>
           <View style={{marginBottom: px(4)}}>
@@ -181,7 +201,22 @@ const ProductCard = ({data}) => {
                 </Text>
               </View>
             ) : (
-              <Text style={styles.price}>$ {data.price}</Text>
+              <>
+                <Text style={styles.price}>$ {data.price}</Text>
+                <Text
+                  style={[
+                    styles.price,
+                    {
+                      color: colors.disabledButton,
+                      fontSize: px(10),
+                      textDecorationLine: 'line-through',
+                      marginTop: 5,
+                      opacity: 0,
+                    },
+                  ]}>
+                  {data.price}
+                </Text>
+              </>
             )}
           </View>
           <View

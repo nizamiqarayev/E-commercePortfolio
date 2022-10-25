@@ -88,6 +88,9 @@ const BottomTabsenComponent = () => {
             <View>
               {isLogin ? (
                 <Image
+                  style={{
+                    borderRadius:1000,
+                  }}
                   source={{
                     uri: profilePicture,
                     width: px(24),

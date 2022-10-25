@@ -9,6 +9,8 @@ import {
 } from '../../../store/slices/products';
 import {useIsFocused} from '@react-navigation/native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import base from '../../../helpers/base';
 
 const ProductsCarousel = ({inProductDetails, inProductId}) => {
   const Skeleton = () => {
@@ -43,6 +45,19 @@ const ProductsCarousel = ({inProductDetails, inProductId}) => {
   const [inDetailsViewData, setInDetailsViewData] = useState([]);
 
   const focus = useIsFocused();
+  async function getWishes(){
+    const userId = await AsyncStorage.getItem('_id');
+      try {
+        const response = await base.api().get(`wishlists/${userId}`);
+        const datas = response.data.data;
+        await AsyncStorage.setItem('wishlist', JSON.stringify(datas.products));
+      } catch (error) {}
+
+    }
+
+    useEffect(()=>{
+      getWishes()
+    },[])
 
   useEffect(() => {
     if (productsAllData.allproductsloaded == false) {
