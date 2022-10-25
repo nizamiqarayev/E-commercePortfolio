@@ -67,6 +67,7 @@ const ProductDetail = ({route}) => {
   };
 
   const addToWishlist = async () => {
+    setLoading(true);
     if (addedWish) return deleteFromWishList();
     try {
       const userId = await AsyncStorage.getItem('_id');
@@ -162,6 +163,7 @@ const ProductDetail = ({route}) => {
   };
 
   const addToCard = async () => {
+    setLoading(true);
     if (inCard) return deleteFromCard();
     try {
       const userId = await AsyncStorage.getItem('_id');
@@ -252,29 +254,27 @@ const ProductDetail = ({route}) => {
 
       setData(response.data);
       setStore(response.data.store);
-    
+
       setLoading(false);
-      scroll()
+      scroll();
     } catch (error) {
       setLoading(false);
     }
-
-    
   }
 
   useEffect(() => {
     scrollref.current.scrollTo({
-      x:0,
-      y:0,
-      animated:false,
-    })
+      x: 0,
+      y: 0,
+      animated: false,
+    });
     getData();
   }, [id]);
 
-const Scroll=()=>{
-    console.log('Salam'); 
-    return <></>
-  }
+  const Scroll = () => {
+    console.log('Salam');
+    return <></>;
+  };
 
   return (
     <>
@@ -399,7 +399,10 @@ const Scroll=()=>{
         <View style={styles.ButtonContainer}>
           <View style={styles.AddedButton}>
             <AddedButton
-              onPress={() => addToWishlist()}
+              onPress={async () => {
+                await addToWishlist();
+                setLoading(false);
+              }}
               backgroundColor={addedWish ? colors.errorRed : colors.black}>
               <View style={styles.AddedButtonContainer}>
                 <Text style={styles.ButtonText}>
@@ -412,7 +415,12 @@ const Scroll=()=>{
               </View>
             </AddedButton>
           </View>
-          <Button onPress={() =>  addToCard()} backgroundColor={colors.blue}>
+          <Button
+            onPress={async () => {
+              await addToCard();
+              setLoading(false);
+            }}
+            backgroundColor={colors.blue}>
             <Text style={styles.ButtonText}>
               {inCard ? 'In card' : 'Add to cart'}
             </Text>
