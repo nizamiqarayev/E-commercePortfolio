@@ -11,6 +11,8 @@ import {useIsFocused} from '@react-navigation/native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import base from '../../../helpers/base';
+import { fetchWishlist, setWishlist } from '../../../store/slices/Wishlist';
+import { set } from 'immer/dist/internal';
 
 const ProductsCarousel = ({inProductDetails, inProductId}) => {
   const Skeleton = () => {
@@ -43,6 +45,8 @@ const ProductsCarousel = ({inProductDetails, inProductId}) => {
   const dispatch = useDispatch();
 
   const [inDetailsViewData, setInDetailsViewData] = useState([]);
+  const [wishes,setWishes]=useState([])
+  const [loaded,setLoaded]=useState(false)
 
   const focus = useIsFocused();
   async function getWishes(){
@@ -51,13 +55,16 @@ const ProductsCarousel = ({inProductDetails, inProductId}) => {
         const response = await base.api().get(`wishlists/${userId}`);
         const datas = response.data.data;
         await AsyncStorage.setItem('wishlist', JSON.stringify(datas.products));
-      } catch (error) {}
+        setWishes(datas.products)
+        setLoaded(true)
+        // console.log('Salaammmmmm',datas.products);
+      } catch (error) {
+        console.log(error);
+      }
 
     }
-
-    useEffect(()=>{
-      getWishes()
-    },[])
+  
+ 
 
   useEffect(() => {
     if (productsAllData.allproductsloaded == false) {
@@ -65,6 +72,8 @@ const ProductsCarousel = ({inProductDetails, inProductId}) => {
     }
   }, []);
   useEffect(() => {
+    getWishes()
+  
     if (productsAllData.allproductsloaded == true) {
       if (inProductDetails == false || inProductDetails == null) {
         dispatch(setAllProductsDisplay({final: productsAllData.products}));
@@ -80,7 +89,7 @@ const ProductsCarousel = ({inProductDetails, inProductId}) => {
 
   return (
     <>
-      {productsAllData.allproductsloaded ? (
+      {productsAllData.allproductsloaded&&loaded? (
         <FlatList
           style={styles.scrollView}
           contentContainerStyle={{
@@ -90,7 +99,7 @@ const ProductsCarousel = ({inProductDetails, inProductId}) => {
           data={productsAllData.allProductsDisplay}
           renderItem={({item}) => (
             <View style={{marginHorizontal: px(15)}}>
-              <ProductCard data={item} />
+              <ProductCard wishlistes={wishes} data={item} />
             </View>
           )}
           horizontal={true}
