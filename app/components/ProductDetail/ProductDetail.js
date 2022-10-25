@@ -415,10 +415,11 @@ const ProductDetail = ({route}) => {
                 <Text style={styles.ButtonText}>
                   {addedWish ? 'Added' : 'Add'}
                 </Text>
-                <Octicons
+                {/* <Octicons
                   name="heart-fill"
                   color={colors.white}
-                  size={px(18)}></Octicons>
+                  size={px(18)}
+                /> */}
               </View>
             </AddedButton>
           </View>
