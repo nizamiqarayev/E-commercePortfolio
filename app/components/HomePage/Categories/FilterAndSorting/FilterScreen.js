@@ -45,10 +45,9 @@ const FilterScreen = ({navigation}) => {
   const filter = () => {
     const tempdata = data.categorySpecificProducts;
     const newData = tempdata.filter(item => {
-      return (
-        item.price.replace(/\s/g, '') >= parseFloat(low) &&
-        item.price.replace(/\s/g, '') <= parseFloat(high)
-      );
+      return item.isSale ?item.salePrice.replace(/\s/g, '') >= parseFloat(low) && item.salePrice.replace(/\s/g, '') <= parseFloat(high) : item.price.replace(/\s/g, '') >= parseFloat(low) && item.price.replace(/\s/g, '') <= parseFloat(high)
+     
+      
     });
 
     dispatch(
@@ -122,7 +121,7 @@ const FilterScreen = ({navigation}) => {
               onPress={() => {
                 setHigh(100), setLow(0);
               }}>
-              reset
+              Reset
             </Button>
           </View>
           <View style={{height: px(50), flex: 1, marginHorizontal: 10}}>

@@ -3,6 +3,7 @@ import React from 'react';
 import IconButton from '../../../UI/IconButton';
 import px from '../../../../assets/utility/dimension';
 import colors from '../../../../config/colors';
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 export default function Selection({
   title,
@@ -37,13 +38,13 @@ export default function Selection({
           {title}
         </Text>
         {value == selectedValue ? (
-          <IconButton
+          <Ionicons
             name="checkmark-circle-outline"
             size={20}
             color={colors.EarthGreen}
           />
         ) : (
-          <IconButton name="ellipse-outline" size={20} color={'black'} />
+          <Ionicons name="ellipse-outline" size={20} color={'black'} />
         )}
       </View>
     </Pressable>
