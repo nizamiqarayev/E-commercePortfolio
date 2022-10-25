@@ -17,10 +17,11 @@ const SortScreen = ({navigation}) => {
   const [sortedValue, setSortedValue] = useState([]);
 
   useEffect(() => {
+    console.log("working");
     if (sortedValue.length) {
       dispatch(setProductsForDisplay({final: sortedValue}));
     }
-  }, [sortedValue]);
+  }, [JSON.stringify(sortedValue)]);
 
   return (
     <View style={styles.container}>
@@ -73,10 +74,8 @@ const SortScreen = ({navigation}) => {
         </View>
         <View style={{height: px(50), flex: 1, marginHorizontal: 10}}>
           <Button
-            onPress={() => {
-              setSortedValue(
-                Sorting(productsAllData.productsForDisplay, SortType),
-              );
+            onPress={async () => {
+              await setSortedValue(Sorting(productsAllData.productsForDisplay, SortType));
 
               navigation.pop(1);
             }}
