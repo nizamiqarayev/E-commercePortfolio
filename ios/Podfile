@@ -4,9 +4,11 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 platform :ios, '12.4'
 install! 'cocoapods', :deterministic_uuids => false
 
+
+
 target 'eCommerce' do
   config = use_native_modules!
-
+  
   # Flags change depending on the env values.
   flags = get_default_flags()
 
@@ -40,4 +42,7 @@ target 'eCommerce' do
     )
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
+
+  
+  
 end

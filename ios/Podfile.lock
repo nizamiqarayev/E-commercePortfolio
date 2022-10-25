@@ -382,6 +382,8 @@ PODS:
     - React-Core
   - RNCMaskedView (0.2.8):
     - React-Core
+  - RNQuickAction (0.3.13):
+    - React
   - RNScreens (3.17.0):
     - React-Core
     - React-RCTImage
@@ -458,6 +460,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
+  - RNQuickAction (from `../node_modules/react-native-quick-actions`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNShare (from `../node_modules/react-native-share`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
@@ -558,6 +561,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCMaskedView:
     :path: "../node_modules/@react-native-masked-view/masked-view"
+  RNQuickAction:
+    :path: "../node_modules/react-native-quick-actions"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   RNShare:
@@ -619,6 +624,7 @@ SPEC CHECKSUMS:
   ReactCommon: 7f86326b92009925c6dcf93f8e825060171c379f
   RNCAsyncStorage: 0c357f3156fcb16c8589ede67cc036330b6698ca
   RNCMaskedView: bc0170f389056201c82a55e242e5d90070e18e5a
+  RNQuickAction: 6d404a869dc872cde841ad3147416a670d13fa93
   RNScreens: 0df01424e9e0ed7827200d6ed1087ddd06c493f9
   RNShare: a5dc3b9c53ddc73e155b8cd9a94c70c91913c43c
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
@@ -626,6 +632,6 @@ SPEC CHECKSUMS:
   Yoga: 6c8252e38d65aa387daee699eacf027e055e0b31
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 41b3a4349501d30f4a0d0ea0f9a1616fcd6c8805
+PODFILE CHECKSUM: 4fa3c0112b29af7c7103d3027de37e31edbb81fc
 
 COCOAPODS: 1.11.3

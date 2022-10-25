@@ -72,7 +72,6 @@ const ProductDetail = ({route}) => {
   const addToWishlist = async () => {
     setLoading(true);
 
-
     if (addedWish) return deleteFromWishList();
     try {
       const userId = await AsyncStorage.getItem('_id');
@@ -418,7 +417,8 @@ const ProductDetail = ({route}) => {
                 <Octicons
                   name="heart-fill"
                   color={colors.white}
-                  size={px(18)}></Octicons>
+                  size={px(18)}
+                />
               </View>
             </AddedButton>
           </View>
@@ -429,7 +429,6 @@ const ProductDetail = ({route}) => {
               setLoading(false);
             }}
             backgroundColor={colors.blue}>
-
             <Text style={styles.ButtonText}>
               {inCard ? 'In card' : 'Add to cart'}
             </Text>

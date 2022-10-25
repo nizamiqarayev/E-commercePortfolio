@@ -5,9 +5,9 @@ import {NavigationContainer} from '@react-navigation/native';
 
 import BottomTabsenComponent from './stack/BottomTabsenComponent';
 import StackComponent from './stack/Stack';
-import { Provider } from 'react-redux';
-import { store } from './store/store';
-
+import {Provider} from 'react-redux';
+import {store} from './store/store';
+import {navigationRef} from './hooks/useNavigation';
 
 LogBox.ignoreLogs([
   'VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality - use another VirtualizedList-backed container instead.',
@@ -17,25 +17,17 @@ LogBox.ignoreLogs([
   'Task orphaned',
 ]);
 
-
 const App = () => {
-  
   const BottomTab = () => {
-    return (
-      <BottomTabsenComponent />
-    )
+    return <BottomTabsenComponent />;
   };
 
   return (
     <Provider store={store}>
-
-   
-    <NavigationContainer>
-      <StackComponent />
-      
+      <NavigationContainer ref={navigationRef}>
+        <StackComponent />
       </NavigationContainer>
-      
-      </Provider>
+    </Provider>
   );
 };
 

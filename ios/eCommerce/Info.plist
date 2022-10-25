@@ -78,5 +78,12 @@
 	<false/>
 	<key>UIUserInterfaceStyle</key>
     <string>Light</string>
+	<key>UIApplicationShortcutItemIconType</key>
+    <string>UIApplicationShortcutIconTypeLocation</string>
+	
+    <key>UIApplicationShortcutItemTitle</key>
+    <string>Some</string>
+    <key>UIApplicationShortcutItemType</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER).action</string>
 </dict>
 </plist>

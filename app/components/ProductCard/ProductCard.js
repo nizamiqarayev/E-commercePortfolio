@@ -13,9 +13,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import base from '../../helpers/base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
-const ProductCard = ({data,wishlistes,inWish}) => {
+const ProductCard = ({data, wishlistes, inWish}) => {
   const navigation = useNavigation();
   const [starReview, setStarReview] = useState(0);
   const [sale, setIsSale] = useState(data.isSale);
@@ -23,7 +23,6 @@ const ProductCard = ({data,wishlistes,inWish}) => {
   const [haveWish, setHavewish] = useState(false);
   const [datas, setDatas] = useState('');
   const focus = useIsFocused();
- 
 
   async function getWishlist() {
     const userId = await AsyncStorage.getItem('_id');
@@ -51,10 +50,7 @@ const ProductCard = ({data,wishlistes,inWish}) => {
     }
   }
 
-  
-
   async function checkWishlist() {
-    
     if (wishlistes) {
       wishlistes.forEach(item => {
         if (item._id === data._id) {
@@ -63,12 +59,12 @@ const ProductCard = ({data,wishlistes,inWish}) => {
       });
     }
   }
-  const wish=useSelector((state)=>state.pending)
+  const wish = useSelector(state => state.pending);
   useEffect(() => {
-    if(inWish){
-      setFavorite(true)
+    if (inWish) {
+      setFavorite(true);
     }
-   checkWishlist();
+    checkWishlist();
   }, [wish]);
 
   async function setWish() {
@@ -77,12 +73,14 @@ const ProductCard = ({data,wishlistes,inWish}) => {
     if (!wishes) {
       wishes = [];
     }
-    if(!(wishes.some(item => {
-      if (item._id=== data._id) {
-       return true
-      }
-    }))){
-      wishes.push(data)
+    if (
+      !wishes.some(item => {
+        if (item._id === data._id) {
+          return true;
+        }
+      })
+    ) {
+      wishes.push(data);
       setFavorite(true);
     }
     await AsyncStorage.setItem('wishlist', JSON.stringify(wishes));
@@ -107,7 +105,7 @@ const ProductCard = ({data,wishlistes,inWish}) => {
     const userId = await AsyncStorage.getItem('_id');
     let wishes = JSON.parse(await AsyncStorage.getItem('wishlist'));
 
-    wishes= wishes.filter(item => {
+    wishes = wishes.filter(item => {
       return item._id !== data._id;
     });
     await AsyncStorage.setItem('wishlist', JSON.stringify(wishes));
@@ -173,13 +171,13 @@ const ProductCard = ({data,wishlistes,inWish}) => {
           )}
           <Image style={styles.image} source={{uri: data.coverPhoto}} />
           <Pressable
-          // onPress={() => {
-          //   if (favorite) {
-          //     delWish();
-          //   } else {
-          //     setWish();
-          //   }
-          // }}
+            // onPress={() => {
+            //   if (favorite) {
+            //     delWish();
+            //   } else {
+            //     setWish();
+            //   }
+            // }}
             style={{position: 'absolute', right: 0, zIndex: 1}}>
             <Ionicons
               name={favorite ? 'md-heart-sharp' : 'md-heart-outline'}
