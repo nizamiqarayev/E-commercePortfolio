@@ -69,7 +69,7 @@ const SortScreen = ({navigation}) => {
             onPress={() => {
               setSortType('A-Z');
             }}>
-            reset
+            Reset
           </Button>
         </View>
         <View style={{height: px(50), flex: 1, marginHorizontal: 10}}>

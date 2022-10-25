@@ -31,23 +31,25 @@ const FilterScreen = ({navigation}) => {
   const focus = useIsFocused();
 
   const maxValue = useMemo(() => {
-    return (
-      parseInt(
-        data.categorySpecificProducts
-          .reduce((previous, current) => {
-            return current.price > previous.price ? current : previous;
-          })
-          .price.replace(/\s/g, ''),
-      ) + 1
+    return parseInt(
+      data.categorySpecificProducts
+        .reduce((previous, current) => {
+          return current.price > previous.price ? current : previous;
+        })
+        .price.replace(/\s/g, ''),
     );
   }, [focus]);
 
   const dispatch = useDispatch();
 
   const filter = () => {
-    const newData = data.categorySpecificProducts.filter(item => {
-      return item.price >= low && item.price <= high;
+    const tempdata = data.categorySpecificProducts;
+    const newData = tempdata.filter(item => {
+      return item.isSale ?item.salePrice.replace(/\s/g, '') >= parseFloat(low) && item.salePrice.replace(/\s/g, '') <= parseFloat(high) : item.price.replace(/\s/g, '') >= parseFloat(low) && item.price.replace(/\s/g, '') <= parseFloat(high)
+     
+      
     });
+
     dispatch(
       setFilteredProducts({
         filteredProducts: newData,
@@ -119,7 +121,7 @@ const FilterScreen = ({navigation}) => {
               onPress={() => {
                 setHigh(100), setLow(0);
               }}>
-              reset
+              Reset
             </Button>
           </View>
           <View style={{height: px(50), flex: 1, marginHorizontal: 10}}>
