@@ -1,11 +1,18 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import ProductCard from '../../../ProductCard/ProductCard'
 import px from '../../../../assets/utility/dimension'
 import colors from '../../../../config/colors'
+import base from '../../../../helpers/base'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const ProductCardList = ({products}) => {
+   
   
+  
+
+  
+
   return (
     <View style={styles.container}>
       <FlatList showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}  content data={products} renderItem={({ item }) => (

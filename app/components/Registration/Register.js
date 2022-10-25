@@ -9,16 +9,17 @@ import {
   Pressable,
   ScrollView,
   Dimensions,
-  PixelRatio,
+  ActivityIndicator
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import base from '../../helpers/base';
 import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
 import Button from '../UI/Button';
 const dimension = Dimensions.get('screen').height / 830;
 
 const Register = () => {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
 
   const [errMsg, setErrMsg] = useState(false);
@@ -44,6 +45,14 @@ const Register = () => {
 
   const placeholder = 'Enter Email/Phone Number to Register';
   return (
+    <>
+    {loading ? (
+        <View style={styles.ActivityIndicator}>
+          <ActivityIndicator size={'large'}></ActivityIndicator>
+        </View>
+      ) : (
+        <></>
+      )}
     <View style={styles.container}>
       <ScrollView>
         <View>
@@ -117,6 +126,7 @@ const Register = () => {
                 onPress={
                   email != ''
                     ? async () => {
+                      setLoading(true)
                         try {
                           const value = await axios.post(
                             'https://izzi-ecom.herokuapp.com/user/emailConfirm',
@@ -132,7 +142,9 @@ const Register = () => {
                           });
                         } catch (error) {
                           console.log(error);
+                          setLoading(false)
                         }
+                        setLoading(false)
                       }
                     : () => {}
                 }>
@@ -160,14 +172,25 @@ const Register = () => {
         </View>
       </ScrollView>
     </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 25 * dimension,
-    backgroundColor:colors.offGray,
+    backgroundColor:colors.white,
     flex: 1,
+  },
+  ActivityIndicator: {
+    position: 'absolute',
+    zIndex: 1,
+    right: 0,
+    width: base.screenWidth,
+    height: base.screenHeight,
+    justifyContent: 'center',
+    backgroundColor: colors.offGray,
+    opacity: 0.5,
   },
   textInput: {
     paddingVertical: 16 * dimension,

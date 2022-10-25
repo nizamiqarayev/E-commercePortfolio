@@ -9,9 +9,10 @@ import {
   ScrollView,
   Dimensions,
   Pressable,
+  ActivityIndicator
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import base from '../../helpers/base';
 import Button from '../UI/Button';
 import px from '../../assets/utility/dimension';
 import CountDown from 'react-native-countdown-component';
@@ -31,6 +32,7 @@ const Verification = ({route}) => {
 
   const [resendAvailable, setResendAvailable] = useState(false);
 
+  const [loading, setLoading] = useState(false);
   const changeHandler = (index, text) => {
     if (index <= 3 && text != '') {
       if (index < 3) {
@@ -121,6 +123,14 @@ const Verification = ({route}) => {
   const navigate = useNavigation();
 
   return (
+    <>
+    {loading ? (
+        <View style={styles.ActivityIndicator}>
+          <ActivityIndicator size={'large'}></ActivityIndicator>
+        </View>
+      ) : (
+        <></>
+      )}
     <View style={styles.container}>
       <ScrollView>
         <View>
@@ -250,15 +260,19 @@ const Verification = ({route}) => {
                 }
                 color={'white'}
                 onPress={
+                  
                   otpReadyforTest && val != 0
                     ? () => {
+                      setLoading(true)
                         if (otpFinalVerification() == true) {
                           navigate.navigate(route.params.path, {
                             email: route.params.email,
                           });
                         } else {
+                          setLoading(false)
                           setErrorMsg(true);
                         }
+                        setLoading(false)
                       }
                     : () => {}
                 }>
@@ -269,6 +283,7 @@ const Verification = ({route}) => {
         </View>
       </ScrollView>
     </View>
+    </>
   );
 };
 
@@ -277,7 +292,18 @@ const styles = StyleSheet.create({
     marginHorizontal: px(25),
     flex: 1,
   },
+  ActivityIndicator: {
+    position: 'absolute',
+    zIndex: 1,
+    right: 0,
+    width: base.screenWidth,
+    height: base.screenHeight,
+    justifyContent: 'center',
+    backgroundColor: colors.offGray,
+    opacity: 0.5,
+  },
   textInput: {
+    color:colors.fontColor,
     flex: 1,
     marginHorizontal: px(6),
     paddingVertical: px(16),

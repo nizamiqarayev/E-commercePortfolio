@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -35,6 +35,7 @@ const ProductDetail = ({route}) => {
   const [inCard, setInCard] = useState(false);
 
   const navigation = useNavigation();
+  const scrollref = useRef();
 
   const productsAllData = useSelector(state => state.products);
 
@@ -251,16 +252,29 @@ const ProductDetail = ({route}) => {
 
       setData(response.data);
       setStore(response.data.store);
-
+    
       setLoading(false);
+      scroll()
     } catch (error) {
       setLoading(false);
     }
+
+    
   }
 
   useEffect(() => {
+    scrollref.current.scrollTo({
+      x:0,
+      y:0,
+      animated:false,
+    })
     getData();
-  }, []);
+  }, [id]);
+
+const Scroll=()=>{
+    console.log('Salam'); 
+    return <></>
+  }
 
   return (
     <>
@@ -272,7 +286,7 @@ const ProductDetail = ({route}) => {
         <></>
       )}
 
-      <ScrollView style={styles.container}>
+      <ScrollView ref={scrollref} style={styles.container}>
         <View style={styles.imageContainer}>
           <FlatList
             data={data.photos}
@@ -398,7 +412,7 @@ const ProductDetail = ({route}) => {
               </View>
             </AddedButton>
           </View>
-          <Button onPress={() => addToCard()} backgroundColor={colors.blue}>
+          <Button onPress={() =>  addToCard()} backgroundColor={colors.blue}>
             <Text style={styles.ButtonText}>
               {inCard ? 'In card' : 'Add to cart'}
             </Text>
