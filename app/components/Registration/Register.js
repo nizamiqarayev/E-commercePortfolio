@@ -19,10 +19,12 @@ import Button from '../UI/Button';
 const dimension = Dimensions.get('screen').height / 830;
 
 const Register = () => {
+
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
 
   const [errMsg, setErrMsg] = useState(false);
+  const [alreadyExistsError,setalreadyExistsError] =useState(false)
 
   const [buttonReady, setButtonReady] = useState(false);
 
@@ -35,6 +37,7 @@ const Register = () => {
       setErrMsg(false);
       setEmail(text);
       setButtonReady(true);
+      setalreadyExistsError(false)
     } else {
       setButtonReady(false);
       setErrMsg(true);
@@ -115,7 +118,27 @@ const Register = () => {
               </View>
             ) : (
               <></>
-            )}
+              )}
+              {alreadyExistsError? (
+              <View style={styles.errorView}>
+                <Ionicons
+                  name={'alert-circle-outline'}
+                  size={24}
+                  color={colors.errorRed}
+                />
+                <Text
+                  style={{
+                    color: colors.errorRed,
+                    fontSize: px(16),
+                    fontWeight: '400',
+                    marginLeft: 5,
+                  }}>
+                  Email Already Exists
+                </Text>
+              </View>
+            ) : (
+              <></>
+              )}
           </View>
 
           <View style={{marginTop: 150 * dimension}}>
@@ -142,6 +165,7 @@ const Register = () => {
                           });
                         } catch (error) {
                           console.log(error);
+                          setalreadyExistsError(true)
                           setLoading(false)
                         }
                         setLoading(false)
