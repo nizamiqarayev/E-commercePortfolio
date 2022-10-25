@@ -29,14 +29,19 @@ const NewsDetail = ({route, navigation}) => {
   const focused = useIsFocused();
   const [loading, setLoading] = useState(false);
   const [otherData, setOtherData] = useState([]);
-  const [otherDatalength, setOtherDataLength] = useState();
+  const [otherDatalength, setOtherDataLength] = useState(0);
   async function otherNewsRequest() {
-    const response = await axios.get(
-      `https://izzi-ecom.herokuapp.com/news/${randomindex}`,
-    );
-    setOtherData(response.data.data);
-    setOtherDataLength(response.data.data.length);
+    try {
+      const response = await axios.get(
+        `https://izzi-ecom.herokuapp.com/news/${randomindex}`,
+      );
+      setOtherData(response?.data?.data);
+      setOtherDataLength(response?.data?.data?.length);
+    } catch (error) {
+      otherNewsRequest();
+    }
   }
+
   useEffect(() => {
     if (focused) {
       otherNewsRequest();
@@ -57,13 +62,13 @@ const NewsDetail = ({route, navigation}) => {
     return (
       <>
         <LatestNewsListItem
-          key={otherData[random1]._id}
-          data={otherData[random1]}
+          key={otherData[random1]._id || 'test'}
+          data={otherData[random1] || []}
           index={random1}
         />
         <LatestNewsListItem
-          key={otherData[random2]._id}
-          data={otherData[random2]}
+          key={otherData[random2]._id || 'test1'}
+          data={otherData[random2] || []}
           index={random2}
         />
       </>
@@ -104,44 +109,45 @@ const NewsDetail = ({route, navigation}) => {
     <>
       {loading ? (
         <View style={styles.ActivityIndicator}>
-        <ActivityIndicator size={'large'}></ActivityIndicator>
-      </View>
-      ) : <></>}
-        <ScrollView ref={scrollref} style={styles.scrollViewContainer}>
-          <View style={styles.container}>
-            <View style={styles.imageContainer}>
-              <Image style={styles.image} source={{uri: data.image}}></Image>
-            </View>
-            <View>
-              <Text style={styles.title}>{data.title}</Text>
-            </View>
-            <View style={styles.dateContainer}>
-              <Text style={styles.date}>{getdate(data.date)}</Text>
-            </View>
-            <View>
-              <Text style={styles.description}>{data.content}</Text>
-            </View>
+          <ActivityIndicator size={'large'}></ActivityIndicator>
+        </View>
+      ) : (
+        <></>
+      )}
+      <ScrollView ref={scrollref} style={styles.scrollViewContainer}>
+        <View style={styles.container}>
+          <View style={styles.imageContainer}>
+            <Image style={styles.image} source={{uri: data.image}}></Image>
           </View>
           <View>
-            <View style={styles.OtherNewsContainer}>
-              <Text style={styles.title}>Other News</Text>
-            </View>
-            <View style={styles.otherNews}>
-              {otherDatalength && <OtherNews />}
-            </View>
-            <View style={styles.container}>
-              <Button
-                onPress={() => {
-                  navigation.navigate('allnews');
-                }}
-                color={colors.black}
-                borderColor={colors.black}>
-                See all News
-              </Button>
-            </View>
+            <Text style={styles.title}>{data.title}</Text>
           </View>
-        </ScrollView>
-      
+          <View style={styles.dateContainer}>
+            <Text style={styles.date}>{getdate(data.date)}</Text>
+          </View>
+          <View>
+            <Text style={styles.description}>{data.content}</Text>
+          </View>
+        </View>
+        <View>
+          <View style={styles.OtherNewsContainer}>
+            <Text style={styles.title}>Other News</Text>
+          </View>
+          <View style={styles.otherNews}>
+            {otherDatalength && <OtherNews />}
+          </View>
+          <View style={styles.container}>
+            <Button
+              onPress={() => {
+                navigation.navigate('allnews');
+              }}
+              color={colors.black}
+              borderColor={colors.black}>
+              See all News
+            </Button>
+          </View>
+        </View>
+      </ScrollView>
     </>
   );
 };
@@ -151,7 +157,7 @@ export default NewsDetail;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginBottom:px(30)
+    marginBottom: px(30),
   },
   OtherNewsContainer: {
     marginTop: px(30),
@@ -159,7 +165,7 @@ const styles = StyleSheet.create({
   },
   scrollViewContainer: {
     paddingHorizontal: px(25),
-    backgroundColor:colors.white,
+    backgroundColor: colors.white,
   },
   imageContainer: {
     margin: px(25),
