@@ -38,13 +38,17 @@ const LatestNewsList = ({homepage, amountOfNews, extraRender}) => {
 
   const datafetcher = async index => {
     setLoading(true);
-    if (!loadedNews.includes(index)) {
-      const response = await axios.get(
-        `https://izzi-ecom.herokuapp.com/news/${index}`,
-      );
-
-      setNextAvailable(response.data.next);
-      setNewsData(response.data.data);
+    try {
+      if (!loadedNews.includes(index)) {
+        const response = await axios.get(
+          `https://izzi-ecom.herokuapp.com/news/${index}`,
+        );
+  
+        setNextAvailable(response.data.next);
+        setNewsData(response.data.data);
+      }
+    } catch (error) {
+     setNewsData([])
     }
     setLoading(false);
   };

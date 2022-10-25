@@ -29,12 +29,6 @@ const HomePage = ({route, navigation}) => {
 
   useEffect(() => {
     if (focused) {
-      // navigation.reset(
-      //   {
-      //     index: 0,
-      //     actions: [navigation.navigate({ routeName: 'HomePage' })],
-      //   }
-      // )
     }
   }, [focused]);
   return (

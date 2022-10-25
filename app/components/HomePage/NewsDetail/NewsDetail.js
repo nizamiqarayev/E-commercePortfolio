@@ -134,7 +134,7 @@ const NewsDetail = ({route, navigation}) => {
             <Text style={styles.title}>Other News</Text>
           </View>
           <View style={styles.otherNews}>
-            {otherDatalength && <OtherNews />}
+            {otherDatalength ? <OtherNews />:<></>}
           </View>
           <View style={styles.container}>
             <Button

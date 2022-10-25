@@ -22,6 +22,8 @@ const ProductCardList = ({products}) => {
       } catch (error) {
         console.log(error);
       }
+      setLoaded(true)
+
 
     }
     useEffect(()=>{
