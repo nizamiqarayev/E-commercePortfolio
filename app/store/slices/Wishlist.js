@@ -1,11 +1,14 @@
-import {createSlice,createAsyncThunk} from '@reduxjs/toolkit';
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import base from '../../helpers/base';
 
 export const fetchWishlist = createAsyncThunk('wishlist/fetchWishlist', () => {
-    console.log(base.token);
-    console.log(base.userId);
   if (base.token) {
-    return base.api().get(`wishlists/${base.userId}`).then((reponse)=>{return reponse.data.data})
+    return base
+      .api()
+      .get(`wishlists/${base.userId}`)
+      .then(reponse => {
+        return reponse.data.data;
+      });
   }
 });
 
@@ -13,7 +16,7 @@ const wishlist = createSlice({
   name: 'wishlist',
   initialState: {
     content: [],
-    pending:false
+    pending: false,
   },
   reducers: {
     setWishlist: (state, action) => {
@@ -22,15 +25,14 @@ const wishlist = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(fetchWishlist.pending, state => {
-      state.pending=true
+      state.pending = true;
     });
     builder.addCase(fetchWishlist.fulfilled, (state, action) => {
-
       state.content = action.payload;
-      state.pending=false
+      state.pending = false;
     }),
       builder.addCase(fetchWishlist.rejected, (state, action) => {
-         (state.content = []);
+        state.content = [];
       });
   },
 });

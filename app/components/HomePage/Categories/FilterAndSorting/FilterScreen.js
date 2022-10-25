@@ -28,22 +28,19 @@ const FilterScreen = ({navigation}) => {
     setHigh(high);
   }, []);
 
-  const focus = useIsFocused()
+  const focus = useIsFocused();
 
-  console.log(data.categorySpecificProducts);
-  const maxValue = useMemo(() =>
-    
-  {
-
-   
-    return parseInt(data.categorySpecificProducts.reduce((previous, current) => {
-      return current.price > previous.price ? current : previous;
-    }).price.replace(/\s/g, ''))+1
-  
-
-    }
-    
-  ,[focus])
+  const maxValue = useMemo(() => {
+    return (
+      parseInt(
+        data.categorySpecificProducts
+          .reduce((previous, current) => {
+            return current.price > previous.price ? current : previous;
+          })
+          .price.replace(/\s/g, ''),
+      ) + 1
+    );
+  }, [focus]);
 
   const dispatch = useDispatch();
 
