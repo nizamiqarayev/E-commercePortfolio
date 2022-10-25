@@ -28,9 +28,11 @@ const FilterScreen = ({navigation}) => {
     setHigh(high);
   }, []);
 
+
+
+
   const focus = useIsFocused()
 
-  console.log(data.categorySpecificProducts);
   const maxValue = useMemo(() =>
     
   {
@@ -38,19 +40,24 @@ const FilterScreen = ({navigation}) => {
    
     return parseInt(data.categorySpecificProducts.reduce((previous, current) => {
       return current.price > previous.price ? current : previous;
-    }).price.replace(/\s/g, ''))+1
+    }).price.replace(/\s/g, ''))
   
 
     }
     
-  ,[focus])
+    , [focus])
+    
 
   const dispatch = useDispatch();
 
   const filter = () => {
-    const newData = data.categorySpecificProducts.filter(item => {
-      return item.price >= low && item.price <= high;
+    const tempdata =data.categorySpecificProducts
+    const newData = tempdata.filter(item => {
+
+      
+      return item.price.replace(/\s/g, '') >= parseFloat(low) && item.price.replace(/\s/g, '') <= parseFloat(high);
     });
+  
     dispatch(
       setFilteredProducts({
         filteredProducts: newData,

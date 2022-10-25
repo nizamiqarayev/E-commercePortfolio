@@ -2,6 +2,7 @@ import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
 import React, {useEffect} from 'react';
 import px from '../../../assets/utility/dimension';
 import {useNavigation} from '@react-navigation/native';
+import colors from '../../../config/colors';
 
 const LatestNewsListItem = ({data,index,onPress}) => {
   const navigation = useNavigation();
@@ -10,7 +11,7 @@ const LatestNewsListItem = ({data,index,onPress}) => {
     <View style={{overflow: 'hidden'}}>
       <Pressable
         style={styles.container}
-        android_ripple={{color: '#59565A'}}
+        android_ripple={{color: colors.softGray}}
         onPress={onPress?onPress:() => {
           navigation.navigate('newsdetail',{data:data,index:index});
         }}>
