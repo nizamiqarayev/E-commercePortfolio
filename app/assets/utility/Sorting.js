@@ -25,24 +25,12 @@ export const Sorting = (data, sortType) => {
       break;
     case 'price-H-L':
       returnData = data.slice().sort((a, b) => {
-        if (a.price < b.price) {
-          return 1;
-        }
-        if (a.price > b.price) {
-          return -1;
-        }
-        return 0;
+       return b.price - a.price
       });
       break;
     case 'price-L-H':
       returnData = data.slice().sort((a, b) => {
-        if (a.price < b.price) {
-          return -1;
-        }
-        if (a.price > b.price) {
-          return 1;
-        }
-        return 0;
+       return a.price-b.price
       });
       break;
     default:

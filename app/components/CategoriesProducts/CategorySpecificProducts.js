@@ -68,11 +68,11 @@ const CategorySpecificProducts = ({route, navigation}) => {
     }
   };
 
-  useEffect(() => {
-    if (productsAllData.productsForDisplay.length !== 0) {
-      Sorting(productsAllData.productsForDisplay, 'A-Z', 'price-L-H');
-    }
-  }, [productsAllData.productsForDisplay]);
+  // useEffect(() => {
+  //   if (productsAllData.productsForDisplay.length !== 0) {
+  //     Sorting(productsAllData.productsForDisplay, 'A-Z', 'price-L-H');
+  //   }
+  // }, [productsAllData.productsForDisplay]);
 
   return (
     <View style={styles.container}>
