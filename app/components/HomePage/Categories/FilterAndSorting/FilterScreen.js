@@ -49,16 +49,16 @@ const FilterScreen = ({navigation}) => {
      
       
     });
-
     dispatch(
       setFilteredProducts({
         filteredProducts: newData,
       }),
     );
   };
-  useEffect(() => {
-    filter();
-  }, [data.categorySpecificProducts]);
+  // useEffect(() => {
+  //   console.log("this is being run");
+  //   filter();
+  // }, [data.categorySpecificProducts]);
   return (
     <View style={styles.container}>
       <View

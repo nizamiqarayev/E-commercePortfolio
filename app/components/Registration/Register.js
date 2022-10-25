@@ -9,7 +9,7 @@ import {
   Pressable,
   ScrollView,
   Dimensions,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import base from '../../helpers/base';
@@ -19,12 +19,11 @@ import Button from '../UI/Button';
 const dimension = Dimensions.get('screen').height / 830;
 
 const Register = () => {
-
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
 
   const [errMsg, setErrMsg] = useState(false);
-  const [alreadyExistsError,setalreadyExistsError] =useState(false)
+  const [alreadyExistsError, setalreadyExistsError] = useState(false);
 
   const [buttonReady, setButtonReady] = useState(false);
 
@@ -37,7 +36,7 @@ const Register = () => {
       setErrMsg(false);
       setEmail(text);
       setButtonReady(true);
-      setalreadyExistsError(false)
+      setalreadyExistsError(false);
     } else {
       setButtonReady(false);
       setErrMsg(true);
@@ -49,153 +48,153 @@ const Register = () => {
   const placeholder = 'Enter Email/Phone Number to Register';
   return (
     <>
-    {loading ? (
+      {loading ? (
         <View style={styles.ActivityIndicator}>
-          <ActivityIndicator size={'large'}></ActivityIndicator>
+          <ActivityIndicator size={'large'} />
         </View>
       ) : (
         <></>
       )}
-    <View style={styles.container}>
-      <ScrollView>
-        <View>
-          <Text
-            style={{
-              marginTop: 30 * dimension,
-              marginBottom: 20 * dimension,
-              fontSize: 32 * dimension,
-              fontWeight: '700',
-              color: '#0C1A30',
-            }}>
-            Register Account
-          </Text>
-          <Text
-            style={{
-              color: '#838589',
-              fontSize: 16 * dimension,
-              fontWeight: '400',
-            }}>
-            Enter Email / No. Phone to register{' '}
-          </Text>
-        </View>
-        <View
-          style={{
-            marginTop: 60 * dimension,
-            flex: 1,
-          }}>
+      <View style={styles.container}>
+        <ScrollView>
           <View>
             <Text
               style={{
+                marginTop: 30 * dimension,
+                marginBottom: 20 * dimension,
+                fontSize: 32 * dimension,
+                fontWeight: '700',
                 color: '#0C1A30',
-                fontSize: 20 * dimension,
+              }}>
+              Register Account
+            </Text>
+            <Text
+              style={{
+                color: '#838589',
+                fontSize: 16 * dimension,
                 fontWeight: '400',
               }}>
-              Email/Phone
+              Enter Email / No. Phone to register{' '}
             </Text>
-            <TextInput
-              style={styles.textInput}
-              placeholder={placeholder}
-              placeholderTextColor="#C4C5C4"
-              underlineColorAndroid={'transparent'}
-              onChangeText={emailInputHandler}
-            />
-            {errMsg ? (
-              <View style={styles.errorView}>
-                <Ionicons
-                  name={'alert-circle-outline'}
-                  size={24}
-                  color={colors.errorRed}
-                />
-                <Text
-                  style={{
-                    color: colors.errorRed,
-                    fontSize: px(16),
-                    fontWeight: '400',
-                    marginLeft: 5,
-                  }}>
-                  Please Enter A Valid Email
-                </Text>
-              </View>
-            ) : (
-              <></>
-              )}
-              {alreadyExistsError? (
-              <View style={styles.errorView}>
-                <Ionicons
-                  name={'alert-circle-outline'}
-                  size={24}
-                  color={colors.errorRed}
-                />
-                <Text
-                  style={{
-                    color: colors.errorRed,
-                    fontSize: px(16),
-                    fontWeight: '400',
-                    marginLeft: 5,
-                  }}>
-                  Email Already Exists
-                </Text>
-              </View>
-            ) : (
-              <></>
-              )}
           </View>
-
-          <View style={{marginTop: 150 * dimension}}>
-            <View style={{height: px(50)}}>
-              <Button
-                backgroundColor={buttonReady ? '#3669c9' : '#C4C5C4'}
-                color={'white'}
-                onPress={
-                  email != ''
-                    ? async () => {
-                      setLoading(true)
-                        try {
-                          const value = await axios.post(
-                            'https://izzi-ecom.herokuapp.com/user/emailConfirm',
-                            {email: email},
-                          );
-
-                          navigate.navigate('verification', {
-                            path: 'Profile Password',
-                            email: email,
-                            otp: value.data.code,
-                            confirmType:
-                              'https://izzi-ecom.herokuapp.com/user/emailConfirm',
-                          });
-                        } catch (error) {
-                          console.log(error);
-                          setalreadyExistsError(true)
-                          setLoading(false)
-                        }
-                        setLoading(false)
-                      }
-                    : () => {}
-                }>
-                Continue
-              </Button>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                marginTop: 120 * dimension,
-                paddingBottom: 20 * dimension,
-              }}>
-              <Text style={{marginRight: 5 * dimension, color: '#838589'}}>
-                Have an account?
-              </Text>
-              <Pressable
-                onPress={() => {
-                  navigate.goBack();
+          <View
+            style={{
+              marginTop: 60 * dimension,
+              flex: 1,
+            }}>
+            <View>
+              <Text
+                style={{
+                  color: '#0C1A30',
+                  fontSize: 20 * dimension,
+                  fontWeight: '400',
                 }}>
-                <Text style={{color: '#3669c9'}}> Sign In</Text>
-              </Pressable>
+                Email/Phone
+              </Text>
+              <TextInput
+                style={styles.textInput}
+                placeholder={placeholder}
+                placeholderTextColor="#C4C5C4"
+                underlineColorAndroid={'transparent'}
+                onChangeText={emailInputHandler}
+              />
+              {errMsg ? (
+                <View style={styles.errorView}>
+                  <Ionicons
+                    name={'alert-circle-outline'}
+                    size={24}
+                    color={colors.errorRed}
+                  />
+                  <Text
+                    style={{
+                      color: colors.errorRed,
+                      fontSize: px(16),
+                      fontWeight: '400',
+                      marginLeft: 5,
+                    }}>
+                    Please Enter A Valid Email
+                  </Text>
+                </View>
+              ) : (
+                <></>
+              )}
+              {alreadyExistsError ? (
+                <View style={styles.errorView}>
+                  <Ionicons
+                    name={'alert-circle-outline'}
+                    size={24}
+                    color={colors.errorRed}
+                  />
+                  <Text
+                    style={{
+                      color: colors.errorRed,
+                      fontSize: px(16),
+                      fontWeight: '400',
+                      marginLeft: 5,
+                    }}>
+                    Email Already Exists
+                  </Text>
+                </View>
+              ) : (
+                <></>
+              )}
+            </View>
+
+            <View style={{marginTop: 150 * dimension}}>
+              <View style={{height: px(50)}}>
+                <Button
+                  backgroundColor={buttonReady ? '#3669c9' : '#C4C5C4'}
+                  color={'white'}
+                  onPress={
+                    email != ''
+                      ? async () => {
+                          setLoading(true);
+                          try {
+                            const value = await axios.post(
+                              'https://izzi-ecom.herokuapp.com/user/emailConfirm',
+                              {email: email},
+                            );
+
+                            navigate.navigate('verification', {
+                              path: 'Profile Password',
+                              email: email,
+                              otp: value.data.code,
+                              confirmType:
+                                'https://izzi-ecom.herokuapp.com/user/emailConfirm',
+                            });
+                          } catch (error) {
+                            console.log(error);
+                            setalreadyExistsError(true);
+                            setLoading(false);
+                          }
+                          setLoading(false);
+                        }
+                      : () => {}
+                  }>
+                  Continue
+                </Button>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  marginTop: 120 * dimension,
+                  paddingBottom: 20 * dimension,
+                }}>
+                <Text style={{marginRight: 5 * dimension, color: '#838589'}}>
+                  Have an account?
+                </Text>
+                <Pressable
+                  onPress={() => {
+                    navigate.goBack();
+                  }}>
+                  <Text style={{color: '#3669c9'}}> Sign In</Text>
+                </Pressable>
+              </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
-    </View>
+        </ScrollView>
+      </View>
     </>
   );
 };
@@ -203,7 +202,7 @@ const Register = () => {
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 25 * dimension,
-    backgroundColor:colors.white,
+    backgroundColor: colors.white,
     flex: 1,
   },
   ActivityIndicator: {
@@ -226,9 +225,9 @@ const styles = StyleSheet.create({
   },
   errorView: {
     flexDirection: 'row',
-    marginTop:10,
-    alignItems: "center",
-  }
+    marginTop: 10,
+    alignItems: 'center',
+  },
 });
 
 export default Register;
