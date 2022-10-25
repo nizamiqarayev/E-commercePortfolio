@@ -5,10 +5,12 @@ import {
   Text,
   TextInput,
   View,
+  ActivityIndicator
 } from 'react-native';
 import React, {useState} from 'react';
 import IconButton from '../UI/IconButton';
 import Button from '../UI/Button';
+import base from '../../helpers/base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import px from '../../assets/utility/dimension';
@@ -16,9 +18,11 @@ import colors from '../../config/colors';
 
 const dimension = Dimensions.get('screen').height / 830;
 
-const ProfilePassword = ({route}) => {
+const ProfilePassword = ({route,navigation}) => {
   const [passwordType, setPasswordType] = useState(true);
   const [confirmType, setConfirm] = useState(true)
+
+  const [loading, setLoading] = useState(false);
 
   const [passwordWarning, setPasswordWarning] = useState(false);
   const [nameWarning, setNameWarning] = useState(false);
@@ -41,21 +45,23 @@ const ProfilePassword = ({route}) => {
   }
 
   const submissionHandler = async () => {
+    setLoading(true)
 
     if (input.password == input.confirm) {
 
       try {
         const response = await axios.post("https://izzi-ecom.herokuapp.com/user/register",
           { username: input.name, email: route.params.email, password: input.password })
-
+        navigation.navigate('Login');
       }
       catch (error) {
-
+        setLoading(false)
       }
     
     }
     else {
     }
+    setLoading(false)
   }
 
   const inputHandler = (text, inputType) => {
@@ -78,6 +84,14 @@ const ProfilePassword = ({route}) => {
   };
 
   return (
+    <>
+    {loading ? (
+        <View style={styles.ActivityIndicator}>
+          <ActivityIndicator size={'large'}></ActivityIndicator>
+        </View>
+      ) : (
+        <></>
+      )}
     <ScrollView>
       <View style={styles.container}>
         <View>
@@ -97,7 +111,7 @@ const ProfilePassword = ({route}) => {
             <View style={styles.inputCellContainer}>
               <Text style={styles.label}> Full Name </Text>
               <TextInput
-                placeholderTextColor={'C4C5C4'}
+                placeholderTextColor={colors.darkgray}
                 placeholder="Enter your full name"
                 style={[styles.input]}
                 onChangeText={text => {
@@ -127,7 +141,7 @@ const ProfilePassword = ({route}) => {
                 }}>
                 <TextInput
                   style={[styles.input, {flex: 1}]}
-                  placeholderTextColor={'#C4C5C4'}
+                  placeholderTextColor={colors.darkgray}
                   placeholder="Enter your password"
                   onChangeText={text => {
                     inputHandler(text, 'password');
@@ -173,7 +187,7 @@ const ProfilePassword = ({route}) => {
                 }}>
                 <TextInput
                   style={[styles.input, {flex: 1}]}
-                  placeholderTextColor={'#C4C5C4'}
+                  placeholderTextColor={colors.darkgray}
                   placeholder="Confirm your password"
                   onChangeText={text => {
                     inputHandler(text, 'confirm');
@@ -217,6 +231,7 @@ const ProfilePassword = ({route}) => {
         </View>
       </View>
     </ScrollView>
+    </>
   );
 };
 
@@ -226,6 +241,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginHorizontal: px(25),
+  },
+  ActivityIndicator: {
+    position: 'absolute',
+    zIndex: 1,
+    right: 0,
+    width: base.screenWidth,
+    height: base.screenHeight,
+    justifyContent: 'center',
+    backgroundColor: colors.offGray,
+    opacity: 0.5,
   },
   headerContainer: {
     marginTop: px(30),
@@ -241,6 +266,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   input: {
+    color:colors.fontColor,
     backgroundColor: colors.softGray,
     borderRadius: 10,
     paddingHorizontal: 20,

@@ -67,7 +67,7 @@ const Account = ({navigation}) => {
         <View style={styles.AccountContainer}>
           <View style={styles.IconContainer}>
             <Image
-              style={{width: px(100), height: px(100)}}
+              style={{width: px(100), height: px(100), borderRadius:1000}}
               source={{uri: informations.profilePicture}}></Image>
           </View>
           <View style={styles.textContainer}>
@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   IconContainer: {
+    borderRadius:1000,
     backgroundColor: colors.white,
     elevation: 6,
   },

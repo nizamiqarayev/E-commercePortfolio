@@ -12,6 +12,7 @@ import getdate from '../../../assets/utility/Date';
 import colors from '../../../config/colors';
 import Button from '../../UI/Button';
 import axios from 'axios';
+import base from '../../../helpers/base';
 import AddedButton from '../../UI/AddedButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LatestNewsListItem from '../LatestNews/LatestNewsListItem';
@@ -69,7 +70,7 @@ const NewsDetail = ({route, navigation}) => {
     );
   };
   const fun = async () => {
-    setLoading(false);
+    setLoading(true);
     try {
       const shareResponse = await Share.open({
         title: 'Salam',
@@ -77,9 +78,9 @@ const NewsDetail = ({route, navigation}) => {
         failOnCancel: true,
       });
     } catch (error) {
-      setLoading(true);
+      setLoading(false);
     }
-    setLoading(true);
+    setLoading(false);
   };
   const navigator = useNavigation();
   useEffect(() => {
@@ -102,10 +103,10 @@ const NewsDetail = ({route, navigation}) => {
   return (
     <>
       {loading ? (
-        <View style={styles.loading}>
-          <ActivityIndicator size={'large'}></ActivityIndicator>
-        </View>
-      ) : (
+        <View style={styles.ActivityIndicator}>
+        <ActivityIndicator size={'large'}></ActivityIndicator>
+      </View>
+      ) : <></>}
         <ScrollView ref={scrollref} style={styles.scrollViewContainer}>
           <View style={styles.container}>
             <View style={styles.imageContainer}>
@@ -140,7 +141,7 @@ const NewsDetail = ({route, navigation}) => {
             </View>
           </View>
         </ScrollView>
-      )}
+      
     </>
   );
 };
@@ -150,14 +151,15 @@ export default NewsDetail;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginBottom:px(30)
   },
   OtherNewsContainer: {
     marginTop: px(30),
     marginBottom: px(25),
   },
   scrollViewContainer: {
-    marginHorizontal: px(25),
-    marginBottom: px(20),
+    paddingHorizontal: px(25),
+    backgroundColor:colors.white,
   },
   imageContainer: {
     margin: px(25),
@@ -173,9 +175,15 @@ const styles = StyleSheet.create({
     fontFamily: 'DMSans-Regular',
     fontSize: px(20),
   },
-  loading: {
-    flex: 1,
+  ActivityIndicator: {
+    position: 'absolute',
+    zIndex: 1,
+    right: 0,
+    width: base.screenWidth,
+    height: base.screenHeight,
     justifyContent: 'center',
+    backgroundColor: colors.offGray,
+    opacity: 0.5,
   },
   otherNews: {},
   dateContainer: {
