@@ -57,6 +57,7 @@ const ProductCard = ({data,wishlistes,inWish}) => {
     
     if (wishlistes) {
       wishlistes.forEach(item => {
+        console.log(item);
         if (item._id === data._id) {
           setFavorite(true);
         }

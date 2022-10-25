@@ -55,12 +55,13 @@ const ProductsCarousel = ({inProductDetails, inProductId}) => {
         const response = await base.api().get(`wishlists/${userId}`);
         const datas = response.data.data;
         await AsyncStorage.setItem('wishlist', JSON.stringify(datas.products));
-        setWishes(datas.products)
+        
         setLoaded(true)
         // console.log('Salaammmmmm',datas.products);
       } catch (error) {
         console.log(error);
       }
+      setWishes(JSON.parse(await AsyncStorage.getItem('wishlist')))
       setLoaded(true)
 
     }
