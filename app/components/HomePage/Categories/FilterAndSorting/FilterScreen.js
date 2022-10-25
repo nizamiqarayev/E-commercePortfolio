@@ -1,5 +1,5 @@
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import RnRangeSlider from 'rn-range-slider';
 import Thumb from '../../../UI/Slider/Thumb';
 import Rail from '../../../UI/Slider/Rail';
@@ -12,7 +12,7 @@ import {setFilteredProducts} from '../../../../store/slices/products';
 import px from '../../../../assets/utility/dimension';
 import colors from '../../../../config/colors';
 import Button from '../../../UI/Button';
-import { useNavigation } from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 
 const FilterScreen = ({navigation}) => {
   const data = useSelector(state => state.products);
@@ -27,6 +27,23 @@ const FilterScreen = ({navigation}) => {
     setLow(low);
     setHigh(high);
   }, []);
+
+  const focus = useIsFocused()
+
+  console.log(data.categorySpecificProducts);
+  const maxValue = useMemo(() =>
+    
+  {
+
+   
+    return parseInt(data.categorySpecificProducts.reduce((previous, current) => {
+      return current.price > previous.price ? current : previous;
+    }).price.replace(/\s/g, ''))+1
+  
+
+    }
+    
+  ,[focus])
 
   const dispatch = useDispatch();
 
@@ -55,7 +72,7 @@ const FilterScreen = ({navigation}) => {
         <RnRangeSlider
           style={styles.slider}
           min={0}
-          max={100}
+          max={maxValue}
           step={1}
           floatingLabel
           renderThumb={renderThumb}
@@ -73,16 +90,15 @@ const FilterScreen = ({navigation}) => {
             marginTop: 10,
           }}>
           <Text>0 $</Text>
-          <Text>100 $</Text>
+          <Text>{maxValue} $</Text>
         </View>
       </View>
       <View style={{height: '70%'}}>
         <ScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={true}
-        scrollEnabled={true}>
-          
-          <Selection title={'Category1'} value={'sad'} />
+          scrollEnabled={true}>
+          {/* <Selection title={'Category1'} value={'sad'} />
           <Selection title={'Category2'} value={'sad'} />
 
           <Selection title={'Category3'} value={'sad'} />
@@ -96,19 +112,29 @@ const FilterScreen = ({navigation}) => {
           <Selection title={'Category9'} value={'sad'} />
           <Selection title={'Category10'} value={'sad'} />
           <Selection title={'Category11'} value={'sad'} />
-          <Selection title={'Category12'} value={'sad'} />
+          <Selection title={'Category12'} value={'sad'} /> */}
         </ScrollView>
         <View style={{flexDirection: 'row'}}>
-          <View style={{height:px(50),flex:1, marginHorizontal:10}}>
-            <Button borderColor={"black"} color={colors.fontColor} onPress={() => {
-              setHigh(100),
-                setLow(0)
-            }} >reset</Button>
+          <View style={{height: px(50), flex: 1, marginHorizontal: 10}}>
+            <Button
+              borderColor={'black'}
+              color={colors.fontColor}
+              onPress={() => {
+                setHigh(100), setLow(0);
+              }}>
+              reset
+            </Button>
           </View>
-          <View style={{height:px(50),flex:1, marginHorizontal:10}}>
-            <Button onPress={() => {
-              filter(),
-            navigation.goBack()}} borderColor={colors.blue} backgroundColor={colors.blue} color={'white'}>Apply</Button>
+          <View style={{height: px(50), flex: 1, marginHorizontal: 10}}>
+            <Button
+              onPress={() => {
+                filter(), navigation.goBack();
+              }}
+              borderColor={colors.blue}
+              backgroundColor={colors.blue}
+              color={'white'}>
+              Apply
+            </Button>
           </View>
         </View>
       </View>

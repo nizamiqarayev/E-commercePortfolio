@@ -62,66 +62,89 @@ const StackComponent = () => {
           }}
         />
 
-<Stack.Screen
-        name="allcategories"
-        component={AllCategories}
+        <Stack.Screen
+          name="allcategories"
+          component={AllCategories}
           options={{
-            headerRight: (()=><Text style={{fontFamily:"DMSans-Bold", fontSize:32, color:colors.fontColor}}>All Categories</Text>),
-            animation:"fade_from_bottom"
-           
-        }}
+            headerRight: () => (
+              <Text
+                style={{
+                  fontFamily: 'DMSans-Bold',
+                  fontSize: 32,
+                  color: colors.fontColor,
+                }}>
+                All Categories
+              </Text>
+            ),
+            animation: 'fade_from_bottom',
+          }}
         />
 
-
         <Stack.Screen name="updatepassword" component={UpdatePassword} />
+        <Stack.Screen
+          name="allnews"
+          component={AllNews}
+          options={{
+            headerRight: () => (
+              <Text
+                style={{ marginRight:px(138),
+                  fontFamily: 'DMSans-Bold',
+                  fontSize: 24,
+                  color: colors.fontColor,
+                }}>
+                News
+              </Text>
+            ),
+            animation: 'fade_from_bottom',
+            backgroundColor:"white"
+
+          }}
+        />
         <Stack.Screen name="resetpassword" component={ResetPassword} />
-        <Stack.Screen name="allnews" component={AllNews} />
       </Stack.Group>
+
       <Stack.Screen
         name="newsdetail"
         component={NewsDetail}
+        
         options={{
           headerTitle: 'Detail News',
           headerTitleAlign: 'center',
+        
+          backgroundColor:"white"
         }}
       />
 
-     
-      <Stack.Screen name='ProductDetail' component={ProductDetail} ></Stack.Screen>
+      <Stack.Screen name="ProductDetail" component={ProductDetail} />
 
       <Stack.Screen
         name="categoryproducts"
         component={CategorySpecificProducts}
         options={{
           animation: 'fade_from_bottom',
-          title: "Catalog",
-          headerTitleAlign: "center",
-        
+          title: 'Catalog',
+          headerTitleAlign: 'center',
+          backgroundColor:"white"
+
         }}
       />
 
       <Stack.Screen
         name="addtocart"
         component={AddToCart}
-        options={{presentation: 'modal', animation: 'fade'}}
+        options={{presentation: 'modal', animation: 'fade', backgroundColor:"white"}}
       />
-       <Stack.Screen
-        name="All Products"
-        component={AllProducts}
-        />
+      <Stack.Screen name="All Products" component={AllProducts} />
 
-      <Stack.Group screenOptions={{ headerShown: false }}>
-     
-        
-
-       
-        
+      <Stack.Group screenOptions={{headerShown: false,contentStyle:{backgroundColor:"white"}}}>
         <Stack.Screen
           name="Filter&Sorting"
           component={FilterTopTabs}
           options={{
             presentation: 'transparentModal',
             animation: 'fade',
+            backgroundColor:"white"
+
             // contentStyle: { paddingHorizontal: px(30) },
           }}
         />
