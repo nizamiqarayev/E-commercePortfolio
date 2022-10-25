@@ -26,15 +26,9 @@ const HomePage = ({route, navigation}) => {
   const focused = useIsFocused();
 
   const productsAllData = useSelector(state => state.products);
-
+// SALAMLARRRRRRRRRRRRRRRRRRRRRRRRRRRR
   useEffect(() => {
     if (focused) {
-      // navigation.reset(
-      //   {
-      //     index: 0,
-      //     actions: [navigation.navigate({ routeName: 'HomePage' })],
-      //   }
-      // )
     }
   }, [focused]);
   return (

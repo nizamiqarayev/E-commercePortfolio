@@ -61,6 +61,7 @@ const ProductsCarousel = ({inProductDetails, inProductId}) => {
       } catch (error) {
         console.log(error);
       }
+      setLoaded(true)
 
     }
   
