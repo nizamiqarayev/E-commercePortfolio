@@ -44,6 +44,7 @@ const ProductDetail = ({route}) => {
   //mentiqi tam dogru deyil, wishlist store da saxlanilmalidi login olduqda, ordan check olunmalidi;
 
   const deleteFromWishList = async () => {
+    setLoading(true);
     try {
       const userId = await AsyncStorage.getItem('_id');
       if (!userId) {
@@ -52,6 +53,7 @@ const ProductDetail = ({route}) => {
         else return setAddedWish(false);
         const filtered = wishlist.filter(item => item._id !== id);
         await AsyncStorage.setItem('wishlist', JSON.stringify(filtered));
+        setLoading(false);
         return setAddedWish(false);
       }
       await base.api().delete('wishlists/delete', {
@@ -64,10 +66,13 @@ const ProductDetail = ({route}) => {
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   const addToWishlist = async () => {
     setLoading(true);
+
+
     if (addedWish) return deleteFromWishList();
     try {
       const userId = await AsyncStorage.getItem('_id');
@@ -78,6 +83,7 @@ const ProductDetail = ({route}) => {
           wishlist.push(data);
           await AsyncStorage.setItem('wishlist', JSON.stringify(wishlist));
         } else await AsyncStorage.setItem('wishlist', JSON.stringify([data]));
+        setLoading(false);
         return setAddedWish(true);
       }
       await base.api().post('wishlists/create', {
@@ -88,6 +94,7 @@ const ProductDetail = ({route}) => {
     } catch (error) {
       console.log({error});
     }
+    setLoading(false);
   };
 
   const getWishlist = async () => {
@@ -415,12 +422,14 @@ const ProductDetail = ({route}) => {
               </View>
             </AddedButton>
           </View>
+
           <Button
             onPress={async () => {
               await addToCard();
               setLoading(false);
             }}
             backgroundColor={colors.blue}>
+
             <Text style={styles.ButtonText}>
               {inCard ? 'In card' : 'Add to cart'}
             </Text>

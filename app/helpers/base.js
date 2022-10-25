@@ -9,10 +9,12 @@ class Base {
     this.isAndroid = Platform.OS === 'android';
     this.screenWidth = Dimensions.get('window').width;
     this.screenHeight = Dimensions.get('window').height;
+    this.userId=''
     this.setToken()
   }
   async setToken(){
     this.token = await AsyncStorage.getItem('token')? await AsyncStorage.getItem('token'):'';
+    this.userId= await AsyncStorage.getItem('_id')?await AsyncStorage.getItem('_id'):''
   }
 
   api({headers = {}} = {}) {
