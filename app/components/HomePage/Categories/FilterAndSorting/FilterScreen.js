@@ -31,13 +31,14 @@ const FilterScreen = ({navigation}) => {
   const focus = useIsFocused();
 
   const maxValue = useMemo(() => {
-    return parseInt(
+   
+    return Math.ceil(parseFloat(
       data.categorySpecificProducts
         .reduce((previous, current) => {
-          return current.price > previous.price ? current : previous;
+          return Math.ceil(current.price) > Math.ceil(previous.price) ? current : previous;
         })
         .price.replace(/\s/g, ''),
-    );
+    ))
   }, [focus]);
 
   const dispatch = useDispatch();
