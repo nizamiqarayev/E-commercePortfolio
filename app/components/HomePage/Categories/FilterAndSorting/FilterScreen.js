@@ -120,7 +120,7 @@ const FilterScreen = ({navigation}) => {
               borderColor={'black'}
               color={colors.fontColor}
               onPress={() => {
-                setHigh(100), setLow(0);
+                setHigh(maxValue), setLow(0);
               }}>
               Reset
             </Button>
