@@ -312,7 +312,7 @@ const ProductDetail = ({route}) => {
   }, [id]);
 
   const Scroll = () => {
-    console.log('Salam');
+    // console.log('Salam');
     return <></>;
   };
 
