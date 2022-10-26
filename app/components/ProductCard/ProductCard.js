@@ -271,8 +271,8 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   image: {
-    height: px(125),
-    width: px(125),
+    height: px(115),
+    width: px(115),
     marginTop: px(15),
   },
   title: {
