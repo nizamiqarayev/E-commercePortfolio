@@ -35,7 +35,7 @@ const FilterScreen = ({navigation}) => {
     return Math.ceil(parseFloat(
       data.categorySpecificProducts
         .reduce((previous, current) => {
-          return Math.ceil(current.price) > Math.ceil(previous.price) ? current : previous;
+          return parseFloat(current.price.replace(/\s/g, '')) > parseFloat(previous.price.replace(/\s/g, '')) ? current : previous;
         })
         .price.replace(/\s/g, ''),
     ))

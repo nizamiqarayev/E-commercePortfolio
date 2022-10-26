@@ -21,7 +21,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import AddedButton from '../UI/AddedButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import ProductsCarousel from '../HomePage/Products/ProductsCarousel';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -35,6 +35,8 @@ const ProductDetail = ({route}) => {
   const [addedWish, setAddedWish] = useState(false);
   const [inCard, setInCard] = useState(false);
   const photoRef = useRef();
+
+  const [carouselReset, setCarousel] = useState(true);
 
   const navigation = useNavigation();
   const scrollref = useRef();
@@ -52,8 +54,11 @@ const ProductDetail = ({route}) => {
       const userId = await AsyncStorage.getItem('_id');
       if (!userId) {
         let wishlist = await AsyncStorage.getItem('wishlist');
-        if (wishlist) wishlist = JSON.parse(wishlist);
-        else return setAddedWish(false);
+        if (wishlist) {
+          wishlist = JSON.parse(wishlist);
+        } else {
+          return setAddedWish(false);
+        }
         const filtered = wishlist.filter(item => item._id !== id);
         await AsyncStorage.setItem('wishlist', JSON.stringify(filtered));
         setLoading(false);
@@ -75,7 +80,11 @@ const ProductDetail = ({route}) => {
   const addToWishlist = async () => {
     setLoading(true);
 
-    if (addedWish) return deleteFromWishList();
+    setCarousel(false);
+
+    if (addedWish) {
+      return deleteFromWishList();
+    }
     try {
       const userId = await AsyncStorage.getItem('_id');
       if (!userId) {
@@ -84,7 +93,9 @@ const ProductDetail = ({route}) => {
           wishlist = JSON.parse(wishlist);
           wishlist.push(data);
           await AsyncStorage.setItem('wishlist', JSON.stringify(wishlist));
-        } else await AsyncStorage.setItem('wishlist', JSON.stringify([data]));
+        } else {
+          await AsyncStorage.setItem('wishlist', JSON.stringify([data]));
+        }
         setLoading(false);
         return setAddedWish(true);
       }
@@ -107,16 +118,23 @@ const ProductDetail = ({route}) => {
       const res = await base.api().get(`wishlists/${userId}`);
       const data = await res.data;
       const productIds = data.data.products.map(item => item._id);
-      if (productIds.includes(id)) return setAddedWish(true);
+      if (productIds.includes(id)) {
+        return setAddedWish(true);
+      }
       setAddedWish(false);
     } catch (error) {
       const errCode = error.response?.data?.code;
       if (errCode === 'auth') {
         let wishlist = await AsyncStorage.getItem('wishlist');
-        if (wishlist) wishlist = JSON.parse(wishlist);
-        else return setAddedWish(false);
+        if (wishlist) {
+          wishlist = JSON.parse(wishlist);
+        } else {
+          return setAddedWish(false);
+        }
         const ids = wishlist.map(item => item._id);
-        if (ids?.includes(id)) return setAddedWish(true);
+        if (ids?.includes(id)) {
+          return setAddedWish(true);
+        }
         setAddedWish(false);
       }
       console.log(error);
@@ -142,7 +160,9 @@ const ProductDetail = ({route}) => {
   const deleteFromCard = async () => {
     try {
       const userId = await AsyncStorage.getItem('_id');
-      if (!userId) return deleteFromCardStore();
+      if (!userId) {
+        return deleteFromCardStore();
+      }
       await base.api().delete('cards/delete', {
         data: {
           userId,
@@ -173,10 +193,14 @@ const ProductDetail = ({route}) => {
 
   const addToCard = async () => {
     setLoading(true);
-    if (inCard) return deleteFromCard();
+    if (inCard) {
+      return deleteFromCard();
+    }
     try {
       const userId = await AsyncStorage.getItem('_id');
-      if (!userId) return addToStoreCard();
+      if (!userId) {
+        return addToStoreCard();
+      }
       await base.api().post('cards', {
         userId,
         productId: id,
@@ -192,7 +216,9 @@ const ProductDetail = ({route}) => {
     if (card) {
       card = JSON.parse(card);
       const ids = card.map(item => item._id);
-      if (ids.includes(id)) return setInCard(true);
+      if (ids.includes(id)) {
+        return setInCard(true);
+      }
     }
     setInCard(false);
   };
@@ -200,11 +226,15 @@ const ProductDetail = ({route}) => {
   const getCards = async () => {
     try {
       const userId = await AsyncStorage.getItem('_id');
-      if (!userId) return getStoreCards();
+      if (!userId) {
+        return getStoreCards();
+      }
       const response = await base.api().get(`cards/${userId}`);
       const data = await response.data;
       const ids = data.products.map(item => item._id);
-      if (ids?.includes(id)) return setInCard(true);
+      if (ids?.includes(id)) {
+        return setInCard(true);
+      }
       setInCard(false);
     } catch (error) {
       console.log(error);
@@ -246,7 +276,8 @@ const ProductDetail = ({route}) => {
               <Ionicons
                 name="md-arrow-redo-outline"
                 size={px(16)}
-                color={colors.black}></Ionicons>
+                color={colors.black}
+              />
             </AddedButton>
           </View>
         );
@@ -301,7 +332,7 @@ const ProductDetail = ({route}) => {
     <>
       {loading ? (
         <View style={styles.ActivityIndicator}>
-          <ActivityIndicator size={'large'}></ActivityIndicator>
+          <ActivityIndicator size={'large'} />
         </View>
       ) : (
         <></>
@@ -355,7 +386,8 @@ const ProductDetail = ({route}) => {
                   name="star"
                   size={px(14)}
                   style={styles.star}
-                  color={colors.OrangeFresh}></Antdesign>
+                  color={colors.OrangeFresh}
+                />
                 <Text style={styles.reviewAverage}>4.6</Text>
               </>
               <Text style={styles.simpleText}>{data.reviewsCount} Reviews</Text>
@@ -367,9 +399,7 @@ const ProductDetail = ({route}) => {
         </View>
         <View style={styles.storeContainer}>
           <View>
-            <Image
-              style={styles.storePhoto}
-              source={{uri: store.photo}}></Image>
+            <Image style={styles.storePhoto} source={{uri: store.photo}} />
           </View>
           <View style={styles.storeDescription}>
             <Text style={styles.storename}>{store.name}</Text>
@@ -381,7 +411,8 @@ const ProductDetail = ({route}) => {
                     style={{marginLeft: 10}}
                     name="shield-check"
                     size={px(20)}
-                    color={colors.blue}></Octicons>
+                    color={colors.blue}
+                  />
                 </>
               ) : (
                 <>
@@ -390,7 +421,8 @@ const ProductDetail = ({route}) => {
                     style={{marginLeft: 10}}
                     name="shield-x"
                     size={px(20)}
-                    color={colors.darkgray}></Octicons>
+                    color={colors.darkgray}
+                  />
                 </>
               )}
             </View>
@@ -399,7 +431,8 @@ const ProductDetail = ({route}) => {
             <Octicons
               name="chevron-right"
               size={px(24)}
-              color={colors.darkgray}></Octicons>
+              color={colors.darkgray}
+            />
           </View>
         </View>
         <View style={styles.ProductDescription}>
@@ -419,7 +452,14 @@ const ProductDetail = ({route}) => {
             </Pressable>
           </View>
           <View style={styles.FeatureProducts}>
-            <ProductsCarousel inProductDetails={true} inProductId={data._id} />
+            {carouselReset ? (
+              <ProductsCarousel
+                inProductDetails={true}
+                inProductId={data._id}
+              />
+            ) : (
+              <></>
+            )}
           </View>
         </View>
         <View style={styles.ButtonContainer}>
@@ -428,6 +468,7 @@ const ProductDetail = ({route}) => {
               onPress={async () => {
                 await addToWishlist();
                 setLoading(false);
+                setCarousel(true);
               }}
               backgroundColor={addedWish ? colors.errorRed : colors.black}>
               <View style={styles.AddedButtonContainer}>

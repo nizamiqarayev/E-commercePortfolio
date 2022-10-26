@@ -14,7 +14,9 @@ import base from '../../../helpers/base';
 import { fetchWishlist, setWishlist } from '../../../store/slices/Wishlist';
 import { set } from 'immer/dist/internal';
 
-const ProductsCarousel = ({inProductDetails, inProductId}) => {
+const ProductsCarousel = ({ inProductDetails, inProductId }) => {
+  const hearted = useSelector(state => state.wishlist)
+
   const Skeleton = () => {
     return (
       <SkeletonPlaceholder>
@@ -51,17 +53,18 @@ const ProductsCarousel = ({inProductDetails, inProductId}) => {
   const focus = useIsFocused();
   async function getWishes(){
     const userId = await AsyncStorage.getItem('_id');
+    if (userId) {
       try {
         const response = await base.api().get(`wishlists/${userId}`);
         const datas = response.data.data;
         await AsyncStorage.setItem('wishlist', JSON.stringify(datas.products));
-        
+        setWishes(datas.products)
         setLoaded(true)
-        // console.log('Salaammmmmm',datas.products);
       } catch (error) {
-        console.log(error);
       }
+    } else {
       setWishes(JSON.parse(await AsyncStorage.getItem('wishlist')))
+    }
       setLoaded(true)
 
     }

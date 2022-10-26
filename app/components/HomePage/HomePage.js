@@ -21,14 +21,19 @@ import {useSelector} from 'react-redux';
 import SearchBar from '../UI/SearchBar';
 import {setAllProductsDisplay} from '../../store/slices/products';
 import IconButton from '../UI/IconButton';
+import { set } from 'immer/dist/internal';
 
 const HomePage = ({route, navigation}) => {
   const focused = useIsFocused();
-
+const [load,setLoad]=useState(false)
   const productsAllData = useSelector(state => state.products);
 // SALAMLARRRRRRRRRRRRRRRRRRRRRRRRRRRR
   useEffect(() => {
+    
     if (focused) {
+      setLoad(true)
+    } else {
+      setLoad(false)
     }
   }, [focused]);
   return (
@@ -81,7 +86,7 @@ const HomePage = ({route, navigation}) => {
           </Pressable>
         </View>
         <View>
-          <ProductsCarousel />
+          {load?<ProductsCarousel />:<></>}
         </View>
         <View style={{paddingVertical: px(30)}}>
           <View>

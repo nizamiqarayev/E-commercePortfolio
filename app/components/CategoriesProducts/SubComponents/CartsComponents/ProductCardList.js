@@ -11,8 +11,10 @@ const ProductCardList = ({products}) => {
   const [wishes,setWishes]=useState([])
   const [loaded,setLoaded]=useState(false)
   
-  async function getWishes(){
+  async function getWishes() {
+    setLoaded(false)
     const userId = await AsyncStorage.getItem('_id');
+    if (userId) {
       try {
         const response = await base.api().get(`wishlists/${userId}`);
         const datas = response.data.data;
@@ -20,8 +22,11 @@ const ProductCardList = ({products}) => {
         setWishes(datas.products)
         setLoaded(true)
       } catch (error) {
-        console.log(error);
       }
+    } else {
+      setWishes(JSON.parse(await AsyncStorage.getItem('wishlist')))
+    }
+      
       setLoaded(true)
 
 
