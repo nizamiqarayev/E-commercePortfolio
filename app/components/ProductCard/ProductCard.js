@@ -178,11 +178,12 @@ const ProductCard = ({data, wishlistes, inWish}) => {
             //     setWish();
             //   }
             // }}
-            style={{position: 'absolute', right: 0, zIndex: 1}}>
+            style={{position: 'absolute', right: 10, top: 10, zIndex: 1}}>
             <Ionicons
               name={favorite ? 'md-heart-sharp' : 'md-heart-outline'}
               size={px(24)}
-              color={colors.errorRed}></Ionicons>
+              color={favorite ? colors.errorRed : colors.black}
+            />
           </Pressable>
         </View>
         <View style={{marginBottom: px(15), marginTop: px(25)}}>

@@ -26,6 +26,7 @@ import {useSelector} from 'react-redux';
 import ProductsCarousel from '../HomePage/Products/ProductsCarousel';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+let interval = null;
 const ProductDetail = ({route}) => {
   const id = route.params?.id ? route.params.id : '';
   const [data, setData] = useState({});
@@ -33,9 +34,11 @@ const ProductDetail = ({route}) => {
   const [loading, setLoading] = useState(false);
   const [addedWish, setAddedWish] = useState(false);
   const [inCard, setInCard] = useState(false);
+  const photoRef = useRef();
 
   const navigation = useNavigation();
   const scrollref = useRef();
+  const photoIndex = useRef(0);
 
   const productsAllData = useSelector(state => state.products);
 
@@ -282,6 +285,18 @@ const ProductDetail = ({route}) => {
     return <></>;
   };
 
+  useEffect(() => {
+    if (data?.photos?.length) {
+      interval = setInterval(() => {
+        if (photoIndex.current < data?.photos?.length - 1) photoIndex.current++;
+        else photoIndex.current = 0;
+        photoRef?.current?.scrollToIndex({index: photoIndex.current});
+      }, 3000);
+    }
+
+    return () => clearInterval(interval);
+  }, [JSON.stringify(data)]);
+
   return (
     <>
       {loading ? (
@@ -297,6 +312,11 @@ const ProductDetail = ({route}) => {
           <FlatList
             data={data.photos}
             keyExtractor={(_, index) => `indexx ${index}`}
+            ref={photoRef}
+            onMomentumScrollEnd={e =>
+              (photoIndex.current =
+                Math.ceil(e.nativeEvent.contentOffset.x / px(300)) - 1)
+            }
             horizontal
             pagingEnabled
             showsHorizontalScrollIndicator={false}
