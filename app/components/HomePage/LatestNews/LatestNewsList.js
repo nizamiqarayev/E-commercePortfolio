@@ -69,7 +69,7 @@ const LatestNewsList = ({homepage, amountOfNews, extraRender}) => {
       if (newsData.length != 0) {
         for (let index = 0; index < amountOfNews; index++) {
           temparr.push(
-            <LatestNewsListItem key={index} data={newsData[index]} />,
+            <LatestNewsListItem key={index} index={counter} data={newsData[index]} />,
           );
         }
       }

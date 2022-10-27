@@ -22,9 +22,9 @@ import Share from 'react-native-share';
 const NewsDetail = ({route, navigation}) => {
   const scrollref = useRef();
   const index = route.params.index;
-  let randomindex = Math.floor(Math.random() * 7);
+  let randomindex = Math.floor(Math.random() * 3);
   if (index == randomindex) {
-    randomindex = Math.floor(Math.random() * 7);
+    randomindex = Math.floor(Math.random() * 3);
   }
   const focused = useIsFocused();
   const [loading, setLoading] = useState(false);
@@ -43,10 +43,9 @@ const NewsDetail = ({route, navigation}) => {
   }
 
   useEffect(() => {
-    if (focused) {
       otherNewsRequest();
-    }
-  }, [focused]);
+    
+  }, [index]);
   const data = route.params.data;
   const OtherNews = () => {
     scrollref.current.scrollTo({
@@ -56,6 +55,7 @@ const NewsDetail = ({route, navigation}) => {
 
     let random1 = Math.floor(Math.random() * otherDatalength);
     let random2 = Math.floor(Math.random() * otherDatalength);
+
     while (random1 === random2) {
       random2 = Math.floor(Math.random() * otherDatalength);
     }
