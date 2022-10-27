@@ -275,6 +275,7 @@ const styles = StyleSheet.create({
     height: px(115),
     width: px(115),
     marginTop: px(15),
+
   },
   title: {
     fontFamily: 'DMSans-Medium',
