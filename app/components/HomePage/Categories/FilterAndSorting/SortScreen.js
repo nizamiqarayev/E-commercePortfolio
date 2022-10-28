@@ -17,7 +17,6 @@ const SortScreen = ({navigation}) => {
   const [sortedValue, setSortedValue] = useState([]);
 
   useEffect(() => {
-    console.log("working");
     if (sortedValue.length) {
       dispatch(setProductsForDisplay({final: sortedValue}));
     }

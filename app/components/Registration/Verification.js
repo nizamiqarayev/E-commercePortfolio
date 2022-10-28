@@ -33,6 +33,7 @@ const Verification = ({route}) => {
   const [resendAvailable, setResendAvailable] = useState(false);
 
   const [loading, setLoading] = useState(false);
+  console.log(val);
   const changeHandler = (index, text) => {
     if (index <= 3 && text != '') {
       if (index < 3) {
