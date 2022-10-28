@@ -137,9 +137,9 @@ const Verification = ({route}) => {
         <View>
           <Text
             style={{
-              marginTop: 30 * dimension,
-              marginBottom: 20 * dimension,
-              fontSize: 36 * dimension,
+              marginTop: px(30),
+              marginBottom: px(20),
+              fontSize: px(36),
               fontWeight: '700',
               color: '#0C1A30',
             }}>
@@ -148,7 +148,7 @@ const Verification = ({route}) => {
           <Text
             style={{
               color: '#838589',
-              fontSize: 16 * dimension,
+              fontSize: px(16),
               fontWeight: '400',
             }}>
             We have sent the verification code to {route.params.email}
@@ -156,7 +156,7 @@ const Verification = ({route}) => {
         </View>
         <View
           style={{
-            marginTop: 60 * dimension,
+            marginTop: px(60),
             flex: 1,
           }}>
           <View>
@@ -165,7 +165,7 @@ const Verification = ({route}) => {
               <Text
                 style={{
                   color: '#0C1A30',
-                  fontSize: 20 * dimension,
+                  fontSize: px(20),
                   fontWeight: '400',
                 }}>
                 Verification Code
@@ -175,7 +175,7 @@ const Verification = ({route}) => {
                   <Text
                     style={{
                       color: 'blue',
-                      fontSize: 14 * dimension,
+                      fontSize: px(14),
                       fontWeight: '400',
                     }}>
                     Re-send code
@@ -185,7 +185,7 @@ const Verification = ({route}) => {
                 <Text
                   style={{
                     color: 'blue',
-                    fontSize: 14 * dimension,
+                    fontSize: px(14),
                     fontWeight: '400',
                   }}>
                   Resend not yet available
@@ -253,8 +253,8 @@ const Verification = ({route}) => {
             </View>
           </View>
 
-          <View style={{marginTop: 150 * dimension}}>
-            <View style={{height: 60 * dimension}}>
+          <View style={{marginTop: px(150)}}>
+            <View style={{height: px(60)}}>
               <Button
                 backgroundColor={
                   otpReadyforTest && val != 0 ? '#3669c9' : '#C4C5C4'
