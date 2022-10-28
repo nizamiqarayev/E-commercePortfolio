@@ -23,6 +23,7 @@ export default function Selection({
       }}>
       <View
         style={{
+          height:px(50),
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
