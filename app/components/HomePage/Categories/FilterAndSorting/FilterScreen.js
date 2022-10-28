@@ -89,8 +89,8 @@ const FilterScreen = ({navigation}) => {
             flexDirection: 'row',
             marginTop: 10,
           }}>
-          <Text>0 $</Text>
-          <Text>{maxValue} $</Text>
+          <Text style={{color:colors.fontColor}}>0 $</Text>
+          <Text style={{color:colors.fontColor}}>{maxValue} $</Text>
         </View>
       </View>
       <View style={{height: '70%'}}>

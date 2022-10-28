@@ -60,9 +60,9 @@ const Register = () => {
           <View>
             <Text
               style={{
-                marginTop: 30 * dimension,
-                marginBottom: 20 * dimension,
-                fontSize: 32 * dimension,
+                marginTop: px(30),
+                marginBottom: px(20),
+                fontSize: px(32),
                 fontWeight: '700',
                 color: '#0C1A30',
               }}>
@@ -71,7 +71,7 @@ const Register = () => {
             <Text
               style={{
                 color: '#838589',
-                fontSize: 16 * dimension,
+                fontSize: px(16),
                 fontWeight: '400',
               }}>
               Enter Email / No. Phone to register{' '}
@@ -79,14 +79,14 @@ const Register = () => {
           </View>
           <View
             style={{
-              marginTop: 60 * dimension,
+              marginTop: px(60),
               flex: 1,
             }}>
             <View>
               <Text
                 style={{
                   color: '#0C1A30',
-                  fontSize: 20 * dimension,
+                  fontSize: px(20),
                   fontWeight: '400',
                 }}>
                 Email/Phone
@@ -140,7 +140,7 @@ const Register = () => {
               )}
             </View>
 
-            <View style={{marginTop: 150 * dimension}}>
+            <View style={{marginTop: px(150)}}>
               <View style={{height: px(50)}}>
                 <Button
                   backgroundColor={buttonReady ? '#3669c9' : '#C4C5C4'}
@@ -178,10 +178,10 @@ const Register = () => {
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'center',
-                  marginTop: 120 * dimension,
-                  paddingBottom: 20 * dimension,
+                  marginTop: px(120) ,
+                  paddingBottom: px(20) ,
                 }}>
-                <Text style={{marginRight: 5 * dimension, color: '#838589'}}>
+                <Text style={{marginRight: px(5), color: '#838589'}}>
                   Have an account?
                 </Text>
                 <Pressable
@@ -201,7 +201,7 @@ const Register = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 25 * dimension,
+    marginHorizontal: px(25),
     backgroundColor: colors.white,
     flex: 1,
   },
@@ -216,12 +216,12 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   textInput: {
-    paddingVertical: 16 * dimension,
-    paddingHorizontal: 20 * dimension,
+    paddingVertical: px(16),
+    paddingHorizontal: px(20),
     backgroundColor: colors.softGray,
     borderRadius: 10,
     color: colors.fontColor,
-    marginTop: 20 * dimension,
+    marginTop: px(20),
   },
   errorView: {
     flexDirection: 'row',
