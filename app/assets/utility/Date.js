@@ -1,7 +1,7 @@
 export default function getdate(date){
     const data=new Date(date)
     const day=data.getDate()
-    const month=data.getMonth()+1
+    const month=data.getMonth()
     const year=data.getFullYear()
     let monthname
     switch (month) {

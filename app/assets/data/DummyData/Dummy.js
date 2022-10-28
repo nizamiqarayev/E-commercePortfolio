@@ -15,7 +15,7 @@ export default DUMMY = [
     coverPhoto:
       'https://res.cloudinary.com/dtokoknba/image/upload/v1648456244/service-photos/cl1agaa8s00020mxs51nta5fa.webp',
       date: '2022-10-27T20:00:00.000Z',
-      rating:0,
+      rating:2,
   },
   {
     id: 3,
@@ -33,8 +33,8 @@ export default DUMMY = [
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
     coverPhoto:
       'https://res.cloudinary.com/dtokoknba/image/upload/v1648456276/service-photos/cl1agaz4g00040mxsfi2oglhj.webp',
-      date: '2022-08-27T20:00:00.000Z',
-      rating:5,
+      date: '2021-12-29T20:00:00.000Z',
+      rating:4,
   },
   {
     id: 5,
@@ -42,8 +42,8 @@ export default DUMMY = [
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
     coverPhoto:
       'https://res.cloudinary.com/dtokoknba/image/upload/v1648456289/service-photos/cl1agb98y00050mxsfisz7glt.webp',
-      date: '2022-08-27T20:00:00.000Z',
-      rating:4,
+      date: '2022-03-27T20:00:00.000Z',
+      rating:1,
   },
   {
     id: 6,
@@ -51,7 +51,7 @@ export default DUMMY = [
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
     coverPhoto:
       'https://res.cloudinary.com/dtokoknba/image/upload/v1645188023/service-photos/ckzsegyqq000c0mt98r33gvv1.jpg',
-      date: '2022-08-27T20:00:00.000Z',
+      date: '2022-08-2T20:00:00.000Z',
       rating:5,
   },
   {
@@ -60,8 +60,8 @@ export default DUMMY = [
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
     coverPhoto:
       'https://res.cloudinary.com/dtokoknba/image/upload/v1645188023/service-photos/ckzsegyqq000c0mt98r33gvv1.jpg',
-      date: '2022-08-27T20:00:00.000Z',
-      rating:4,
+      date: '2022-10-27T19:00:00.000Z',
+      rating:5,
   },
   {
     id: 8,
@@ -69,8 +69,8 @@ export default DUMMY = [
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
     coverPhoto:
       'https://res.cloudinary.com/dtokoknba/image/upload/v1645188023/service-photos/ckzsegyqq000c0mt98r33gvv1.jpg',
-      date: '2022-08-27T20:00:00.000Z',
-      rating:5,
+      date: '2022-09-02T20:00:00.000Z',
+      rating:4,
   },
   {
     id: 9,
@@ -78,8 +78,8 @@ export default DUMMY = [
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
     coverPhoto:
       'https://res.cloudinary.com/dtokoknba/image/upload/v1645188023/service-photos/ckzsegyqq000c0mt98r33gvv1.jpg',
-      date: '2022-08-27T20:00:00.000Z',
-      rating:5,
+      date: '2022-06-03T20:00:00.000Z',
+      rating:4,
   },
   {
     id: 10,
@@ -87,16 +87,16 @@ export default DUMMY = [
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
     coverPhoto:
       'https://res.cloudinary.com/dtokoknba/image/upload/v1645188023/service-photos/ckzsegyqq000c0mt98r33gvv1.jpg',
-      date: '2022-08-27T20:00:00.000Z',
+      date: '2022-10-30T20:00:00.000Z',
       rating:5,
   },
   {
     id: 11,
-    title: 'Albus Pervical Wulfric Brian Dumbledor',
+    title: 'Albus Pervical Dumbledor',
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
     coverPhoto:
       'https://res.cloudinary.com/dtokoknba/image/upload/v1645188023/service-photos/ckzsegyqq000c0mt98r33gvv1.jpg',
-      date: '2022-08-27T20:00:00.000Z',
+      date: '2022-09-27T20:00:00.000Z',
       rating:5,
   },
 ];
