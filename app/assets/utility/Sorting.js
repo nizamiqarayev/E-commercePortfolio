@@ -25,9 +25,7 @@ export const Sorting = (data, sortType) => {
       break;
     case 'price-H-L':
       returnData = data.slice().sort((a, b) => {
-        console.log('a', a.price.replace(/\s/g, ''));
 
-        console.log('b', b.price.replace(/\s/g, ''));
 
         return (
           parseFloat(b.isSale ? b.salePrice.replace(/\s/g, ''): b.price.replace(/\s/g, '')) - parseFloat(a.isSale ? a.salePrice.replace(/\s/g, ''): a.price.replace(/\s/g, ''))
@@ -38,9 +36,7 @@ export const Sorting = (data, sortType) => {
       
       returnData = data.slice().sort((a, b) => {
 
-        console.log('a', a.price.replace(/\s/g, ''));
-
-      console.log('b', b.price.replace(/\s/g, ''));
+     
         return (
           parseFloat(a.isSale ? a.salePrice.replace(/\s/g, ''): a.price.replace(/\s/g, '')) - parseFloat(b.isSale ? b.salePrice.replace(/\s/g, ''): b.price.replace(/\s/g, ''))
         );
@@ -48,6 +44,5 @@ export const Sorting = (data, sortType) => {
       break;
     default:
   }
-  console.log(returnData);
   return returnData;
 };
