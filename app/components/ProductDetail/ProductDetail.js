@@ -462,6 +462,7 @@ const ProductDetail = ({route}) => {
             )}
           </View>
         </View>
+      </ScrollView>
         <View style={styles.ButtonContainer}>
           <View style={styles.AddedButton}>
             <AddedButton
@@ -495,7 +496,6 @@ const ProductDetail = ({route}) => {
             </Text>
           </Button>
         </View>
-      </ScrollView>
     </>
   );
 };
@@ -646,7 +646,10 @@ const styles = StyleSheet.create({
   ButtonContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: px(30),
+    paddingVertical: px(15),
+    height:px(65),
+    backgroundColor:colors.white
+
   },
   AddedButton: {
     paddingHorizontal: px(10),
