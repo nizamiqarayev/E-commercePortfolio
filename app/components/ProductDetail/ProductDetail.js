@@ -322,8 +322,8 @@ const ProductDetail = ({route}) => {
         duration: 3000,
       }).start();
     } catch (error) {
-      console.log(reviewInput);
-      if (userDatas.username.length===0) {
+      console.log(userDatas);
+      if (userDatas.username===null) {
         Alert.alert('Opps...', 'You need to sign in first');
       }
     }
@@ -748,7 +748,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: px(15),
-    height: px(65),
+    height: px(70),
     backgroundColor: colors.white,
   },
   AddedButton: {
