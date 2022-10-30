@@ -6,6 +6,7 @@ import {
   Text,
   Pressable,
   ImageBackground,
+  Alert,
 } from 'react-native';
 import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
@@ -24,31 +25,31 @@ const ProductCard = ({data, wishlistes, inWish}) => {
   const [datas, setDatas] = useState('');
   const focus = useIsFocused();
 
-  async function getWishlist() {
-    const userId = await AsyncStorage.getItem('_id');
-    if (base.token.length === 0) {
-      const datas = JSON.parse(await AsyncStorage.getItem('wishlist'));
-      datas.products.forEach(item => {
-        if (item._id === data._id) {
-          setFavorite(true);
-        }
-      });
-    } else {
-      try {
-        const response = await base.api().get(`wishlists/${userId}`);
-        const datas = response.data.data;
-        await AsyncStorage.setItem('wishlist', JSON.stringify(datas.products));
-        if (datas.products.length !== 0) {
-          setHavewish(true);
-        }
-        datas.products.forEach(item => {
-          if (item._id === data._id) {
-            setFavorite(true);
-          }
-        });
-      } catch (error) {}
-    }
-  }
+  // async function getWishlist() {
+  //   const userId = await AsyncStorage.getItem('_id');
+  //   if (base.token.length === 0) {
+  //     const datas = JSON.parse(await AsyncStorage.getItem('wishlist'));
+  //     datas.products.forEach(item => {
+  //       if (item._id === data._id) {
+  //         setFavorite(true);
+  //       }
+  //     });
+  //   } else {
+  //     try {
+  //       const response = await base.api().get(`wishlists/${userId}`);
+  //       const datas = response.data.data;
+  //       await AsyncStorage.setItem('wishlist', JSON.stringify(datas.products));
+  //       if (datas.products.length !== 0) {
+  //         setHavewish(true);
+  //       }
+  //       datas.products.forEach(item => {
+  //         if (item._id === data._id) {
+  //           setFavorite(true);
+  //         }
+  //       });
+  //     } catch (error) {}
+  //   }
+  // }
 
   async function checkWishlist() {
     if (wishlistes) {
@@ -84,22 +85,18 @@ const ProductCard = ({data, wishlistes, inWish}) => {
       setFavorite(true);
     }
     await AsyncStorage.setItem('wishlist', JSON.stringify(wishes));
-    if (base.token.length === 0) {
-    } else {
-      if (!haveWish) {
-        await base.api().post('wishlists/create', {
+   
+    Alert.alert('Added','Your item is added to the wishlist')
+      try {
+        const response = await base.api().post('wishlists/create', {
           userId: userId,
           productId: data._id,
         });
-      }
-      try {
-        const response = await base.api().post('wishlists/send', {
-          userId: userId,
-          wishlist: [data._id],
-        });
+        
         setFavorite(true);
-      } catch (error) {}
-    }
+      } catch (error) {
+
+      }
   }
   async function delWish() {
     const userId = await AsyncStorage.getItem('_id');
@@ -110,15 +107,15 @@ const ProductCard = ({data, wishlistes, inWish}) => {
     });
     await AsyncStorage.setItem('wishlist', JSON.stringify(wishes));
     setFavorite(false);
-    if (base.token.length === 0) {
-    } else {
+
+    Alert.alert('Deleted','This item removed from wishlist')
       try {
         const response = await base.api().delete('wishlists/delete', {
           data: {productId: data._id, userId: userId},
         });
         setFavorite(false);
+        
       } catch (error) {}
-    }
   }
 
   useEffect(() => {
@@ -171,13 +168,13 @@ const ProductCard = ({data, wishlistes, inWish}) => {
           )}
           <Image style={styles.image} source={{uri: data.coverPhoto}} />
           <Pressable
-            // onPress={() => {
-            //   if (favorite) {
-            //     delWish();
-            //   } else {
-            //     setWish();
-            //   }
-            // }}
+            onPress={() => {
+              if (favorite) {
+                delWish();
+              } else {
+                setWish();
+              }
+            }}
             style={{position: 'absolute', right: 10, top: 10, zIndex: 1}}>
             <Ionicons
               name={favorite ? 'md-heart-sharp' : 'md-heart-outline'}

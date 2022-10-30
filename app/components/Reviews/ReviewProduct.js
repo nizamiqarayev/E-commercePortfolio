@@ -11,19 +11,19 @@ import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
 import Stars from './Stars';
 import * as Progress from 'react-native-progress';
-import Dummy from '../../assets/data/DummyData/Dummy';
 import ReviewItem from './ReviewItem';
 import Antdesign from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
 
-const ReviewProduct = () => {
+const ReviewProduct = ({route}) => {
+  const Dummy = route.params.data;
   let averageRating = 0;
   let count = 0;
   let countOfReviews = [0, 0, 0, 0, 0];
   Dummy.map(item => {
-    countOfReviews[item.rating - 1] = countOfReviews[item.rating - 1] + 1;
+    countOfReviews[item.starCount - 1] = countOfReviews[item.starCount - 1] + 1;
     count = count + 1;
-    averageRating = averageRating + item.rating;
+    averageRating = averageRating + item.starCount;
   });
   const navigation = useNavigation();
   useEffect(()=>{

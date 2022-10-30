@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -7,24 +7,26 @@ import {
   Image,
   ActivityIndicator,
   FlatList,
+  TextInput,
+  Alert,
+  Animated,
 } from 'react-native';
 import px from '../../assets/utility/dimension';
 import Share from 'react-native-share';
 import Antdesign from 'react-native-vector-icons/AntDesign';
 import colors from '../../config/colors';
 import Reviews from '../Reviews/Reviews';
-import ProductCard from '../ProductCard/ProductCard';
 import Button from '../UI/Button';
 import base from '../../helpers/base';
 import Octicons from 'react-native-vector-icons/Octicons';
-import Feather from 'react-native-vector-icons/Feather';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import AddedButton from '../UI/AddedButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import ProductsCarousel from '../HomePage/Products/ProductsCarousel';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Rating} from 'react-native-ratings';
 
 let interval = null;
 const ProductDetail = ({route}) => {
@@ -32,9 +34,20 @@ const ProductDetail = ({route}) => {
   const [data, setData] = useState({});
   const [store, setStore] = useState({});
   const [loading, setLoading] = useState(false);
+  const [review,setReview]=useState(false)
   const [addedWish, setAddedWish] = useState(false);
   const [inCard, setInCard] = useState(false);
+  const [reviewSend, setReviewSend] = useState(false);
   const photoRef = useRef();
+  const [userDatas, setUserDatas] = useState({
+    username: '',
+    profileImage: '',
+    userId: '',
+  });
+  const [reviewInput, setReviewInput] = useState({
+    starCount: '',
+    review: '',
+  });
 
   const [carouselReset, setCarousel] = useState(true);
 
@@ -284,6 +297,38 @@ const ProductDetail = ({route}) => {
       },
     });
   }, [data]);
+  function getInputs(inputName, data) {
+    setReviewInput({
+      ...reviewInput,
+      [inputName]: data,
+    });
+  }
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  async function sendReview() {
+    setLoading(true);
+    try {
+      const response = await base.api().post('reviews/create', {
+        username: userDatas.username,
+        starCount: parseInt(reviewInput.starCount),
+        profileImage: userDatas.profileImage,
+        review: reviewInput.review,
+        productId: data._id,
+        userId: userDatas.userId,
+      });
+      setReviewSend(true);
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        useNativeDriver: true,
+        duration: 3000,
+      }).start();
+    } catch (error) {
+      console.log(reviewInput);
+      if (userDatas.username.length===0) {
+        Alert.alert('Opps...', 'You need to sign in first');
+      }
+    }
+    setLoading(false);
+  }
 
   async function getData() {
     setLoading(true);
@@ -294,22 +339,29 @@ const ProductDetail = ({route}) => {
 
       setData(response.data);
       setStore(response.data.store);
-
+      if(response.data.reviews.length>0){
+        setReview(true)
+      }
       setLoading(false);
       scroll();
     } catch (error) {
       setLoading(false);
     }
+    setUserDatas({
+      username: await AsyncStorage.getItem('username'),
+      profileImage: await AsyncStorage.getItem('profilePicture'),
+      userId: await AsyncStorage.getItem('_id'),
+    });
   }
 
   useEffect(() => {
     scrollref.current.scrollTo({
       x: 0,
       y: 0,
-      animated: false,
+      animated: true,
     });
     getData();
-  }, [id]);
+  }, [id,reviewSend]);
 
   const Scroll = () => {
     // console.log('Salam');
@@ -442,12 +494,63 @@ const ProductDetail = ({route}) => {
           <Text style={styles.ProductDescriptionText}>{data.description}</Text>
         </View>
         <View>
-          <Reviews />
+          {review ? (
+            <Reviews data={data.reviews} />
+          ) : (
+            <View>
+              <Text style={styles.RatingCommentText}>There is no review for this product</Text>
+            </View>
+          )}
+        </View>
+        <View style={styles.LeaveCommentContainer}>
+          {reviewSend ? (
+            <Animated.View
+              style={[
+                styles.RatingCommentContainer,
+                {
+                  opacity: fadeAnim,
+                },
+              ]}>
+              <Text style={styles.RatingCommentText}>Thanks for review</Text>
+            </Animated.View>
+          ) : (
+            <>
+              <View style={styles.RatingCommentContainer}>
+                <Text style={styles.RatingCommentText}>Rate this product</Text>
+                <Rating
+                  fractions={0}
+                  jumpValue={1}
+                  imageSize={px(25)}
+                  startingValue={0}
+                  onFinishRating={getInputs.bind(this, 'starCount')}></Rating>
+              </View>
+              <View style={styles.LeaveCommentInputContainer}>
+                <TextInput
+                  style={styles.LeaveCommentInput}
+                  multiline={true}
+                  textAlignVertical="top"
+                  placeholder={'Leave a comment'}
+                  placeholderTextColor={colors.darkgray}
+                  onChangeText={getInputs.bind(this, 'review')}></TextInput>
+              </View>
+              <View style={styles.ButtonContainer}>
+                <Button
+                  color={colors.fontColor}
+                  borderColor={colors.fontColor}
+                  onPress={sendReview}>
+                  Rate
+                </Button>
+              </View>
+            </>
+          )}
         </View>
         <View style={styles.FeatureProductsContainer}>
           <View style={styles.FeatureProductsTitleContainer}>
             <Text style={styles.FeatureProductsText}>Featured Product</Text>
-            <Pressable>
+            <Pressable
+              onPress={() => {
+                navigation.navigate('allcategories');
+              }}>
               <Text style={styles.SeeAllProducts}>See all</Text>
             </Pressable>
           </View>
@@ -461,41 +564,38 @@ const ProductDetail = ({route}) => {
               <></>
             )}
           </View>
-        </View>
-        <View style={styles.ButtonContainer}>
-          <View style={styles.AddedButton}>
-            <AddedButton
-              onPress={async () => {
-                await addToWishlist();
-                setLoading(false);
-                setCarousel(true);
-              }}
-              backgroundColor={addedWish ? colors.errorRed : colors.black}>
-              <View style={styles.AddedButtonContainer}>
-                <Text style={styles.ButtonText}>
-                  {addedWish ? 'Added' : 'Add'}
-                </Text>
-                <Octicons
-                  name="heart-fill"
-                  color={colors.white}
-                  size={px(18)}
-                />
-              </View>
-            </AddedButton>
-          </View>
-
-          <Button
-            onPress={async () => {
-              await addToCard();
-              setLoading(false);
-            }}
-            backgroundColor={colors.blue}>
-            <Text style={styles.ButtonText}>
-              {inCard ? 'In card' : 'Add to cart'}
-            </Text>
-          </Button>
+        
         </View>
       </ScrollView>
+      <View style={styles.ButtonContainer}>
+        <View style={styles.AddedButton}>
+          <AddedButton
+            onPress={async () => {
+              await addToWishlist();
+              setLoading(false);
+              setCarousel(true);
+            }}
+            backgroundColor={addedWish ? colors.errorRed : colors.black}>
+            <View style={styles.AddedButtonContainer}>
+              <Text style={styles.ButtonText}>
+                {addedWish ? 'Added' : 'Add'}
+              </Text>
+              <Octicons name="heart-fill" color={colors.white} size={px(18)} />
+            </View>
+          </AddedButton>
+        </View>
+
+        <Button
+          onPress={async () => {
+            await addToCard();
+            setLoading(false);
+          }}
+          backgroundColor={colors.blue}>
+          <Text style={styles.ButtonText}>
+            {inCard ? 'In card' : 'Add to cart'}
+          </Text>
+        </Button>
+      </View>
     </>
   );
 };
@@ -528,6 +628,7 @@ const styles = StyleSheet.create({
   image: {
     height: px(300),
     width: px(300),
+    marginRight: px(30),
   },
   title: {
     fontFamily: 'DMSans-Bold',
@@ -646,7 +747,9 @@ const styles = StyleSheet.create({
   ButtonContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: px(30),
+    paddingVertical: px(15),
+    height: px(65),
+    backgroundColor: colors.white,
   },
   AddedButton: {
     paddingHorizontal: px(10),
@@ -665,6 +768,35 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: px(14),
     fontFamily: 'DMSans-Medium',
+  },
+  LeaveCommentContainer: {
+    borderTopWidth: px(1),
+    borderTopColor: colors.softGray,
+    borderBottomWidth: px(1),
+    borderBottomColor: colors.softGray,
+    paddingVertical: px(20),
+  },
+  RatingCommentContainer: {
+    marginVertical: px(10),
+  },
+  RatingCommentText: {
+    textAlign: 'center',
+    fontSize: px(25),
+    color: colors.fontColor,
+    fontFamily: 'DMSans-Medium',
+    marginBottom: px(15),
+  },
+  LeaveCommentInputContainer: {
+    marginVertical: px(15),
+  },
+  LeaveCommentInput: {
+    color: colors.fontColor,
+    fontFamily: 'DMSans-Regular',
+    fontSize: px(14),
+    padding: px(15),
+    backgroundColor: colors.offGray,
+    borderRadius: px(10),
+    height: px(100),
   },
 });
 
