@@ -22,6 +22,7 @@ import AddToCart from '../components/AddToCart/AddToCart';
 import ProductDetail from '../components/ProductDetail/ProductDetail';
 import AllProducts from '../components/HomePage/Products/AllProducts';
 import colors from '../config/colors';
+import StoreDetails from '../components/Store/StoreDetails';
 import AddToCartScreen from '../components/AddToCart/AddToCartScreen';
 
 const Stack = createNativeStackNavigator();
@@ -88,7 +89,8 @@ const StackComponent = () => {
           options={{
             headerRight: () => (
               <Text
-                style={{ marginRight:px(138),
+                style={{
+                  marginRight: px(138),
                   fontFamily: 'DMSans-Bold',
                   fontSize: 24,
                   color: colors.fontColor,
@@ -97,8 +99,7 @@ const StackComponent = () => {
               </Text>
             ),
             animation: 'fade_from_bottom',
-            backgroundColor:"white"
-
+            backgroundColor: 'white',
           }}
         />
         <Stack.Screen name="resetpassword" component={ResetPassword} />
@@ -107,12 +108,11 @@ const StackComponent = () => {
       <Stack.Screen
         name="newsdetail"
         component={NewsDetail}
-        
         options={{
           headerTitle: 'Detail News',
           headerTitleAlign: 'center',
-        
-          backgroundColor:"white"
+
+          backgroundColor: 'white',
         }}
       />
 
@@ -125,30 +125,34 @@ const StackComponent = () => {
           animation: 'fade_from_bottom',
           title: 'Catalog',
           headerTitleAlign: 'center',
-          backgroundColor:"white"
-
+          backgroundColor: 'white',
         }}
       />
 
       <Stack.Screen
         name="addtocart"
         component={AddToCart}
-        options={{presentation: 'modal', animation: 'fade', backgroundColor:"white"}}
+        options={{
+          presentation: 'modal',
+          animation: 'fade',
+          backgroundColor: 'white',
+        }}
       />
       <Stack.Screen name="All Products" component={AllProducts} />
+      <Stack.Screen name="Store" component={StoreDetails} />
 
-      <Stack.Group screenOptions={{
-        headerShown: false,
-        // contentStyle: { backgroundColor: "white" }
-      }}>
+      <Stack.Group
+        screenOptions={{
+          headerShown: false,
+          // contentStyle: { backgroundColor: "white" }
+        }}>
         <Stack.Screen
           name="Filter&Sorting"
           component={FilterTopTabs}
           options={{
             presentation: 'transparentModal',
             animation: 'fade',
-            backgroundColor:"white"
-
+            backgroundColor: 'white',
           }}
         />
         <Stack.Screen
