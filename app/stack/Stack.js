@@ -22,6 +22,7 @@ import AddToCart from '../components/AddToCart/AddToCart';
 import ProductDetail from '../components/ProductDetail/ProductDetail';
 import AllProducts from '../components/HomePage/Products/AllProducts';
 import colors from '../config/colors';
+import AddToCartScreen from '../components/AddToCart/AddToCartScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -136,7 +137,10 @@ const StackComponent = () => {
       />
       <Stack.Screen name="All Products" component={AllProducts} />
 
-      <Stack.Group screenOptions={{headerShown: false,contentStyle:{backgroundColor:"white"}}}>
+      <Stack.Group screenOptions={{
+        headerShown: false,
+        // contentStyle: { backgroundColor: "white" }
+      }}>
         <Stack.Screen
           name="Filter&Sorting"
           component={FilterTopTabs}
@@ -145,7 +149,14 @@ const StackComponent = () => {
             animation: 'fade',
             backgroundColor:"white"
 
-            // contentStyle: { paddingHorizontal: px(30) },
+          }}
+        />
+        <Stack.Screen
+          name="addtocartscreen"
+          component={AddToCartScreen}
+          options={{
+            presentation: 'transparentModal',
+            animation: 'fade',
           }}
         />
       </Stack.Group>
