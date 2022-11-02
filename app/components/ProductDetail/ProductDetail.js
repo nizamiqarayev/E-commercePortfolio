@@ -34,7 +34,7 @@ const ProductDetail = ({route}) => {
   const [data, setData] = useState({});
   const [store, setStore] = useState({});
   const [loading, setLoading] = useState(false);
-  const [review,setReview]=useState(false)
+  const [review, setReview] = useState(false);
   const [addedWish, setAddedWish] = useState(false);
   const [inCard, setInCard] = useState(false);
   const [reviewSend, setReviewSend] = useState(false);
@@ -323,7 +323,7 @@ const ProductDetail = ({route}) => {
       }).start();
     } catch (error) {
       console.log(userDatas);
-      if (userDatas.username===null) {
+      if (userDatas.username === null) {
         Alert.alert('Opps...', 'You need to sign in first');
       }
     }
@@ -339,10 +339,10 @@ const ProductDetail = ({route}) => {
 
       setData(response.data);
       setStore(response.data.store);
-      if(response.data.reviews.length>0){
-        setReview(true)
-      }else{
-        setReview(false)
+      if (response.data.reviews.length > 0) {
+        setReview(true);
+      } else {
+        setReview(false);
       }
       setLoading(false);
       scroll();
@@ -363,7 +363,7 @@ const ProductDetail = ({route}) => {
       animated: true,
     });
     getData();
-  }, [id,reviewSend]);
+  }, [id, reviewSend]);
 
   const Scroll = () => {
     // console.log('Salam');
@@ -373,8 +373,11 @@ const ProductDetail = ({route}) => {
   useEffect(() => {
     if (data?.photos?.length) {
       interval = setInterval(() => {
-        if (photoIndex.current < data?.photos?.length - 1) photoIndex.current++;
-        else photoIndex.current = 0;
+        if (photoIndex.current < data?.photos?.length - 1) {
+          photoIndex.current++;
+        } else {
+          photoIndex.current = 0;
+        }
         photoRef?.current?.scrollToIndex({index: photoIndex.current});
       }, 3000);
     }
@@ -451,10 +454,12 @@ const ProductDetail = ({route}) => {
             </View>
           </View>
         </View>
-        
-          <Pressable style={styles.storeContainer} onPress={()=>{
-            navigation.navigate('Store',{data:store})
-          }} >
+
+        <Pressable
+          style={styles.storeContainer}
+          onPress={() => {
+            navigation.navigate('Store', {data: store});
+          }}>
           <View>
             <Image style={styles.storePhoto} source={{uri: store.photo}} />
           </View>
@@ -491,8 +496,8 @@ const ProductDetail = ({route}) => {
               color={colors.darkgray}
             />
           </View>
-          </Pressable>
-        
+        </Pressable>
+
         <View style={styles.ProductDescription}>
           <Text style={styles.ProductDescriptionTitle}>
             Description Product
@@ -504,7 +509,9 @@ const ProductDetail = ({route}) => {
             <Reviews data={data.reviews} />
           ) : (
             <View>
-              <Text style={styles.RatingCommentText}>There is no review for this product</Text>
+              <Text style={styles.RatingCommentText}>
+                There is no review for this product
+              </Text>
             </View>
           )}
         </View>
@@ -528,7 +535,8 @@ const ProductDetail = ({route}) => {
                   jumpValue={1}
                   imageSize={px(25)}
                   startingValue={0}
-                  onFinishRating={getInputs.bind(this, 'starCount')}></Rating>
+                  onFinishRating={getInputs.bind(this, 'starCount')}
+                />
               </View>
               <View style={styles.LeaveCommentInputContainer}>
                 <TextInput
@@ -537,7 +545,8 @@ const ProductDetail = ({route}) => {
                   textAlignVertical="top"
                   placeholder={'Leave a comment'}
                   placeholderTextColor={colors.darkgray}
-                  onChangeText={getInputs.bind(this, 'review')}></TextInput>
+                  onChangeText={getInputs.bind(this, 'review')}
+                />
               </View>
               <View style={styles.ButtonContainer}>
                 <Button
@@ -570,7 +579,6 @@ const ProductDetail = ({route}) => {
               <></>
             )}
           </View>
-        
         </View>
       </ScrollView>
       <View style={styles.ButtonContainer}>
@@ -593,7 +601,11 @@ const ProductDetail = ({route}) => {
 
         <Button
           onPress={async () => {
-            await addToCard();
+            // await addToCard();
+            navigation.navigate('addtocartscreen', {
+              id: data._id,
+              price: data.isSale ? data.salePrice : data.price,
+            });
             setLoading(false);
           }}
           backgroundColor={colors.blue}>
