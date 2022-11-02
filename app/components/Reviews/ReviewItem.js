@@ -12,18 +12,18 @@ const ReviewItem = ({data}) => {
     return (
         <View style={styles.container}>
             <View style={{marginRight:px(15)}}>
-                <Image style={styles.image} source={{uri:data.profileImage}}/>
+                <Image style={styles.image} source={{uri:data?.profileImage}}/>
             </View>
             <View style={{flex:1}}>
                 <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:px(7)}}>
-                    <Text style={styles.name} >{data.username}</Text>
-                    <Text style={styles.date}>{getdate(data.created)}</Text>
+                    <Text style={styles.name} >{data?.username}</Text>
+                    <Text style={styles.date}>{getdate(data?.created)}</Text>
                 </View>
                 <View style={{marginBottom:px(9)}}>
-                    <Stars key={Math.random()} filled={data.starCount}/>
+                    <Stars key={Math.random()} filled={data?.starCount}/>
                 </View>
                 <View>
-                    <Text style={styles.description}>{data.review}</Text>
+                    <Text style={styles.description}>{data?.review}</Text>
                 </View>
             </View>
         </View>

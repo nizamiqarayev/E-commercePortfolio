@@ -5,6 +5,7 @@ import {
   ScrollView,
   Text,
   Image,
+  Pressable,
   ActivityIndicator,
   FlatList,
   TextInput,
@@ -19,7 +20,6 @@ import Reviews from '../Reviews/Reviews';
 import Button from '../UI/Button';
 import base from '../../helpers/base';
 import Octicons from 'react-native-vector-icons/Octicons';
-import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import AddedButton from '../UI/AddedButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
@@ -341,6 +341,8 @@ const ProductDetail = ({route}) => {
       setStore(response.data.store);
       if(response.data.reviews.length>0){
         setReview(true)
+      }else{
+        setReview(false)
       }
       setLoading(false);
       scroll();
@@ -449,7 +451,10 @@ const ProductDetail = ({route}) => {
             </View>
           </View>
         </View>
-        <View style={styles.storeContainer}>
+        
+          <Pressable style={styles.storeContainer} onPress={()=>{
+            navigation.navigate('Store',{data:store})
+          }} >
           <View>
             <Image style={styles.storePhoto} source={{uri: store.photo}} />
           </View>
@@ -486,7 +491,8 @@ const ProductDetail = ({route}) => {
               color={colors.darkgray}
             />
           </View>
-        </View>
+          </Pressable>
+        
         <View style={styles.ProductDescription}>
           <Text style={styles.ProductDescriptionTitle}>
             Description Product

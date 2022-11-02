@@ -22,6 +22,7 @@ import AddToCart from '../components/AddToCart/AddToCart';
 import ProductDetail from '../components/ProductDetail/ProductDetail';
 import AllProducts from '../components/HomePage/Products/AllProducts';
 import colors from '../config/colors';
+import StoreDetails from '../components/Store/StoreDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -135,6 +136,7 @@ const StackComponent = () => {
         options={{presentation: 'modal', animation: 'fade', backgroundColor:"white"}}
       />
       <Stack.Screen name="All Products" component={AllProducts} />
+      <Stack.Screen name='Store' component={StoreDetails}></Stack.Screen>
 
       <Stack.Group screenOptions={{headerShown: false,contentStyle:{backgroundColor:"white"}}}>
         <Stack.Screen
