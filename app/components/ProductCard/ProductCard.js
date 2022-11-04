@@ -15,8 +15,6 @@ import {useIsFocused, useNavigation} from '@react-navigation/native';
 import base from '../../helpers/base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSelector} from 'react-redux';
-import { Addedwish, DeletedWish } from '../../stack/Stack';
-
 
 const ProductCard = ({data, wishlistes, inWish}) => {
   const navigation = useNavigation();
@@ -87,18 +85,16 @@ const ProductCard = ({data, wishlistes, inWish}) => {
       setFavorite(true);
     }
     await AsyncStorage.setItem('wishlist', JSON.stringify(wishes));
-   
-    Addedwish()
-      try {
-        const response = await base.api().post('wishlists/create', {
-          userId: userId,
-          productId: data._id,
-        });
-        
-        setFavorite(true);
-      } catch (error) {
 
-      }
+    Alert.alert('Added', 'Your item is added to the wishlist');
+    try {
+      const response = await base.api().post('wishlists/create', {
+        userId: userId,
+        productId: data._id,
+      });
+
+      setFavorite(true);
+    } catch (error) {}
   }
   async function delWish() {
     const userId = await AsyncStorage.getItem('_id');
@@ -110,14 +106,13 @@ const ProductCard = ({data, wishlistes, inWish}) => {
     await AsyncStorage.setItem('wishlist', JSON.stringify(wishes));
     setFavorite(false);
 
-   DeletedWish()
-      try {
-        const response = await base.api().delete('wishlists/delete', {
-          data: {productId: data._id, userId: userId},
-        });
-        setFavorite(false);
-        
-      } catch (error) {}
+    Alert.alert('Deleted', 'This item removed from wishlist');
+    try {
+      const response = await base.api().delete('wishlists/delete', {
+        data: {productId: data._id, userId: userId},
+      });
+      setFavorite(false);
+    } catch (error) {}
   }
 
   useEffect(() => {
@@ -172,7 +167,6 @@ const ProductCard = ({data, wishlistes, inWish}) => {
           <Pressable
             onPress={() => {
               if (favorite) {
-                
                 delWish();
               } else {
                 setWish();
@@ -275,7 +269,6 @@ const styles = StyleSheet.create({
     height: px(115),
     width: px(115),
     marginTop: px(15),
-
   },
   title: {
     fontFamily: 'DMSans-Medium',
