@@ -20,7 +20,14 @@ import payment from '../../paymentMethods/widget';
 const Order = ({navigation}) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [email, setEmail] = useState(async () => {
+    let email = await AsyncStorage.getItem('email');
+    return email;
+  });
+  const [userId, setUserId] = useState(async () => {
+    let userId = await AsyncStorage.getItem('_id');
+    return userId;
+  });
   const [totalPrice, setTotalPrice] = useState(0);
 
   const getStoreData = async () => {
@@ -135,7 +142,11 @@ const Order = ({navigation}) => {
       <View style={{height: px(40), width: '100%'}}>
         <Button
           onPress={() => {
-            navigation.navigate('payment');
+            navigation.navigate('payment', {
+              total: totalPrice,
+              email: email,
+              userId: userId,
+            });
           }}
           color={colors.fontColor}>
           Checkout

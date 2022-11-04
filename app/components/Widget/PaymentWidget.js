@@ -7,7 +7,8 @@ import colors from '../../config/colors';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useFocusEffect} from '@react-navigation/native';
 
-const PaymentWidget = () => {
+const PaymentWidget = ({route}) => {
+  console.log(route.params.email._j);
   //   useFocusEffect(() => {
   //     this.webref.injectJavaScript(pay());
   //   });
@@ -26,14 +27,15 @@ const PaymentWidget = () => {
     const pay = () => {
         var widget = new cp.CloudPayments();
         widget.pay(
-          'auth', // or 'charge'
+          'charge', // or 'charge'
           {
             //options
             publicId: 'pk_a2636e94412550d124dbc41eb3544', //id of site (from back office)
             description: 'Payment example (no real withdrawal)', // purpose/justification/description
-            amount: 10,
-            currency: 'RUB',
-            accountId: 'user@example.com', //customer's/user's/payer's ID (optional)
+            amount: ${route.params.total},
+            currency: 'USD',
+            email: '${route.params.email._j}',
+            accountId: '${route.params.userId._j}', //customer's/user's/payer's ID (optional)
             invoiceId: '1234567', // order number  (optional)
             skin: 'modern', // disign widget (optional)
             data: {
