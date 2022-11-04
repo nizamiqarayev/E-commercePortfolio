@@ -15,6 +15,8 @@ import {useIsFocused, useNavigation} from '@react-navigation/native';
 import base from '../../helpers/base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSelector} from 'react-redux';
+import { Addedwish, DeletedWish } from '../../stack/Stack';
+
 
 const ProductCard = ({data, wishlistes, inWish}) => {
   const navigation = useNavigation();
@@ -86,7 +88,7 @@ const ProductCard = ({data, wishlistes, inWish}) => {
     }
     await AsyncStorage.setItem('wishlist', JSON.stringify(wishes));
    
-    Alert.alert('Added','Your item is added to the wishlist')
+    Addedwish()
       try {
         const response = await base.api().post('wishlists/create', {
           userId: userId,
@@ -108,7 +110,7 @@ const ProductCard = ({data, wishlistes, inWish}) => {
     await AsyncStorage.setItem('wishlist', JSON.stringify(wishes));
     setFavorite(false);
 
-    Alert.alert('Deleted','This item removed from wishlist')
+   DeletedWish()
       try {
         const response = await base.api().delete('wishlists/delete', {
           data: {productId: data._id, userId: userId},
@@ -170,6 +172,7 @@ const ProductCard = ({data, wishlistes, inWish}) => {
           <Pressable
             onPress={() => {
               if (favorite) {
+                
                 delWish();
               } else {
                 setWish();
