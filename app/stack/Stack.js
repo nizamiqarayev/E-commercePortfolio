@@ -25,201 +25,201 @@ import colors from '../config/colors';
 import StoreDetails from '../components/Store/StoreDetails';
 import AddToCartScreen from '../components/AddToCart/AddToCartScreen';
 import Toast from 'react-native-toast-message';
+import PaymentWidget from '../components/Widget/PaymentWidget';
 
 const Stack = createNativeStackNavigator();
 
-export function DeletedWish(){
+export function DeletedWish() {
   Toast.show({
     type: 'success',
     text1: 'This item deleted from wishlist',
-    topOffset:px(50),
+    topOffset: px(50),
   });
 }
-export function Addedwish(){
+export function Addedwish() {
   Toast.show({
     type: 'success',
     text1: 'This item added to wishlist',
-    topOffset:px(50),
+    topOffset: px(50),
   });
 }
-export function successLogin(){
+export function successLogin() {
   Toast.show({
     type: 'success',
     text1: 'You logged successfully',
-    topOffset:px(50),
+    topOffset: px(50),
   });
 }
-export function ErrorLogin(){
+export function ErrorLogin() {
   Toast.show({
     type: 'error',
     text1: 'Login failed',
     text2: 'Email or password is incorrect',
-    topOffset:px(50),
+    topOffset: px(50),
   });
 }
-export function AddToCartMessage(){
+export function AddToCartMessage() {
   Toast.show({
     type: 'Success',
     text1: 'Item added to card',
-    topOffset:px(50),
+    topOffset: px(50),
   });
 }
-export function RemoveFromCartMessage(){
+export function RemoveFromCartMessage() {
   Toast.show({
     type: 'Success',
     text1: 'Item removed from card',
-    topOffset:px(50),
+    topOffset: px(50),
   });
 }
 const StackComponent = () => {
-  
-
-
-
   return (
     <>
-    <Stack.Navigator
-    // screenOptions={{
-    //   contentStyle: {backgroundColor: 'white'},
-    // }}
-    >
-      <Stack.Screen
-        name="main"
-        options={{
-          headerShown: false,
-          contentStyle: {backgroundColor: 'white'},
-        }}
-        component={BottomTabsenComponent}
-      />
-      <Stack.Screen name="ReviewProduct" component={ReviewProduct} />
-      <Stack.Group
-        screenOptions={{
-          headerTitle: '',
-          contentStyle: {backgroundColor: 'white'},
-        }}>
-        <Stack.Screen name="Register" component={Register} />
+      <Stack.Navigator
+      // screenOptions={{
+      //   contentStyle: {backgroundColor: 'white'},
+      // }}
+      >
         <Stack.Screen
-          name="verification"
-          component={Verification}
+          name="main"
           options={{
-            headerShadowVisible: false,
+            headerShown: false,
+            contentStyle: {backgroundColor: 'white'},
           }}
+          component={BottomTabsenComponent}
         />
-        <Stack.Screen
-          name="Profile Password"
-          component={ProfilePassword}
-          options={{
-            headerShadowVisible: false,
-          }}
-        />
+        <Stack.Screen name="ReviewProduct" component={ReviewProduct} />
+        <Stack.Group
+          screenOptions={{
+            headerTitle: '',
+            contentStyle: {backgroundColor: 'white'},
+          }}>
+          <Stack.Screen name="Register" component={Register} />
+          <Stack.Screen
+            name="verification"
+            component={Verification}
+            options={{
+              headerShadowVisible: false,
+            }}
+          />
+          <Stack.Screen
+            name="Profile Password"
+            component={ProfilePassword}
+            options={{
+              headerShadowVisible: false,
+            }}
+          />
+
+          <Stack.Screen
+            name="allcategories"
+            component={AllCategories}
+            options={{
+              headerRight: () => (
+                <Text
+                  style={{
+                    fontFamily: 'DMSans-Bold',
+                    fontSize: 32,
+                    color: colors.fontColor,
+                  }}>
+                  All Categories
+                </Text>
+              ),
+              animation: 'fade_from_bottom',
+            }}
+          />
+
+          <Stack.Screen name="updatepassword" component={UpdatePassword} />
+          <Stack.Screen
+            name="allnews"
+            component={AllNews}
+            options={{
+              headerRight: () => (
+                <Text
+                  style={{
+                    marginRight: px(138),
+                    fontFamily: 'DMSans-Bold',
+                    fontSize: 24,
+                    color: colors.fontColor,
+                  }}>
+                  News
+                </Text>
+              ),
+              animation: 'fade_from_bottom',
+              backgroundColor: 'white',
+            }}
+          />
+          <Stack.Screen name="resetpassword" component={ResetPassword} />
+        </Stack.Group>
 
         <Stack.Screen
-          name="allcategories"
-          component={AllCategories}
+          name="newsdetail"
+          component={NewsDetail}
           options={{
-            headerRight: () => (
-              <Text
-                style={{
-                  fontFamily: 'DMSans-Bold',
-                  fontSize: 32,
-                  color: colors.fontColor,
-                }}>
-                All Categories
-              </Text>
-            ),
-            animation: 'fade_from_bottom',
-          }}
-        />
+            headerTitle: 'Detail News',
+            headerTitleAlign: 'center',
 
-        <Stack.Screen name="updatepassword" component={UpdatePassword} />
-        <Stack.Screen
-          name="allnews"
-          component={AllNews}
-          options={{
-            headerRight: () => (
-              <Text
-                style={{
-                  marginRight: px(138),
-                  fontFamily: 'DMSans-Bold',
-                  fontSize: 24,
-                  color: colors.fontColor,
-                }}>
-                News
-              </Text>
-            ),
-            animation: 'fade_from_bottom',
             backgroundColor: 'white',
           }}
         />
-        <Stack.Screen name="resetpassword" component={ResetPassword} />
-      </Stack.Group>
 
-      <Stack.Screen
-        name="newsdetail"
-        component={NewsDetail}
-        options={{
-          headerTitle: 'Detail News',
-          headerTitleAlign: 'center',
+        <Stack.Screen name="ProductDetail" component={ProductDetail} />
 
-          backgroundColor: 'white',
-        }}
-      />
-
-      <Stack.Screen name="ProductDetail" component={ProductDetail} />
-
-      <Stack.Screen
-        name="categoryproducts"
-        component={CategorySpecificProducts}
-        options={{
-          animation: 'fade_from_bottom',
-          title: 'Catalog',
-          headerTitleAlign: 'center',
-          backgroundColor: 'white',
-        }}
-      />
-
-      <Stack.Screen
-        name="addtocart"
-        component={AddToCart}
-        options={{
-          presentation: 'modal',
-          animation: 'fade',
-          backgroundColor: 'white',
-        }}
-      />
-      <Stack.Screen name="All Products" component={AllProducts} />
-      <Stack.Screen name="Store" component={StoreDetails} />
-
-      <Stack.Group
-        screenOptions={{
-          headerShown: false,
-          // contentStyle: { backgroundColor: "white" }
-        }}>
         <Stack.Screen
-          name="Filter&Sorting"
-          component={FilterTopTabs}
+          name="categoryproducts"
+          component={CategorySpecificProducts}
           options={{
-            presentation: 'transparentModal',
+            animation: 'fade_from_bottom',
+            title: 'Catalog',
+            headerTitleAlign: 'center',
+            backgroundColor: 'white',
+          }}
+        />
+
+        <Stack.Screen
+          name="addtocart"
+          component={AddToCart}
+          options={{
+            presentation: 'modal',
             animation: 'fade',
             backgroundColor: 'white',
           }}
         />
-        <Stack.Screen
-          name="addtocartscreen"
-          component={AddToCartScreen}
-          options={{
-            presentation: 'transparentModal',
-            animation: 'fade',
-          }}
-        />
-      </Stack.Group>
-    </Stack.Navigator>
-    <Toast onShow={()=>{
-       setTimeout(() => {
-      
-         Toast.hide()
-      }, 1700);
-    }}></Toast>
+        <Stack.Screen name="All Products" component={AllProducts} />
+        <Stack.Screen name="Store" component={StoreDetails} />
+
+        <Stack.Screen name="payment" component={PaymentWidget} />
+
+        <Stack.Group
+          screenOptions={{
+            headerShown: false,
+            // contentStyle: { backgroundColor: "white" }
+          }}>
+          <Stack.Screen
+            name="Filter&Sorting"
+            component={FilterTopTabs}
+            options={{
+              presentation: 'transparentModal',
+              animation: 'fade',
+              backgroundColor: 'white',
+            }}
+          />
+          <Stack.Screen
+            name="addtocartscreen"
+            component={AddToCartScreen}
+            options={{
+              presentation: 'transparentModal',
+              animation: 'fade',
+            }}
+          />
+        </Stack.Group>
+      </Stack.Navigator>
+      <Toast
+        onShow={() => {
+          setTimeout(() => {
+            Toast.hide();
+          }, 1700);
+        }}
+      />
     </>
   );
 };

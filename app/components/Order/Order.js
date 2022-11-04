@@ -14,10 +14,21 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ProductCard from '../ProductCard/ProductCard';
 import px from '../../assets/utility/dimension';
 import OrderedProductCard from '../ProductCard/OrderedProductCard';
+import {useEffect} from 'react';
+import payment from '../../paymentMethods/widget';
 
 const Order = ({navigation}) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [email, setEmail] = useState(async () => {
+    let email = await AsyncStorage.getItem('email');
+    return email;
+  });
+  const [userId, setUserId] = useState(async () => {
+    let userId = await AsyncStorage.getItem('_id');
+    return userId;
+  });
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const getStoreData = async () => {
     try {
@@ -49,6 +60,23 @@ const Order = ({navigation}) => {
     } finally {
       setLoading(false);
     }
+    setLoading(false);
+  };
+
+  const calculateTotal = () => {
+    var total = 0;
+    if (data.length > 0) {
+      data.map(product => {
+        if (product.isSale) {
+          console.log('isSale', product.salePrice);
+          total = total + parseFloat(product.salePrice);
+        } else {
+          console.log('NoSale', product.price);
+          total = total + parseFloat(product.price);
+        }
+      });
+    }
+    setTotalPrice(total);
   };
 
   useFocusEffect(
@@ -57,9 +85,17 @@ const Order = ({navigation}) => {
     }, []),
   );
 
-  const Product = useCallback(({item}) => {
-    return <OrderedProductCard data={item} />;
-  }, []);
+  useEffect(() => {
+    calculateTotal();
+  }, [data]);
+
+  const Product = useCallback(
+    ({item}) => {
+      console.log('item', item);
+      return <OrderedProductCard data={item} />;
+    },
+    [loading],
+  );
 
   const EmptyList = useCallback(() => {
     return (
@@ -77,27 +113,45 @@ const Order = ({navigation}) => {
   }, [loading]);
 
   return (
-    <View style={styles.container}>
-      {loading ? (
-        <ActivityIndicator
-          color={colors.EarthGreen}
-          size={'large'}
-          style={{alignSelf: 'center'}}
-        />
-      ) : (
-        <FlatList
-          data={data}
-          keyExtractor={item => item._id}
-          contentContainerStyle={{padding: px(20)}}
-          // columnWrapperStyle={{
-          //   justifyContent: 'space-between',
-          //   marginTop: px(20),
-          // }}
-          showsVerticalScrollIndicator={false}
-          renderItem={Product}
-          ListEmptyComponent={EmptyList}
-        />
-      )}
+    <View style={{flex: 1}}>
+      <View style={styles.container}>
+        {loading ? (
+          <ActivityIndicator
+            color={colors.EarthGreen}
+            size={'large'}
+            style={{alignSelf: 'center'}}
+          />
+        ) : (
+          <FlatList
+            data={data}
+            keyExtractor={item => item._id}
+            // contentContainerStyle={{padding: px(20)}}
+            // columnWrapperStyle={{
+            //   justifyContent: 'space-between',
+            //   marginTop: px(20),
+            // }}
+            showsVerticalScrollIndicator={false}
+            renderItem={Product}
+            ListEmptyComponent={EmptyList}
+          />
+        )}
+      </View>
+      <View>
+        <Text>Total Amount: {totalPrice}$</Text>
+      </View>
+      <View style={{height: px(40), width: '100%'}}>
+        <Button
+          onPress={() => {
+            navigation.navigate('payment', {
+              total: totalPrice,
+              email: email,
+              userId: userId,
+            });
+          }}
+          color={colors.fontColor}>
+          Checkout
+        </Button>
+      </View>
     </View>
   );
 };
