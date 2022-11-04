@@ -13,6 +13,7 @@ import base from '../../helpers/base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ProductCard from '../ProductCard/ProductCard';
 import px from '../../assets/utility/dimension';
+import OrderedProductCard from '../ProductCard/OrderedProductCard';
 
 const Order = ({navigation}) => {
   const [data, setData] = useState([]);
@@ -21,7 +22,9 @@ const Order = ({navigation}) => {
   const getStoreData = async () => {
     try {
       let card = await AsyncStorage.getItem('card');
-      if (card) card = JSON.parse(card);
+      if (card) {
+        card = JSON.parse(card);
+      }
       setData(card);
     } catch (error) {
       console.log(error);
@@ -34,7 +37,9 @@ const Order = ({navigation}) => {
     try {
       setLoading(true);
       const userId = await AsyncStorage.getItem('_id');
-      if (!userId) return getStoreData();
+      if (!userId) {
+        return getStoreData();
+      }
       const response = await base.api().get(`cards/${userId}`);
       const data = await response.data;
       const products = data.products;
@@ -53,7 +58,7 @@ const Order = ({navigation}) => {
   );
 
   const Product = useCallback(({item}) => {
-    return <ProductCard data={item} />;
+    return <OrderedProductCard data={item} />;
   }, []);
 
   const EmptyList = useCallback(() => {
@@ -83,12 +88,11 @@ const Order = ({navigation}) => {
         <FlatList
           data={data}
           keyExtractor={item => item._id}
-          numColumns={2}
           contentContainerStyle={{padding: px(20)}}
-          columnWrapperStyle={{
-            justifyContent: 'space-between',
-            marginTop: px(20),
-          }}
+          // columnWrapperStyle={{
+          //   justifyContent: 'space-between',
+          //   marginTop: px(20),
+          // }}
           showsVerticalScrollIndicator={false}
           renderItem={Product}
           ListEmptyComponent={EmptyList}

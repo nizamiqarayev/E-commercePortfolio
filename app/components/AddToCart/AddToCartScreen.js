@@ -7,9 +7,7 @@ import IconButton from '../UI/IconButton';
 import Button from '../UI/Button';
 import {useEffect} from 'react';
 
-const AddToCartScreen = ({route}) => {
-  const navigator = useNavigation();
-
+const AddToCartScreen = ({route, navigation}) => {
   const [quantity, setQuantity] = useState(1);
 
   const [maxValue, setMaxValue] = useState(
@@ -38,7 +36,7 @@ const AddToCartScreen = ({route}) => {
       <Pressable
         android_ripple={'#fff'}
         onPress={() => {
-          navigator.goBack();
+          navigation.goBack();
         }}
         style={{
           backgroundColor: 'rgba(101, 96, 96,0.5)',
@@ -84,7 +82,9 @@ const AddToCartScreen = ({route}) => {
               name="close"
               color={colors.darkgray}
               size={px(27)}
-              onPress={navigator.goBack}
+              onPress={() => {
+                navigation.goBack;
+              }}
             />
           </View>
           <View
@@ -157,7 +157,12 @@ const AddToCartScreen = ({route}) => {
 
           <View style={{paddingBottom: px(25)}}>
             <View style={{height: px(50)}}>
-              <Button backgroundColor={colors.blue} color={colors.white}>
+              <Button
+                backgroundColor={colors.blue}
+                onPress={() => {
+                  navigation.goBack();
+                }}
+                color={colors.white}>
                 Add to cart
               </Button>
             </View>
