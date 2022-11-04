@@ -24,11 +24,60 @@ import AllProducts from '../components/HomePage/Products/AllProducts';
 import colors from '../config/colors';
 import StoreDetails from '../components/Store/StoreDetails';
 import AddToCartScreen from '../components/AddToCart/AddToCartScreen';
+import Toast from 'react-native-toast-message';
 
 const Stack = createNativeStackNavigator();
 
+export function DeletedWish(){
+  Toast.show({
+    type: 'success',
+    text1: 'This item deleted from wishlist',
+    topOffset:px(50),
+  });
+}
+export function Addedwish(){
+  Toast.show({
+    type: 'success',
+    text1: 'This item added to wishlist',
+    topOffset:px(50),
+  });
+}
+export function successLogin(){
+  Toast.show({
+    type: 'success',
+    text1: 'You logged successfully',
+    topOffset:px(50),
+  });
+}
+export function ErrorLogin(){
+  Toast.show({
+    type: 'error',
+    text1: 'Login failed',
+    text2: 'Email or password is incorrect',
+    topOffset:px(50),
+  });
+}
+export function AddToCartMessage(){
+  Toast.show({
+    type: 'Success',
+    text1: 'Item added to card',
+    topOffset:px(50),
+  });
+}
+export function RemoveFromCartMessage(){
+  Toast.show({
+    type: 'Success',
+    text1: 'Item removed from card',
+    topOffset:px(50),
+  });
+}
 const StackComponent = () => {
+  
+
+
+
   return (
+    <>
     <Stack.Navigator
     // screenOptions={{
     //   contentStyle: {backgroundColor: 'white'},
@@ -165,6 +214,13 @@ const StackComponent = () => {
         />
       </Stack.Group>
     </Stack.Navigator>
+    <Toast onShow={()=>{
+       setTimeout(() => {
+      
+         Toast.hide()
+      }, 1700);
+    }}></Toast>
+    </>
   );
 };
 

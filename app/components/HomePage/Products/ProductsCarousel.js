@@ -55,10 +55,12 @@ const ProductsCarousel = ({ inProductDetails, inProductId }) => {
     const userId = await AsyncStorage.getItem('_id');
     if (userId) {
       try {
+        
         const response = await base.api().get(`wishlists/${userId}`);
         const datas = response.data.data;
         await AsyncStorage.setItem('wishlist', JSON.stringify(datas.products));
         setWishes(datas.products)
+
         setLoaded(true)
       } catch (error) {
       }
@@ -90,7 +92,7 @@ const ProductsCarousel = ({ inProductDetails, inProductId }) => {
         dispatch(setAllProductsDisplay({final: tempdata}));
       }
     }
-  }, [productsAllData.allproductsloaded, focus, inProductId]);
+  }, [productsAllData.allproductsloaded, loaded, inProductId]);
 
   return (
     <>

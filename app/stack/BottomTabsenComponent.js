@@ -16,9 +16,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Account from '../components/Login/Account';
 import base from '../helpers/base';
 import {useNavigationState} from '@react-navigation/native';
+import Toast, { BaseToast } from 'react-native-toast-message';
 import px from '../assets/utility/dimension';
+import Test from '../components/Test/Test';
 
 const BottomTabs = createBottomTabNavigator();
+
+
 
 const BottomTabsenComponent = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -38,7 +42,13 @@ const BottomTabsenComponent = () => {
     }
     getToken();
   }, [AsyncStorage.getItem('token')]);
+
+  
+  
+
+
   return (
+    <>
     <BottomTabs.Navigator>
       <BottomTabs.Screen
         name="HomePage"
@@ -107,7 +117,22 @@ const BottomTabsenComponent = () => {
           ),
         }}
       />
+      {/* <BottomTabs.Screen
+        name="Test"
+        component={Test}
+        initialParams={{toast:successLogin}}
+        options={{
+          tabBarLabel: 'Test',
+          tabBarIcon: ({focused, color}) => (
+            <Feather
+              name="edit"
+              size={24}
+              color={focused ? color : colors.darkgray}
+            />
+          ),
+        }}></BottomTabs.Screen> */}
     </BottomTabs.Navigator>
+    </>
   );
 };
 

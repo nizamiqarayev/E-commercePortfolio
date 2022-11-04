@@ -29,7 +29,6 @@ const [load,setLoad]=useState(false)
   const productsAllData = useSelector(state => state.products);
 // SALAMLARRRRRRRRRRRRRRRRRRRRRRRRRRRR
   useEffect(() => {
-    
     if (focused) {
       setLoad(true)
     } else {
