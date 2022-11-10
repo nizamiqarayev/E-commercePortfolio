@@ -187,7 +187,11 @@ const StackComponent = () => {
         <Stack.Screen name="All Products" component={AllProducts} />
         <Stack.Screen name="Store" component={StoreDetails} />
 
-        <Stack.Screen name="payment" component={PaymentWidget} />
+        <Stack.Screen name="payment" component={PaymentWidget} options={ 
+         {
+          headerShown: false,
+         }
+        } />
 
         <Stack.Group
           screenOptions={{

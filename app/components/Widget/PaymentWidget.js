@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Alert, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {WebView} from 'react-native-webview';
 import Button from '../UI/Button';
@@ -7,7 +7,7 @@ import colors from '../../config/colors';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useFocusEffect} from '@react-navigation/native';
 
-const PaymentWidget = ({route}) => {
+const PaymentWidget = ({route, navigation}) => {
   console.log(route.params.email._j);
   //   useFocusEffect(() => {
   //     this.webref.injectJavaScript(pay());
@@ -25,7 +25,7 @@ const PaymentWidget = ({route}) => {
     </body>
     <script>
     const pay = () => {
-        var widget = new cp.CloudPayments();
+        var widget = new cp.CloudPayments({language: "en-US"});
         widget.pay(
           'charge', // or 'charge'
           {
@@ -43,15 +43,21 @@ const PaymentWidget = ({route}) => {
             },
           },
           {
-            onSuccess: function (options) {
+            onSuccess: async function (options) {
+              window.ReactNativeWebView.postMessage('Payment Success');
+
               // success
               //action upon successful payment
             },
-            onFail: function (reason, options) {
+            onFail: async function (reason, options) {
+              window.ReactNativeWebView.postMessage('Payment Failed');
+
               // fail
               //action upon unsuccessful payment
             },
-            onComplete: function (paymentResult, options) {
+            onComplete: async function (paymentResult, options) {
+              window.ReactNativeWebView.postMessage('Transaction Complete');
+
               //It is called as soon as the widget receives a response from api.cloudpayments with the result of the transaction.
               //e.x. calling your Facebook Pixel analytics
             },
@@ -78,6 +84,22 @@ const PaymentWidget = ({route}) => {
           //   injectedJavaScript={runFirst}
           injectedJavaScriptBeforeContentLoaded={runBeforeFirst}
           source={{html: customHtml}}
+          onMessage={event => {
+            switch (event.nativeEvent.data) {
+              case 'Transaction Complete':
+                break;
+              case 'Payment Success':
+                navigation.navigate('HomePage');
+                break;
+              case 'Payment Failed':
+                console.log('====================================');
+                console.log('fail');
+                console.log('====================================');
+                navigation.navigate('Card');
+
+                break;
+            }
+          }}
         />
       </SafeAreaView>
     </>
