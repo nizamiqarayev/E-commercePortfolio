@@ -5,10 +5,7 @@ import Verification from '../components/Registration/Verification';
 import ResetPassword from '../components/Login/ResetPassword';
 import UpdatePassword from '../components/Login/UpdatePassword';
 import ProfilePassword from '../components/Registration/ProfilePassword';
-import Login from '../components/Login/Login';
-
 import NewsDetail from '../components/HomePage/NewsDetail/NewsDetail';
-
 import AllNews from '../components/AllNews/AllNews';
 import AllCategories from '../components/HomePage/Categories/AllCategories';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -18,7 +15,6 @@ import FilterTopTabs from './FilterTopTabs';
 import px from '../assets/utility/dimension';
 import CategorySpecificProducts from '../components/CategoriesProducts/CategorySpecificProducts';
 import AddToCart from '../components/AddToCart/AddToCart';
-
 import ProductDetail from '../components/ProductDetail/ProductDetail';
 import AllProducts from '../components/HomePage/Products/AllProducts';
 import colors from '../config/colors';
@@ -46,7 +42,21 @@ export function Addedwish() {
 export function successLogin() {
   Toast.show({
     type: 'success',
-    text1: 'You logged successfully',
+    text1: 'You logged in successfully',
+    topOffset: px(50),
+  });
+}
+export function successRegister() {
+  Toast.show({
+    type: 'success',
+    text1: 'You Registered successfully',
+    topOffset: px(50),
+  });
+}
+export function successLogout() {
+  Toast.show({
+    type: 'success',
+    text1: 'You logged out successfully',
     topOffset: px(50),
   });
 }
@@ -76,13 +86,14 @@ const StackComponent = () => {
   return (
     <>
       <Stack.Navigator
-      // screenOptions={{
-      //   contentStyle: {backgroundColor: 'white'},
-      // }}
+        screenOptions={{
+          animation:'slide_from_right',
+        }}
       >
         <Stack.Screen
           name="main"
           options={{
+            
             headerShown: false,
             contentStyle: {backgroundColor: 'white'},
           }}
@@ -144,7 +155,6 @@ const StackComponent = () => {
                   News
                 </Text>
               ),
-              animation: 'fade_from_bottom',
               backgroundColor: 'white',
             }}
           />
@@ -203,7 +213,7 @@ const StackComponent = () => {
             component={FilterTopTabs}
             options={{
               presentation: 'transparentModal',
-              animation: 'fade',
+              animation: 'fade_from_bottom',
               backgroundColor: 'white',
             }}
           />
