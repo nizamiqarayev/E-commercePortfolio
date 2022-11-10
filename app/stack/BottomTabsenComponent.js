@@ -79,7 +79,8 @@ const BottomTabsenComponent = () => {
       <BottomTabs.Screen
         name="Card"
         component={Order}
-        options={{
+          options={{
+
           tabBarLabel: 'CARD',
           tabBarIcon: ({focused, color}) => (
             <Feather
