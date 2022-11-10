@@ -18,6 +18,22 @@ import {useEffect} from 'react';
 import payment from '../../paymentMethods/widget';
 
 const Order = ({navigation}) => {
+  navigation.setOptions({
+    headerRight: () => {
+      return (
+        <View style={{marginRight: px(10)}}>
+          <Text
+            style={{
+              color: colors.fontColor,
+              fontFamily: 'DMSans-Bold',
+              fontSize: px(16),
+            }}>
+            Total Amount: {totalPrice}$
+          </Text>
+        </View>
+      );
+    },
+  });
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState(async () => {
@@ -64,15 +80,23 @@ const Order = ({navigation}) => {
   };
 
   const calculateTotal = () => {
+    // console.log('====================================');
+    // console.log(data);
+    // console.log('====================================');
     var total = 0;
     if (data.length > 0) {
       data.map(product => {
         if (product.isSale) {
-          console.log('isSale', product.salePrice);
-          total = total + parseFloat(product.salePrice);
+          // console.log('isSale', product.product.salePrice * product.count);
+          total =
+            total + parseFloat(product.product.salePrice.replace(/\s/g, ''));
         } else {
-          console.log('NoSale', product.price);
-          total = total + parseFloat(product.price);
+          // console.log('NoSale', product.product.price);
+          total =
+            total +
+            parseFloat(
+              product.product.price.replace(/\s/g, '') * product.count,
+            );
         }
       });
     }
@@ -91,7 +115,7 @@ const Order = ({navigation}) => {
 
   const Product = useCallback(
     ({item}) => {
-      console.log('item', item);
+      // console.log('item', item);
       return <OrderedProductCard data={item} />;
     },
     [loading],
@@ -136,21 +160,28 @@ const Order = ({navigation}) => {
           />
         )}
       </View>
-      <View>
-        <Text>Total Amount: {totalPrice}$</Text>
-      </View>
-      <View style={{height: px(40), width: '100%'}}>
-        <Button
-          onPress={() => {
-            navigation.navigate('payment', {
-              total: totalPrice,
-              email: email,
-              userId: userId,
-            });
-          }}
-          color={colors.fontColor}>
-          Checkout
-        </Button>
+
+      <View
+        style={{
+          justifyContent: 'center',
+          width: '100%',
+          alignItems: 'center',
+          marginBottom: px(10),
+        }}>
+        <View style={{height: px(50), width: '90%'}}>
+          <Button
+            backgroundColor={colors.blue}
+            onPress={() => {
+              navigation.navigate('payment', {
+                total: totalPrice,
+                email: email,
+                userId: userId,
+              });
+            }}
+            color={colors.white}>
+            Checkout
+          </Button>
+        </View>
       </View>
     </View>
   );
