@@ -15,6 +15,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
+import { successRegister } from '../../stack/Stack';
 
 const dimension = Dimensions.get('screen').height / 830;
 
@@ -52,7 +53,8 @@ const ProfilePassword = ({route,navigation}) => {
       try {
         const response = await axios.post("https://izzi-ecom.herokuapp.com/user/register",
           { username: input.name, email: route.params.email, password: input.password })
-        navigation.navigate('Login');
+        successRegister();
+          navigation.navigate('Login');
       }
       catch (error) {
         setLoading(false)

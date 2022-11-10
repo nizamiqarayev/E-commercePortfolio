@@ -5,6 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
 import base from '../../helpers/base';
+import { successLogout } from '../../stack/Stack';
 import Button from '../UI/Button';
 
 const Account = ({navigation}) => {
@@ -47,7 +48,7 @@ const Account = ({navigation}) => {
     await AsyncStorage.setItem('wishlist', JSON.stringify(products));
     await AsyncStorage.setItem('card', JSON.stringify(cards));
     base.token = '';
-
+    successLogout()
     Home();
   }
   function Home() {
