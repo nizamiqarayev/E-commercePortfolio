@@ -18,22 +18,6 @@ import {useEffect} from 'react';
 import payment from '../../paymentMethods/widget';
 
 const Order = ({navigation}) => {
-  navigation.setOptions({
-    headerRight: () => {
-      return (
-        <View style={{marginRight: px(10)}}>
-          <Text
-            style={{
-              color: colors.fontColor,
-              fontFamily: 'DMSans-Bold',
-              fontSize: px(16),
-            }}>
-            Total Amount: {totalPrice}$
-          </Text>
-        </View>
-      );
-    },
-  });
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState(async () => {
@@ -45,6 +29,25 @@ const Order = ({navigation}) => {
     return userId;
   });
   const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <View style={{marginRight: px(10)}}>
+            <Text
+              style={{
+                color: colors.fontColor,
+                fontFamily: 'DMSans-Bold',
+                fontSize: px(16),
+              }}>
+              Total Amount: {totalPrice}$
+            </Text>
+          </View>
+        );
+      },
+    });
+  }, []);
 
   const getStoreData = async () => {
     try {
