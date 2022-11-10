@@ -93,6 +93,7 @@ const StackComponent = () => {
         <Stack.Screen
           name="main"
           options={{
+            
             headerShown: false,
             contentStyle: {backgroundColor: 'white'},
           }}

@@ -1,11 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Text, Image, ActivityIndicator} from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
 import base from '../../helpers/base';
-import { successLogout } from '../../stack/Stack';
+import {successLogout} from '../../stack/Stack';
 import Button from '../UI/Button';
 
 const Account = ({navigation}) => {
@@ -14,6 +15,9 @@ const Account = ({navigation}) => {
     name: '',
     email: '',
     profilePicture: null,
+  });
+  navigation.setOptions({
+    headerTransparent: true,
   });
 
   async function getNameEmail() {
@@ -48,7 +52,7 @@ const Account = ({navigation}) => {
     await AsyncStorage.setItem('wishlist', JSON.stringify(products));
     await AsyncStorage.setItem('card', JSON.stringify(cards));
     base.token = '';
-    successLogout()
+    successLogout();
     Home();
   }
   function Home() {
@@ -65,7 +69,7 @@ const Account = ({navigation}) => {
         <></>
       )}
       <View style={styles.container}>
-        <View style={styles.AccountContainer}>
+        {/* <View style={styles.AccountContainer}>
           <View style={styles.IconContainer}>
             <Image
               style={{width: px(100), height: px(100), borderRadius:1000}}
@@ -88,6 +92,68 @@ const Account = ({navigation}) => {
             borderColor={colors.errorRed}>
             <Text style={styles.Logout}>Log Out</Text>
           </Button>
+        </View> */}
+        <View>
+          <View
+            style={{
+              backgroundColor: colors.OrangeFresh,
+              width: '100%',
+              height: px(200),
+              borderBottomLeftRadius: px(200),
+              borderBottomRightRadius: px(200),
+            }}>
+            <View
+              style={{
+                position: 'absolute',
+                alignItems: 'center',
+                width: '100%',
+                bottom: px(-50),
+              }}>
+              <Image
+                style={{width: px(100), height: px(100), borderRadius: 1000}}
+                source={{uri: informations.profilePicture}}></Image>
+            </View>
+          </View>
+          <View style={{marginTop: px(70)}}>
+            <View style={styles.InformationComponent}>
+              <AntDesign
+                name="user"
+                color={colors.blue}
+                size={px(24)}></AntDesign>
+              <Text style={styles.textStyle}>
+                {informations.name.toUpperCase()}
+              </Text>
+            </View>
+            <View style={styles.InformationComponent}>
+              <AntDesign
+                name="mail"
+                color={colors.blue}
+                size={px(24)}></AntDesign>
+              <Text style={styles.textStyle}>{informations.email}</Text>
+            </View>
+            <Pressable style={styles.InformationComponent}>
+              <AntDesign
+                name="eyeo"
+                color={colors.blue}
+                size={px(24)}></AntDesign>
+              <Text style={styles.textStyle}>Change Password</Text>
+            </Pressable>
+            <Pressable style={styles.InformationComponent}>
+              <AntDesign
+                name="gift"
+                color={colors.blue}
+                size={px(24)}></AntDesign>
+              <Text style={styles.textStyle}>All orders</Text>
+            </Pressable>
+          </View>
+        </View>
+        <View style={styles.ButtonStyle}>
+          <Button
+            onPress={logOut}
+            color={colors.errorRed}
+            borderColor={colors.errorRed}>
+            <Text style={styles.Logout}>Log Out</Text>
+          </Button>
         </View>
       </View>
     </>
@@ -96,8 +162,10 @@ const Account = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: px(30),
+    // paddingHorizontal: px(30),
     backgroundColor: colors.white,
+    justifyContent:'space-between',
+    // alignItems: 'center',
     flex: 1,
   },
   ActivityIndicator: {
@@ -110,8 +178,17 @@ const styles = StyleSheet.create({
     backgroundColor: colors.offGray,
     opacity: 0.5,
   },
+  InformationComponent: {
+    borderBottomColor: colors.darkgray,
+    borderBottomWidth: 1,
+    marginTop: px(20),
+    marginHorizontal: px(30),
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: px(10),
+  },
   IconContainer: {
-    borderRadius:1000,
+    borderRadius: 1000,
     backgroundColor: colors.white,
     elevation: 6,
   },
@@ -124,12 +201,14 @@ const styles = StyleSheet.create({
     color: colors.errorRed,
   },
   ButtonStyle: {
-    marginTop: px(20),
+    marginBottom: px(20),
+    marginHorizontal: px(20),
     height: px(55),
   },
   textStyle: {
-    fontFamily: 'DMSans-Medium',
-    fontSize: px(14),
+    marginLeft: px(40),
+    fontFamily: 'DMSans-Regular',
+    fontSize: px(16),
     color: colors.fontColor,
   },
   textContainer: {
