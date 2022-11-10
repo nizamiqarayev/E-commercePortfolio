@@ -16,9 +16,7 @@ const Account = ({navigation}) => {
     email: '',
     profilePicture: null,
   });
-  navigation.setOptions({
-    headerTransparent: true,
-  });
+
 
   async function getNameEmail() {
     let name = await AsyncStorage.getItem('username');
@@ -96,7 +94,7 @@ const Account = ({navigation}) => {
         <View>
           <View
             style={{
-              backgroundColor: colors.OrangeFresh,
+              backgroundColor: colors.EarthGreen,
               width: '100%',
               height: px(200),
               borderBottomLeftRadius: px(200),
@@ -131,7 +129,10 @@ const Account = ({navigation}) => {
                 size={px(24)}></AntDesign>
               <Text style={styles.textStyle}>{informations.email}</Text>
             </View>
-            <Pressable style={styles.InformationComponent}>
+            <Pressable onPress={()=>{
+              navigation.navigate('updatepassword',
+              {email:informations.email})
+            }} style={styles.InformationComponent}>
               <AntDesign
                 name="eyeo"
                 color={colors.blue}
