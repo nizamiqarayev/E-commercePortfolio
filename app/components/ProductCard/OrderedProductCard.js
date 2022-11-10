@@ -6,48 +6,45 @@ import px from '../../assets/utility/dimension';
 import Button from '../UI/Button';
 
 const OrderedProductCard = ({data}) => {
-  const [sale, setIsSale] = useState(true);
-  console.log('dataFromItem', data);
-  console.log(data.name);
+  const [sale, setIsSale] = useState(data.product.isSale);
+  // console.log('dataFromItem', data);
+  // console.log(data.name);
   return (
-    <View style={{flex: 1}}>
-      <View style={{flex: 1}}>
-        <Image style={styles.image} source={{uri: data.coverPhoto}} />
-        <Text style={{color: colors.black}}>{data.name}</Text>
-        {sale ? (
+    <View style={{}}>
+      <View
+        style={{
+          marginHorizontal: px(15),
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
+        <Image style={styles.image} source={{uri: data.product.coverPhoto}} />
+        <View>
+          <Text style={{width: px(220), color: colors.black}}>
+            {data.product.name}
+          </Text>
+          {sale ? (
+            <View>
+              <Text style={styles.price}>
+                $ {data.product.salePrice} X {data.count}
+              </Text>
+            </View>
+          ) : (
+            <View>
+              <Text style={styles.price}>
+                $ {data.product.price} X {data.count}
+              </Text>
+            </View>
+          )}
           <View>
-            <Text style={styles.price}>$ {data.salePrice}</Text>
-            <Text
-              style={[
-                styles.price,
-                {
-                  color: colors.disabledButton,
-                  fontSize: px(10),
-                  textDecorationLine: 'line-through',
-                  marginTop: 5,
-                },
-              ]}>
-              $ {data.price}
+            <Text>
+              Total Amount: $
+              {sale
+                ? data.product.salePrice.replace(/\s/g, '') * data.count
+                : data.product.price.replace(/\s/g, '') * data.count}
             </Text>
           </View>
-        ) : (
-          <>
-            <Text style={styles.price}>$ {data.price}</Text>
-            <Text
-              style={[
-                styles.price,
-                {
-                  color: colors.disabledButton,
-                  fontSize: px(10),
-                  textDecorationLine: 'line-through',
-                  marginTop: 5,
-                  opacity: 0,
-                },
-              ]}>
-              {data.price}
-            </Text>
-          </>
-        )}
+        </View>
       </View>
     </View>
   );

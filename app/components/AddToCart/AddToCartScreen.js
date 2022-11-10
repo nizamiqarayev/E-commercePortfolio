@@ -6,14 +6,27 @@ import colors from '../../config/colors';
 import IconButton from '../UI/IconButton';
 import Button from '../UI/Button';
 import {useEffect} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import {set} from 'immer/dist/internal';
+import base from '../../helpers/base';
 
 const AddToCartScreen = ({route, navigation}) => {
   const [quantity, setQuantity] = useState(1);
+  const [userId, setUserId] = useState('');
 
   const [maxValue, setMaxValue] = useState(
     route.params.price.replace(/\s/g, '') * quantity,
   );
 
+  const fetchUserId = async () => {
+    let userId = await AsyncStorage.getItem('_id');
+    setUserId(userId);
+  };
+
+  useEffect(() => {
+    fetchUserId();
+  }, []);
   useEffect(() => {
     const val = route.params.price.replace(/\s/g, '') * quantity;
     setMaxValue(val);
@@ -28,6 +41,23 @@ const AddToCartScreen = ({route, navigation}) => {
         if (quantity > 1) {
           setQuantity(quantity - 1);
         }
+    }
+  };
+
+  const addToCard = async () => {
+    console.log(route.params.id);
+    try {
+      const response = await base.api().post('cards', {
+        userId: userId,
+        products: {
+          product: route.params.id,
+          count: quantity,
+        },
+      });
+
+      return response;
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -160,6 +190,8 @@ const AddToCartScreen = ({route, navigation}) => {
               <Button
                 backgroundColor={colors.blue}
                 onPress={() => {
+                  const result = addToCard();
+                  console.log(result);
                   navigation.goBack();
                 }}
                 color={colors.white}>
