@@ -8,7 +8,6 @@ import {
   TextInput,
   Pressable,
   ScrollView,
-  Dimensions,
   ActivityIndicator,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -16,7 +15,6 @@ import base from '../../helpers/base';
 import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
 import Button from '../UI/Button';
-const dimension = Dimensions.get('screen').height / 830;
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
@@ -178,8 +176,8 @@ const Register = () => {
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'center',
-                  marginTop: px(120) ,
-                  paddingBottom: px(20) ,
+                  marginTop: px(120),
+                  paddingBottom: px(20),
                 }}>
                 <Text style={{marginRight: px(5), color: '#838589'}}>
                   Have an account?

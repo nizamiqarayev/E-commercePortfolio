@@ -11,40 +11,41 @@ import colors from '../../config/colors';
 import Button from '../UI/Button';
 import base from '../../helpers/base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ProductCard from '../ProductCard/ProductCard';
 import px from '../../assets/utility/dimension';
 import OrderedProductCard from '../ProductCard/OrderedProductCard';
 import {useEffect} from 'react';
-import payment from '../../paymentMethods/widget';
 
 const Order = ({navigation}) => {
-  navigation.setOptions({
-    headerRight: () => {
-      return (
-        <View style={{marginRight: px(10)}}>
-          <Text
-            style={{
-              color: colors.fontColor,
-              fontFamily: 'DMSans-Bold',
-              fontSize: px(16),
-            }}>
-            Total Amount: {totalPrice}$
-          </Text>
-        </View>
-      );
-    },
-  });
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [email, setEmail] = useState(async () => {
+  const [email] = useState(async () => {
     let email = await AsyncStorage.getItem('email');
     return email;
   });
-  const [userId, setUserId] = useState(async () => {
+  const [userId] = useState(async () => {
     let userId = await AsyncStorage.getItem('_id');
     return userId;
   });
   const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <View style={{marginRight: px(10)}}>
+            <Text
+              style={{
+                color: colors.fontColor,
+                fontFamily: 'DMSans-Bold',
+                fontSize: px(16),
+              }}>
+              Total Amount: {totalPrice}$
+            </Text>
+          </View>
+        );
+      },
+    });
+  }, []);
 
   const getStoreData = async () => {
     try {
@@ -80,12 +81,9 @@ const Order = ({navigation}) => {
   };
 
   const calculateTotal = () => {
-    // console.log('====================================');
-    // console.log(data);
-    // console.log('====================================');
     var total = 0;
-    if (data.length > 0) {
-      data.map(product => {
+    if (data?.length > 0) {
+      data?.map(product => {
         if (product.isSale) {
           // console.log('isSale', product.product.salePrice * product.count);
           total =
@@ -115,7 +113,6 @@ const Order = ({navigation}) => {
 
   const Product = useCallback(
     ({item}) => {
-      // console.log('item', item);
       return <OrderedProductCard data={item} />;
     },
     [loading],

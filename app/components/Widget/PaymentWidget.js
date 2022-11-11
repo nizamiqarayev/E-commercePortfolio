@@ -8,11 +8,6 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useFocusEffect} from '@react-navigation/native';
 
 const PaymentWidget = ({route, navigation}) => {
-  console.log(route.params.email._j);
-  //   useFocusEffect(() => {
-  //     this.webref.injectJavaScript(pay());
-  //   });
-
   const customHtml = `
     <!DOCTYPE html>
     <html>
@@ -80,7 +75,7 @@ const PaymentWidget = ({route, navigation}) => {
       <SafeAreaView style={{flex: 1}}>
         <WebView
           style={{flex: 1}}
-          ref={r => (this.webref = r)}
+          // ref={r => (this.webref = r)}
           //   injectedJavaScript={runFirst}
           injectedJavaScriptBeforeContentLoaded={runBeforeFirst}
           source={{html: customHtml}}
@@ -92,11 +87,7 @@ const PaymentWidget = ({route, navigation}) => {
                 navigation.navigate('HomePage');
                 break;
               case 'Payment Failed':
-                console.log('====================================');
-                console.log('fail');
-                console.log('====================================');
                 navigation.navigate('Card');
-
                 break;
             }
           }}

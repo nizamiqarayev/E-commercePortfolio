@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import px from '../../assets/utility/dimension';
 import Antdesign from 'react-native-vector-icons/AntDesign';
 import colors from '../../config/colors';
@@ -10,12 +10,22 @@ const Stars = ({filled}) => {
   const temparr = [];
   for (let index = 0; index < filled; index++) {
     temparr.push(
-      <Antdesign key={(index+1)*Math.random()} name="star" size={px(14)} style={styles.star} color={colors.OrangeFresh}></Antdesign>,
+      <Antdesign
+        key={(index + 1) * Math.random()}
+        name="star"
+        size={px(14)}
+        style={styles.star}
+        color={colors.OrangeFresh}></Antdesign>,
     );
   }
   for (let index = 0; index < empty; index++) {
     temparr.push(
-      <Antdesign key={(index+1)*Math.random()} name="staro" size={px(14)} style={styles.star} color={colors.OrangeFresh}></Antdesign>,
+      <Antdesign
+        key={(index + 1) * Math.random()}
+        name="staro"
+        size={px(14)}
+        style={styles.star}
+        color={colors.OrangeFresh}></Antdesign>,
     );
   }
 

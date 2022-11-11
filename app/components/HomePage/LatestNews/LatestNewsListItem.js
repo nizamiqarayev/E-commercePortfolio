@@ -1,10 +1,10 @@
 import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
-import React, {useEffect} from 'react';
+import React from 'react';
 import px from '../../../assets/utility/dimension';
 import {useNavigation} from '@react-navigation/native';
 import colors from '../../../config/colors';
 
-const LatestNewsListItem = ({data,index,onPress}) => {
+const LatestNewsListItem = ({data, index, onPress}) => {
   const navigation = useNavigation();
 
   return (
@@ -12,15 +12,23 @@ const LatestNewsListItem = ({data,index,onPress}) => {
       <Pressable
         style={styles.container}
         android_ripple={{color: colors.softGray}}
-        onPress={onPress?onPress:() => {
-          navigation.navigate('newsdetail',{data:data,index:index});
-        }}>
+        onPress={
+          onPress
+            ? onPress
+            : () => {
+                navigation.navigate('newsdetail', {data: data, index: index});
+              }
+        }>
         <View style={styles.textView}>
           <Text style={[styles.text, {marginTop: 20}]}>
             {data != null ? data.title : ''}
           </Text>
-          <Text style={styles.text} numberOfLines={1}>{data != null ? data.content : ''}</Text>
-          <Text style={[styles.text, {marginBottom: 20}]}>{data != null ? `${new Date(data.date).toDateString()}` : ''}</Text>
+          <Text style={styles.text} numberOfLines={1}>
+            {data != null ? data.content : ''}
+          </Text>
+          <Text style={[styles.text, {marginBottom: 20}]}>
+            {data != null ? `${new Date(data.date).toDateString()}` : ''}
+          </Text>
         </View>
         <View>
           <Image

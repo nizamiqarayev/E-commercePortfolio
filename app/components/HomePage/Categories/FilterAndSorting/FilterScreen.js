@@ -1,18 +1,17 @@
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import RnRangeSlider from 'rn-range-slider';
 import Thumb from '../../../UI/Slider/Thumb';
 import Rail from '../../../UI/Slider/Rail';
 import RailSelected from '../../../UI/Slider/RailSelected';
 import Label from '../../../UI/Slider/Label';
 import Notch from '../../../UI/Slider/Notch';
-import Selection from './Selection';
 import {useDispatch, useSelector} from 'react-redux';
 import {setFilteredProducts} from '../../../../store/slices/products';
 import px from '../../../../assets/utility/dimension';
 import colors from '../../../../config/colors';
 import Button from '../../../UI/Button';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
 
 const FilterScreen = ({navigation}) => {
   const data = useSelector(state => state.products);
@@ -31,14 +30,18 @@ const FilterScreen = ({navigation}) => {
   const focus = useIsFocused();
 
   const maxValue = useMemo(() => {
-   
-    return Math.ceil(parseFloat(
-      data.categorySpecificProducts
-        .reduce((previous, current) => {
-          return parseFloat(current.price.replace(/\s/g, '')) > parseFloat(previous.price.replace(/\s/g, '')) ? current : previous;
-        })
-        .price.replace(/\s/g, ''),
-    ))
+    return Math.ceil(
+      parseFloat(
+        data.categorySpecificProducts
+          .reduce((previous, current) => {
+            return parseFloat(current.price.replace(/\s/g, '')) >
+              parseFloat(previous.price.replace(/\s/g, ''))
+              ? current
+              : previous;
+          })
+          .price.replace(/\s/g, ''),
+      ),
+    );
   }, [focus]);
 
   const dispatch = useDispatch();
@@ -46,9 +49,11 @@ const FilterScreen = ({navigation}) => {
   const filter = () => {
     const tempdata = data.categorySpecificProducts;
     const newData = tempdata.filter(item => {
-      return item.isSale ?item.salePrice.replace(/\s/g, '') >= parseFloat(low) && item.salePrice.replace(/\s/g, '') <= parseFloat(high) : item.price.replace(/\s/g, '') >= parseFloat(low) && item.price.replace(/\s/g, '') <= parseFloat(high)
-     
-      
+      return item.isSale
+        ? item.salePrice.replace(/\s/g, '') >= parseFloat(low) &&
+            item.salePrice.replace(/\s/g, '') <= parseFloat(high)
+        : item.price.replace(/\s/g, '') >= parseFloat(low) &&
+            item.price.replace(/\s/g, '') <= parseFloat(high);
     });
     dispatch(
       setFilteredProducts({
@@ -89,8 +94,8 @@ const FilterScreen = ({navigation}) => {
             flexDirection: 'row',
             marginTop: 10,
           }}>
-          <Text style={{color:colors.fontColor}}>0 $</Text>
-          <Text style={{color:colors.fontColor}}>{maxValue} $</Text>
+          <Text style={{color: colors.fontColor}}>0 $</Text>
+          <Text style={{color: colors.fontColor}}>{maxValue} $</Text>
         </View>
       </View>
       <View style={{height: '70%'}}>

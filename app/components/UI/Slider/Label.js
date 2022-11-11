@@ -1,7 +1,7 @@
-import React, { memo } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, {memo} from 'react';
+import {View, Text, StyleSheet} from 'react-native';
 
-const Label = ({ text, ...restProps }) => {
+const Label = ({text, ...restProps}) => {
   return (
     <View style={styles.root} {...restProps}>
       <Text style={styles.text}>{text}</Text>

@@ -1,15 +1,12 @@
-import {FlatList, Modal, Pressable, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import React from 'react';
 import CategoryItem from './CategoryItem';
 import {useSelector} from 'react-redux';
 import px from '../../../assets/utility/dimension';
-import IconButton from '../../UI/IconButton';
 import colors from '../../../config/colors';
 
-const AllCategories = ({onPress, navigation}) => {
+const AllCategories = () => {
   const categoriesFromStore = useSelector(state => state.categories);
-
-  const renderItems = ({item, index}) => {};
 
   return (
     <View style={styles.parent}>
@@ -45,7 +42,12 @@ const AllCategories = ({onPress, navigation}) => {
             data={categoriesFromStore.content}
             renderItem={({item}) => {
               return (
-                <View style={{ marginHorizontal:px(5), paddingVertical:15, marginVertical:px(10)}}>
+                <View
+                  style={{
+                    marginHorizontal: px(5),
+                    paddingVertical: 15,
+                    marginVertical: px(10),
+                  }}>
                   <CategoryItem
                     key={item._id}
                     id={item._id}
@@ -75,8 +77,7 @@ const AllCategories = ({onPress, navigation}) => {
 export default AllCategories;
 
 const styles = StyleSheet.create({
-  parent: {
-  },
+  parent: {},
   container: {
     backgroundColor: colors.offGray,
   },
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
   },
   flatlist: {
     justifyContent: 'space-evenly',
-    alignItems:'center'
+    alignItems: 'center',
 
     // backgroundColor:"red"
   },

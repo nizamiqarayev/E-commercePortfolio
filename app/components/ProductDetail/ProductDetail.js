@@ -27,7 +27,7 @@ import {useSelector} from 'react-redux';
 import ProductsCarousel from '../HomePage/Products/ProductsCarousel';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Rating} from 'react-native-ratings';
-import { Addedwish, DeletedWish } from '../../stack/Stack';
+import {Addedwish, DeletedWish} from '../../stack/Stack';
 
 let interval = null;
 const ProductDetail = ({route}) => {
@@ -97,7 +97,7 @@ const ProductDetail = ({route}) => {
     setCarousel(false);
 
     if (addedWish) {
-      DeletedWish()
+      DeletedWish();
       return deleteFromWishList();
     }
     try {

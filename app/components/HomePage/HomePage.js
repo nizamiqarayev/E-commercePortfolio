@@ -1,38 +1,25 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Pressable,
-  Modal,
-} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Pressable} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import LatestNewsList from './LatestNews/LatestNewsList';
 import Button from '../UI/Button';
 import px from '../../assets/utility/dimension';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useIsFocused} from '@react-navigation/native';
-import ProductCard from '../ProductCard/ProductCard';
 import colors from '../../config/colors';
 import CategoryCarousel from './Categories/CategoryCarousel';
-import AllCategories from './Categories/AllCategories';
 import ProductsCarousel from './Products/ProductsCarousel';
 import {useSelector} from 'react-redux';
 import SearchBar from '../UI/SearchBar';
 import {setAllProductsDisplay} from '../../store/slices/products';
-import IconButton from '../UI/IconButton';
-import { set } from 'immer/dist/internal';
 
-const HomePage = ({route, navigation}) => {
+const HomePage = ({navigation}) => {
   const focused = useIsFocused();
-const [load,setLoad]=useState(false)
+  const [load, setLoad] = useState(false);
   const productsAllData = useSelector(state => state.products);
-// SALAMLARRRRRRRRRRRRRRRRRRRRRRRRRRRR
   useEffect(() => {
     if (focused) {
-      setLoad(true)
+      setLoad(true);
     } else {
-      setLoad(false)
+      setLoad(false);
     }
   }, [focused]);
   return (
@@ -58,7 +45,6 @@ const [load,setLoad]=useState(false)
             <Text style={styles.title}>Categories</Text>
             <Pressable
               onPress={() => {
-                // setCategoriesModal(true);
                 navigation.navigate('allcategories');
               }}>
               <Text style={{color: colors.blue}}>See All</Text>
@@ -84,9 +70,7 @@ const [load,setLoad]=useState(false)
             <Text style={{color: colors.blue}}>See All</Text>
           </Pressable>
         </View>
-        <View>
-          {load?<ProductsCarousel />:<></>}
-        </View>
+        <View>{load ? <ProductsCarousel /> : <></>}</View>
         <View style={{paddingVertical: px(30)}}>
           <View>
             <Text style={styles.latestNewsHeaderText}>Latest News</Text>
