@@ -38,7 +38,7 @@ const CheckoutComponent = ({item}) => {
             </View>
           )}
           <View>
-            <Text>
+            <Text style={{color:colors.fontColor}}>
               Total Amount: $
               {sale
                 ? item.productId?.salePrice.replace(/\s/g, '') * item.count
