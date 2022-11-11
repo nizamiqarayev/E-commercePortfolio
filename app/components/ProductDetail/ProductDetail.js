@@ -604,9 +604,8 @@ const ProductDetail = ({route}) => {
 
         <Button
           onPress={async () => {
-            if(inCard){
-
-            }else{
+            if (inCard) {
+            } else {
               await addToStoreCard();
               navigation.navigate('addtocartscreen', {
                 id: data._id,
@@ -614,7 +613,6 @@ const ProductDetail = ({route}) => {
               });
               setLoading(false);
             }
-            
           }}
           backgroundColor={colors.blue}>
           <Text style={styles.ButtonText}>

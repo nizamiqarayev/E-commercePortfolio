@@ -21,22 +21,39 @@ const Order = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [userId, setUserId] = useState('');
   const [totalPrice, setTotalPrice] = useState(0);
+  const [dataFetched, setDataFetched] = useState(false);
+
+  const [logged, setLogged] = useState(false);
+
   useEffect(() => {
     fetchUserId();
     fetchEmail();
     console.log(data);
-  }, [data]);
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchUserId();
+    }, []),
+  );
 
   const fetchUserId = async () => {
-    const userId = await AsyncStorage.getItem('_id');
-    setUserId(userId);
+    const userIdFetch = await AsyncStorage.getItem('_id');
+    if (userIdFetch) {
+      setLogged(true);
+    } else {
+      setLogged(false);
+    }
+    setUserId(userIdFetch);
   };
 
   const fetchEmail = async () => {
-    const email = await AsyncStorage.getItem('email');
-    console.log(email);
-    setEmail(email);
+    const emailFetch = await AsyncStorage.getItem('email');
+    setEmail(emailFetch);
   };
+  // useEffect(() => {
+  //   getData();
+  // }, logged);
 
   useEffect(() => {
     navigation.setOptions({
@@ -127,6 +144,9 @@ const Order = ({navigation}) => {
       const data = await response.data;
       const products = data.products;
       setData(products);
+      if (products.length > 0) {
+        setDataFetched(true);
+      }
     } catch (error) {
       console.log(error);
     } finally {
@@ -137,12 +157,15 @@ const Order = ({navigation}) => {
 
   const calculateTotal = () => {
     var total = 0;
-    if (data?.length > 0) {
+    if (dataFetched) {
       data?.map(product => {
-        if (product.isSale) {
+        if (product.product.isSale) {
           // console.log('isSale', product.product.salePrice * product.count);
           total =
-            total + parseFloat(product.product.salePrice.replace(/\s/g, ''));
+            total +
+            parseFloat(
+              product.product.salePrice.replace(/\s/g, '') * product.count,
+            );
         } else {
           // console.log('NoSale', product.product.price);
           total =
@@ -180,29 +203,59 @@ const Order = ({navigation}) => {
   );
 
   const EmptyList = useCallback(() => {
-    return (
-      loading || (
-        <Text
-          style={{
-            marginTop: 20,
-            fontFamily: 'DMSans-Medium',
-            alignSelf: 'center',
-          }}>
-          Card is empty
-        </Text>
-      )
+    console.log('logged', logged);
+    return logged ? (
+      // loading || (
+      //   <Text
+      //     style={{
+      //       marginTop: 20,
+      //       fontFamily: 'DMSans-Medium',
+      //       alignSelf: 'center',
+      //     }}>
+      //     Card is empty
+      //   </Text>
+      // )
+      <Text
+        style={{
+          marginTop: 20,
+          fontFamily: 'DMSans-Medium',
+          alignSelf: 'center',
+        }}>
+        Card is empty
+      </Text>
+    ) : (
+      <Text
+        style={{
+          marginTop: 20,
+          fontFamily: 'DMSans-Medium',
+          alignSelf: 'center',
+        }}>
+        You must login first
+      </Text>
     );
   }, [loading]);
 
-  return (
-    <View style={{flex: 1}}>
-      <View style={styles.container}>
-        {loading ? (
+  const Loading = () => {
+    return (
+      <View>
+        {logged ? (
           <ActivityIndicator
             color={colors.EarthGreen}
             size={'large'}
             style={{alignSelf: 'center'}}
           />
+        ) : (
+          <Text>First you must log in</Text>
+        )}
+      </View>
+    );
+  };
+
+  return (
+    <View style={{flex: 1}}>
+      <View style={styles.container}>
+        {loading ? (
+          <Loading />
         ) : (
           <FlatList
             data={data}
@@ -219,9 +272,7 @@ const Order = ({navigation}) => {
         )}
       </View>
 
-      {data.length == 0 ? (
-        <></>
-      ) : (
+      {loading ? (
         <View
           style={{
             justifyContent: 'center',
@@ -248,6 +299,8 @@ const Order = ({navigation}) => {
             </Button>
           </View>
         </View>
+      ) : (
+        <></>
       )}
     </View>
   );

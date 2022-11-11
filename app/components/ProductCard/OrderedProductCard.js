@@ -8,7 +8,6 @@ import base from '../../helpers/base';
 
 const OrderedProductCard = ({data, userId, dataResetter}) => {
   const [sale] = useState(data.product.isSale);
-  console.log('data', data);
   return (
     <View style={{}}>
       <View
