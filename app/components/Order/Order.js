@@ -65,6 +65,7 @@ const Order = ({navigation}) => {
       await deletion();
     }
   };
+
   const deletion = async () => {
     for (let i = 0; i < data.length; i++) {
       try {
@@ -167,7 +168,13 @@ const Order = ({navigation}) => {
 
   const Product = useCallback(
     ({item}) => {
-      return <OrderedProductCard data={item} />;
+      return (
+        <OrderedProductCard
+          data={item}
+          userId={userId}
+          dataResetter={getData}
+        />
+      );
     },
     [loading],
   );
@@ -212,32 +219,36 @@ const Order = ({navigation}) => {
         )}
       </View>
 
-      <View
-        style={{
-          justifyContent: 'center',
-          width: '100%',
-          alignItems: 'center',
-          marginBottom: px(10),
-        }}>
-        <View style={{height: px(50), width: '90%'}}>
-          <Button
-            backgroundColor={colors.blue}
-            onPress={() => {
-              console.log(email);
-              console.log(userId);
+      {data.length == 0 ? (
+        <></>
+      ) : (
+        <View
+          style={{
+            justifyContent: 'center',
+            width: '100%',
+            alignItems: 'center',
+            marginBottom: px(10),
+          }}>
+          <View style={{height: px(50), width: '90%'}}>
+            <Button
+              backgroundColor={colors.blue}
+              onPress={() => {
+                console.log(email);
+                console.log(userId);
 
-              navigation.navigate('payment', {
-                total: totalPrice,
-                email: email,
-                userId: userId,
-                onCompletion: paymentFinished,
-              });
-            }}
-            color={colors.white}>
-            Checkout
-          </Button>
+                navigation.navigate('payment', {
+                  total: totalPrice,
+                  email: email,
+                  userId: userId,
+                  onCompletion: paymentFinished,
+                });
+              }}
+              color={colors.white}>
+              Checkout
+            </Button>
+          </View>
         </View>
-      </View>
+      )}
     </View>
   );
 };
