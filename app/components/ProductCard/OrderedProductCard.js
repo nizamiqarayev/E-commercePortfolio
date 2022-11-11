@@ -37,8 +37,10 @@ const OrderedProductCard = ({data}) => {
             <Text style={[styles.price, {color: colors.fontColor}]}>
               Total Amount: $
               {sale
-                ? data.product.salePrice.replace(/\s/g, '') * data.count
-                : data.product.price.replace(/\s/g, '') * data.count}
+                ? (
+                    data.product.salePrice.replace(/\s/g, '') * data.count
+                  ).toFixed(2)
+                : data.product.price.replace(/\s/g, '') * data.count.toFixed(2)}
             </Text>
           </View>
         </View>

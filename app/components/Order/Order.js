@@ -49,7 +49,7 @@ const Order = ({navigation}) => {
                 fontFamily: 'DMSans-Bold',
                 fontSize: px(16),
               }}>
-              Total Amount: {totalPrice}$
+              Total Amount: {totalPrice.toFixed(2)}$
             </Text>
           </View>
         );
