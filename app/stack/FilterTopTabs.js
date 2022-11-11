@@ -1,9 +1,8 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Pressable, Text, View} from 'react-native';
 import React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import FilterScreen from '../components/HomePage/Categories/FilterAndSorting/FilterScreen';
 import SortScreen from '../components/HomePage/Categories/FilterAndSorting/SortScreen';
-import {TabBarItem} from 'react-native-tab-view';
 import {useNavigation} from '@react-navigation/native';
 import px from '../assets/utility/dimension';
 import IconButton from '../components/UI/IconButton';
@@ -85,5 +84,3 @@ const FilterTopTabs = () => {
 };
 
 export default FilterTopTabs;
-
-const styles = StyleSheet.create({});

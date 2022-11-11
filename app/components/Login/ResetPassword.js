@@ -109,7 +109,6 @@ const ResetPassword = ({navigation}) => {
 };
 
 const screenheight = Dimensions.get('screen').height;
-const windowheight = Dimensions.get('window').height;
 const deviceHeight = screenheight / 1063;
 const styles = StyleSheet.create({
   KeyboardAwareScrollView: {

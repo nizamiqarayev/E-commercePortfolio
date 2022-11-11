@@ -1,11 +1,7 @@
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {StyleSheet, TextInput, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import colors from '../../config/colors';
-import {useDispatch, useSelector} from 'react-redux';
-import {
-  setFilteredProducts,
-  setProductsForDisplay,
-} from '../../store/slices/products';
+import {useDispatch} from 'react-redux';
 import px from '../../assets/utility/dimension';
 import Feather from 'react-native-vector-icons/Feather';
 

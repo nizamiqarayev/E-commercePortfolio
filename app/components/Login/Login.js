@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  Dimensions,
   Keyboard,
   ActivityIndicator,
 } from 'react-native';
@@ -16,9 +15,8 @@ import px from '../../assets/utility/dimension';
 import axios from 'axios';
 import colors from '../../config/colors';
 import base from '../../helpers/base';
-import { ErrorLogin, successLogin } from '../../stack/Stack';
+import {ErrorLogin, successLogin} from '../../stack/Stack';
 const Login = ({navigation}) => {
-  
   const [keyboard, setkeyboard] = useState();
   const [iconName, setIconName] = useState('eye-outline');
   const [buttonColor, setButtonColor] = useState(colors.disabledButton);
@@ -116,12 +114,12 @@ const Login = ({navigation}) => {
 
       Home();
     } catch (error) {
-      ErrorLogin()
+      ErrorLogin();
       setLoading(false);
       setError(true);
     }
     function Home() {
-      successLogin()
+      successLogin();
       navigation.navigate('HomePage');
     }
   }
@@ -233,7 +231,6 @@ const Login = ({navigation}) => {
     </>
   );
 };
-const screen = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: colors.white,

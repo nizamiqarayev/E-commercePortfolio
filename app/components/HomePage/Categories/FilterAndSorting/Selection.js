@@ -1,17 +1,10 @@
 import {View, Text, Pressable} from 'react-native';
 import React from 'react';
-import IconButton from '../../../UI/IconButton';
 import px from '../../../../assets/utility/dimension';
 import colors from '../../../../config/colors';
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-export default function Selection({
-  title,
-  value,
-  selectedValue,
-  valuesetter,
-  alternateValue,
-}) {
+export default function Selection({title, value, selectedValue, valuesetter}) {
   return (
     <Pressable
       onPress={() => {
@@ -23,7 +16,7 @@ export default function Selection({
       }}>
       <View
         style={{
-          height:px(50),
+          height: px(50),
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',

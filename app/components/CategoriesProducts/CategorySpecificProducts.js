@@ -10,17 +10,12 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import SearchBar from '../UI/SearchBar';
 import px from '../../assets/utility/dimension';
-import IconButton from '../UI/IconButton';
 import Button from '../UI/Button';
 import colors from '../../config/colors';
-import {useIsFocused} from '@react-navigation/native';
-import {Sorting} from '../../assets/utility/Sorting';
 const CategorySpecificProducts = ({route, navigation}) => {
   const dispatch = useDispatch();
 
   const productsAllData = useSelector(state => state.products);
-
-  const isFocused = useIsFocused();
 
   useEffect(() => {
     if (productsAllData.allproductsloaded == false) {

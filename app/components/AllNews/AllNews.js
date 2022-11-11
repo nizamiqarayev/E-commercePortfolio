@@ -1,7 +1,6 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
 import LatestNewsList from '../HomePage/LatestNews/LatestNewsList';
-import Dummy from '../../assets/data/DummyData/Dummy';
 const AllNews = () => {
   return (
     <View>
@@ -11,5 +10,3 @@ const AllNews = () => {
 };
 
 export default AllNews;
-
-const styles = StyleSheet.create({});

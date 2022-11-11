@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {View, Image} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
@@ -14,15 +14,9 @@ import Login from '../components/Login/Login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Account from '../components/Login/Account';
-import base from '../helpers/base';
-import {useNavigationState} from '@react-navigation/native';
-import Toast, { BaseToast } from 'react-native-toast-message';
 import px from '../assets/utility/dimension';
-import Test from '../components/Test/Test';
 
 const BottomTabs = createBottomTabNavigator();
-
-
 
 const BottomTabsenComponent = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -43,82 +37,77 @@ const BottomTabsenComponent = () => {
     getToken();
   }, [AsyncStorage.getItem('token')]);
 
-  
-  
-
-
   return (
     <>
-    <BottomTabs.Navigator>
-      <BottomTabs.Screen
-        name="HomePage"
-        component={HomePage}
-        options={{
-          tabBarLabel: 'HOME',
-          tabBarIcon: ({focused, color}) => (
-            <Octicons
-              name="home"
-              size={24}
-              color={focused ? color : colors.darkgray}
-            />
-          ),
-        }}></BottomTabs.Screen>
-      <BottomTabs.Screen
-        name="Wishlist"
-        component={Wishlist}
-        options={{
-          tabBarLabel: 'WISHLIST',
-          tabBarIcon: ({focused, color}) => (
-            <Ionicons
-              name="heart-outline"
-              size={24}
-              color={focused ? color : colors.darkgray}
-            />
-          ),
-        }}></BottomTabs.Screen>
-      <BottomTabs.Screen
-        name="Card"
-        component={Order}
+      <BottomTabs.Navigator>
+        <BottomTabs.Screen
+          name="HomePage"
+          component={HomePage}
           options={{
+            tabBarLabel: 'HOME',
+            tabBarIcon: ({focused, color}) => (
+              <Octicons
+                name="home"
+                size={24}
+                color={focused ? color : colors.darkgray}
+              />
+            ),
+          }}></BottomTabs.Screen>
+        <BottomTabs.Screen
+          name="Wishlist"
+          component={Wishlist}
+          options={{
+            tabBarLabel: 'WISHLIST',
+            tabBarIcon: ({focused, color}) => (
+              <Ionicons
+                name="heart-outline"
+                size={24}
+                color={focused ? color : colors.darkgray}
+              />
+            ),
+          }}></BottomTabs.Screen>
+        <BottomTabs.Screen
+          name="Card"
+          component={Order}
+          options={{
+            tabBarLabel: 'CARD',
+            tabBarIcon: ({focused, color}) => (
+              <Feather
+                name="credit-card"
+                size={24}
+                color={focused ? color : colors.darkgray}
+              />
+            ),
+          }}></BottomTabs.Screen>
 
-          tabBarLabel: 'CARD',
-          tabBarIcon: ({focused, color}) => (
-            <Feather
-              name="credit-card"
-              size={24}
-              color={focused ? color : colors.darkgray}
-            />
-          ),
-        }}></BottomTabs.Screen>
-
-      <BottomTabs.Screen
-        name={isLogin ? 'Account' : 'Login'}
-        component={isLogin ? Account : Login}
-        options={{
-          tabBarIcon: ({focused, color}) => (
-            <View>
-              {isLogin ? (
-                <Image
-                  style={{
-                    borderRadius:1000,
-                  }}
-                  source={{
-                    uri: profilePicture,
-                    width: px(24),
-                    height: px(24),
-                  }}></Image>
-              ) : (
-                <Ionicons
-                  name="person-outline"
-                  size={24}
-                  color={focused ? color : colors.darkgray}
-                />
-              )}
-            </View>
-          ),
-        }}
-      />
-      {/* <BottomTabs.Screen
+        <BottomTabs.Screen
+          name={isLogin ? 'Account' : 'Login'}
+          component={isLogin ? Account : Login}
+          options={{
+            tabBarIcon: ({focused, color}) => (
+              <View>
+                {isLogin ? (
+                  <Image
+                    style={{
+                      borderRadius: 1000,
+                    }}
+                    source={{
+                      uri: profilePicture,
+                      width: px(24),
+                      height: px(24),
+                    }}></Image>
+                ) : (
+                  <Ionicons
+                    name="person-outline"
+                    size={24}
+                    color={focused ? color : colors.darkgray}
+                  />
+                )}
+              </View>
+            ),
+          }}
+        />
+        {/* <BottomTabs.Screen
         name="Test"
         component={Test}
         initialParams={{toast:successLogin}}
@@ -132,11 +121,9 @@ const BottomTabsenComponent = () => {
             />
           ),
         }}></BottomTabs.Screen> */}
-    </BottomTabs.Navigator>
+      </BottomTabs.Navigator>
     </>
   );
 };
 
 export default BottomTabsenComponent;
-
-const styles = StyleSheet.create({});
