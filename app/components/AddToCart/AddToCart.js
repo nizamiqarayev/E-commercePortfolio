@@ -1,4 +1,4 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Pressable, Text, View} from 'react-native';
 import React from 'react';
 
 const AddToCart = () => {
@@ -54,5 +54,3 @@ const AddToCart = () => {
 };
 
 export default AddToCart;
-
-const styles = StyleSheet.create({});

@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Selection from './Selection';
 import px from '../../../../assets/utility/dimension';
@@ -74,7 +74,9 @@ const SortScreen = ({navigation}) => {
         <View style={{height: px(50), flex: 1, marginHorizontal: 10}}>
           <Button
             onPress={async () => {
-              await setSortedValue(Sorting(productsAllData.productsForDisplay, SortType));
+              setSortedValue(
+                Sorting(productsAllData.productsForDisplay, SortType),
+              );
 
               navigation.pop(1);
             }}

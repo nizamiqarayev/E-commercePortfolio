@@ -1,5 +1,5 @@
-import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {FlatList, ScrollView, StyleSheet} from 'react-native';
+import React, {useEffect} from 'react';
 import CategoryItem from './CategoryItem';
 import px from '../../../assets/utility/dimension';
 import {useDispatch, useSelector} from 'react-redux';

@@ -1,4 +1,4 @@
-import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import px from '../../../assets/utility/dimension';
 import {useDispatch, useSelector} from 'react-redux';
@@ -7,16 +7,11 @@ import {
   fetchProducts,
   setAllProductsDisplay,
 } from '../../../store/slices/products';
-import {useIsFocused} from '@react-navigation/native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import base from '../../../helpers/base';
-import { fetchWishlist, setWishlist } from '../../../store/slices/Wishlist';
-import { set } from 'immer/dist/internal';
 
-const ProductsCarousel = ({ inProductDetails, inProductId }) => {
-  const hearted = useSelector(state => state.wishlist)
-
+const ProductsCarousel = ({inProductDetails, inProductId}) => {
   const Skeleton = () => {
     return (
       <SkeletonPlaceholder>
@@ -46,32 +41,26 @@ const ProductsCarousel = ({ inProductDetails, inProductId }) => {
   const productsAllData = useSelector(state => state.products);
   const dispatch = useDispatch();
 
-  const [inDetailsViewData, setInDetailsViewData] = useState([]);
-  const [wishes,setWishes]=useState([])
-  const [loaded,setLoaded]=useState(false)
+  const [] = useState([]);
+  const [wishes, setWishes] = useState([]);
+  const [loaded, setLoaded] = useState(false);
 
-  const focus = useIsFocused();
-  async function getWishes(){
+  async function getWishes() {
     const userId = await AsyncStorage.getItem('_id');
     if (userId) {
       try {
-        
         const response = await base.api().get(`wishlists/${userId}`);
         const datas = response.data.data;
         await AsyncStorage.setItem('wishlist', JSON.stringify(datas.products));
-        setWishes(datas.products)
+        setWishes(datas.products);
 
-        setLoaded(true)
-      } catch (error) {
-      }
+        setLoaded(true);
+      } catch (error) {}
     } else {
-      setWishes(JSON.parse(await AsyncStorage.getItem('wishlist')))
+      setWishes(JSON.parse(await AsyncStorage.getItem('wishlist')));
     }
-      setLoaded(true)
-
-    }
-  
- 
+    setLoaded(true);
+  }
 
   useEffect(() => {
     if (productsAllData.allproductsloaded == false) {
@@ -79,8 +68,8 @@ const ProductsCarousel = ({ inProductDetails, inProductId }) => {
     }
   }, []);
   useEffect(() => {
-    getWishes()
-  
+    getWishes();
+
     if (productsAllData.allproductsloaded == true) {
       if (inProductDetails == false || inProductDetails == null) {
         dispatch(setAllProductsDisplay({final: productsAllData.products}));
@@ -96,7 +85,7 @@ const ProductsCarousel = ({ inProductDetails, inProductId }) => {
 
   return (
     <>
-      {productsAllData.allproductsloaded&&loaded? (
+      {productsAllData.allproductsloaded && loaded ? (
         <FlatList
           style={styles.scrollView}
           contentContainerStyle={{

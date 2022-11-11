@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Text} from 'react-native';
 import React from 'react';
 import Register from '../components/Registration/Register';
 import Verification from '../components/Registration/Verification';
@@ -87,13 +87,11 @@ const StackComponent = () => {
     <>
       <Stack.Navigator
         screenOptions={{
-          animation:'slide_from_right',
-        }}
-      >
+          animation: 'slide_from_right',
+        }}>
         <Stack.Screen
           name="main"
           options={{
-            
             headerShown: false,
             contentStyle: {backgroundColor: 'white'},
           }}
@@ -197,11 +195,13 @@ const StackComponent = () => {
         <Stack.Screen name="All Products" component={AllProducts} />
         <Stack.Screen name="Store" component={StoreDetails} />
 
-        <Stack.Screen name="payment" component={PaymentWidget} options={ 
-         {
-          headerShown: false,
-         }
-        } />
+        <Stack.Screen
+          name="payment"
+          component={PaymentWidget}
+          options={{
+            headerShown: false,
+          }}
+        />
 
         <Stack.Group
           screenOptions={{
@@ -239,5 +239,3 @@ const StackComponent = () => {
 };
 
 export default StackComponent;
-
-const styles = StyleSheet.create({});

@@ -16,8 +16,7 @@ import base from '../../../helpers/base';
 import AddedButton from '../../UI/AddedButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LatestNewsListItem from '../LatestNews/LatestNewsListItem';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
-import Share from 'react-native-share';
+import {useNavigation} from '@react-navigation/native';
 
 const NewsDetail = ({route, navigation}) => {
   const scrollref = useRef();
@@ -26,7 +25,6 @@ const NewsDetail = ({route, navigation}) => {
   if (index == randomindex) {
     randomindex = Math.floor(Math.random() * 3);
   }
-  const focused = useIsFocused();
   const [loading, setLoading] = useState(false);
   const [otherData, setOtherData] = useState([]);
   const [otherDatalength, setOtherDataLength] = useState(0);
@@ -43,8 +41,7 @@ const NewsDetail = ({route, navigation}) => {
   }
 
   useEffect(() => {
-      otherNewsRequest();
-    
+    otherNewsRequest();
   }, [index]);
   const data = route.params.data;
   const OtherNews = () => {
@@ -77,11 +74,6 @@ const NewsDetail = ({route, navigation}) => {
   const fun = async () => {
     setLoading(true);
     try {
-      const shareResponse = await Share.open({
-        title: 'Salam',
-        message: `${data.image}\n\n*${data.title}*\n\n${data.content}\n`,
-        failOnCancel: true,
-      });
     } catch (error) {
       setLoading(false);
     }
@@ -134,7 +126,7 @@ const NewsDetail = ({route, navigation}) => {
             <Text style={styles.title}>Other News</Text>
           </View>
           <View style={styles.otherNews}>
-            {otherDatalength ? <OtherNews />:<></>}
+            {otherDatalength ? <OtherNews /> : <></>}
           </View>
           <View style={styles.container}>
             <Button

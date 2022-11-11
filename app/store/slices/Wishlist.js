@@ -31,7 +31,7 @@ const wishlist = createSlice({
       state.content = action.payload;
       state.pending = false;
     }),
-      builder.addCase(fetchWishlist.rejected, (state, action) => {
+      builder.addCase(fetchWishlist.rejected, state => {
         state.content = [];
       });
   },

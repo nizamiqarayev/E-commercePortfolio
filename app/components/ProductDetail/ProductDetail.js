@@ -27,7 +27,7 @@ import {useSelector} from 'react-redux';
 import ProductsCarousel from '../HomePage/Products/ProductsCarousel';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Rating} from 'react-native-ratings';
-import { Addedwish, DeletedWish } from '../../stack/Stack';
+import {Addedwish, DeletedWish} from '../../stack/Stack';
 
 let interval = null;
 const ProductDetail = ({route}) => {
@@ -97,7 +97,7 @@ const ProductDetail = ({route}) => {
     setCarousel(false);
 
     if (addedWish) {
-      DeletedWish()
+      DeletedWish();
       return deleteFromWishList();
     }
     try {
@@ -604,12 +604,17 @@ const ProductDetail = ({route}) => {
 
         <Button
           onPress={async () => {
-            // await addToCard();
-            navigation.navigate('addtocartscreen', {
-              id: data._id,
-              price: data.isSale ? data.salePrice : data.price,
-            });
-            setLoading(false);
+            if(inCard){
+
+            }else{
+              await addToStoreCard();
+              navigation.navigate('addtocartscreen', {
+                id: data._id,
+                price: data.isSale ? data.salePrice : data.price,
+              });
+              setLoading(false);
+            }
+            
           }}
           backgroundColor={colors.blue}>
           <Text style={styles.ButtonText}>

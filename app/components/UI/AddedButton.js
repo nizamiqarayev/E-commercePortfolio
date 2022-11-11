@@ -1,8 +1,8 @@
 import React from 'react';
-import {View, StyleSheet, Pressable, Text} from 'react-native';
+import {View, StyleSheet, Pressable} from 'react-native';
 import px from '../../assets/utility/dimension';
 
-const AddedButton = ({children, backgroundColor, color, onPress, borderColor}) => {
+const AddedButton = ({children, backgroundColor, onPress, borderColor}) => {
   return (
     <Pressable style={{flex: 1}} onPress={onPress}>
       <View

@@ -1,17 +1,13 @@
 import {useFocusEffect} from '@react-navigation/native';
-import React, {useCallback, useEffect, useState, useTransition} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   View,
   StyleSheet,
   Text,
-  ToastAndroid,
-  Alert,
   FlatList,
-  Image,
   ActivityIndicator,
 } from 'react-native';
 import colors from '../../config/colors';
-import Reviews from '../Reviews/Reviews';
 import base from '../../helpers/base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ProductCard from '../ProductCard/ProductCard';
@@ -20,10 +16,6 @@ import px from '../../assets/utility/dimension';
 const Wishlist = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // numune qurdum tam optimize deyil - mentiq bu formada olacaq
-  //datani storeda saxlayin - logout olduqda clear edin;
-  // getData in storeda cagirin ve funksiyani daha seliqeli edin;
 
   const getData = async () => {
     // url-i burda yazdim ama file yaradib butun url-ləri ora ataq.

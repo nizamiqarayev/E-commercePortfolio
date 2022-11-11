@@ -1,12 +1,5 @@
-import React, { useEffect } from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  FlatList,
-  ScrollView,
-  Image,
-} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, StyleSheet, Text, FlatList, ScrollView} from 'react-native';
 import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
 import Stars from './Stars';
@@ -26,13 +19,16 @@ const ReviewProduct = ({route}) => {
     averageRating = averageRating + item.starCount;
   });
   const navigation = useNavigation();
-  useEffect(()=>{
-
+  useEffect(() => {
     navigation.setOptions({
       headerRight: () => {
         return (
-          <View style={{flexDirection: 'row',alignItems:'center'}}>
-            <Antdesign name="star" size={px(14)} style={styles.star} color={colors.OrangeFresh}></Antdesign>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Antdesign
+              name="star"
+              size={px(14)}
+              style={styles.star}
+              color={colors.OrangeFresh}></Antdesign>
             <Text style={styles.headerRightText}>
               {(averageRating / count).toFixed(1)}
             </Text>
@@ -40,7 +36,7 @@ const ReviewProduct = ({route}) => {
         );
       },
     });
-  },[])
+  }, []);
 
   return (
     <ScrollView>
@@ -119,12 +115,12 @@ const ReviewProduct = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:colors.white
+    backgroundColor: colors.white,
   },
-  headerRightText:{
-    color:colors.fontColor,
-    fontFamily:"DMSans-Medium",
-    fontSize:px(16)
+  headerRightText: {
+    color: colors.fontColor,
+    fontFamily: 'DMSans-Medium',
+    fontSize: px(16),
   },
   star: {
     width: px(16),

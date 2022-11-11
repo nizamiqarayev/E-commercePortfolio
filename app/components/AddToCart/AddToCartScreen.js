@@ -1,14 +1,11 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Pressable, Text, View} from 'react-native';
 import React, {useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
 import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
 import IconButton from '../UI/IconButton';
 import Button from '../UI/Button';
 import {useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
-import {set} from 'immer/dist/internal';
 import base from '../../helpers/base';
 
 const AddToCartScreen = ({route, navigation}) => {
@@ -206,5 +203,3 @@ const AddToCartScreen = ({route, navigation}) => {
 };
 
 export default AddToCartScreen;
-
-const styles = StyleSheet.create({});

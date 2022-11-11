@@ -6,28 +6,19 @@ import {
   Text,
   Pressable,
   ImageBackground,
-  Alert,
 } from 'react-native';
 import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
-import base from '../../helpers/base';
+import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useCallback } from 'react';
-import { Addedwish, DeletedWish } from '../../stack/Stack';
-
-
+import {Addedwish, DeletedWish} from '../../stack/Stack';
 
 const ProductCard = ({data, wishlistes, inWish}) => {
   const navigation = useNavigation();
   const [starReview, setStarReview] = useState(0);
-  const [sale, setIsSale] = useState(data.isSale);
+  const [sale] = useState(data.isSale);
   const [favorite, setFavorite] = useState(false);
-  const [haveWish, setHavewish] = useState(false);
-  const [datas, setDatas] = useState('');
-  const focus = useIsFocused();
-
 
   async function checkWishlist() {
     if (wishlistes) {
@@ -47,7 +38,6 @@ const ProductCard = ({data, wishlistes, inWish}) => {
   }, []);
 
   async function setWish() {
-    const userId = await AsyncStorage.getItem('_id');
     let wishes = JSON.parse(await AsyncStorage.getItem('wishlist'));
     if (!wishes) {
       wishes = [];
@@ -64,18 +54,12 @@ const ProductCard = ({data, wishlistes, inWish}) => {
     }
     await AsyncStorage.setItem('wishlist', JSON.stringify(wishes));
 
-    Addedwish()
+    Addedwish();
     try {
-      const response = await base.api().post('wishlists/create', {
-        userId: userId,
-        productId: data._id,
-      });
-
       setFavorite(true);
     } catch (error) {}
   }
   async function delWish() {
-    const userId = await AsyncStorage.getItem('_id');
     let wishes = JSON.parse(await AsyncStorage.getItem('wishlist'));
 
     wishes = wishes.filter(item => {
@@ -86,15 +70,8 @@ const ProductCard = ({data, wishlistes, inWish}) => {
 
     DeletedWish();
     try {
-      const response = await base.api().delete('wishlists/delete', {
-        data: {productId: data._id, userId: userId},
-      });
       setFavorite(false);
     } catch (error) {}
-  }
-  const wish = ()=>{
-    
-    
   }
 
   useEffect(() => {
@@ -147,14 +124,14 @@ const ProductCard = ({data, wishlistes, inWish}) => {
           )}
           <Image style={styles.image} source={{uri: data.coverPhoto}} />
           <Pressable
-            onPress={()=>{
-              setTimeout(()=>{
+            onPress={() => {
+              setTimeout(() => {
                 if (favorite) {
                   delWish();
                 } else {
                   setWish();
                 }
-              },1000)
+              }, 1000);
             }}
             style={{position: 'absolute', right: 10, top: 10, zIndex: 1}}>
             <Ionicons

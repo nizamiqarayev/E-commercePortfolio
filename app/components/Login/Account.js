@@ -16,9 +16,7 @@ const Account = ({navigation}) => {
     email: '',
     profilePicture: null,
   });
-  navigation.setOptions({
-    headerTransparent: true,
-  });
+
 
   async function getNameEmail() {
     let name = await AsyncStorage.getItem('username');
@@ -40,17 +38,7 @@ const Account = ({navigation}) => {
 
   async function logOut() {
     setLoading(true);
-    const userId = await AsyncStorage.getItem('_id');
-
-    const wishRes = await base.api().get(`wishlists/${userId}`);
-    const wishData = await wishRes.data;
-    const products = wishData.data.products;
-    const cardRes = await base.api().get(`cards/${userId}`);
-    const cardData = await cardRes.data;
-    const cards = cardData.products;
     await AsyncStorage.clear();
-    await AsyncStorage.setItem('wishlist', JSON.stringify(products));
-    await AsyncStorage.setItem('card', JSON.stringify(cards));
     base.token = '';
     successLogout();
     Home();
@@ -96,7 +84,7 @@ const Account = ({navigation}) => {
         <View>
           <View
             style={{
-              backgroundColor: colors.OrangeFresh,
+              backgroundColor: colors.EarthGreen,
               width: '100%',
               height: px(200),
               borderBottomLeftRadius: px(200),
@@ -131,7 +119,10 @@ const Account = ({navigation}) => {
                 size={px(24)}></AntDesign>
               <Text style={styles.textStyle}>{informations.email}</Text>
             </View>
-            <Pressable style={styles.InformationComponent}>
+            <Pressable onPress={()=>{
+              navigation.navigate('updatepassword',
+              {email:informations.email})
+            }} style={styles.InformationComponent}>
               <AntDesign
                 name="eyeo"
                 color={colors.blue}
@@ -164,7 +155,7 @@ const styles = StyleSheet.create({
   container: {
     // paddingHorizontal: px(30),
     backgroundColor: colors.white,
-    justifyContent:'space-between',
+    justifyContent: 'space-between',
     // alignItems: 'center',
     flex: 1,
   },

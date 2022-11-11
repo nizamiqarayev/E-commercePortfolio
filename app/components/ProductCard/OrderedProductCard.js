@@ -3,12 +3,9 @@ import React from 'react';
 import {useState} from 'react';
 import colors from '../../config/colors';
 import px from '../../assets/utility/dimension';
-import Button from '../UI/Button';
 
 const OrderedProductCard = ({data}) => {
-  const [sale, setIsSale] = useState(data.product.isSale);
-  // console.log('dataFromItem', data);
-  // console.log(data.name);
+  const [sale] = useState(data.product.isSale);
   return (
     <View style={{}}>
       <View

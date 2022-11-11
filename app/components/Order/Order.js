@@ -11,11 +11,9 @@ import colors from '../../config/colors';
 import Button from '../UI/Button';
 import base from '../../helpers/base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ProductCard from '../ProductCard/ProductCard';
 import px from '../../assets/utility/dimension';
 import OrderedProductCard from '../ProductCard/OrderedProductCard';
 import {useEffect} from 'react';
-import payment from '../../paymentMethods/widget';
 
 const Order = ({navigation}) => {
   const [data, setData] = useState([]);
@@ -137,12 +135,9 @@ const Order = ({navigation}) => {
   };
 
   const calculateTotal = () => {
-    // console.log('====================================');
-    // console.log(data);
-    // console.log('====================================');
     var total = 0;
-    if (data.length > 0) {
-      data.map(product => {
+    if (data?.length > 0) {
+      data?.map(product => {
         if (product.isSale) {
           // console.log('isSale', product.product.salePrice * product.count);
           total =
@@ -172,7 +167,6 @@ const Order = ({navigation}) => {
 
   const Product = useCallback(
     ({item}) => {
-      // console.log('item', item);
       return <OrderedProductCard data={item} />;
     },
     [loading],
