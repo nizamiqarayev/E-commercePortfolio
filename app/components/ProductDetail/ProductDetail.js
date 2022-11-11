@@ -604,12 +604,17 @@ const ProductDetail = ({route}) => {
 
         <Button
           onPress={async () => {
-            // await addToCard();
-            navigation.navigate('addtocartscreen', {
-              id: data._id,
-              price: data.isSale ? data.salePrice : data.price,
-            });
-            setLoading(false);
+            if(inCard){
+
+            }else{
+              await addToStoreCard();
+              navigation.navigate('addtocartscreen', {
+                id: data._id,
+                price: data.isSale ? data.salePrice : data.price,
+              });
+              setLoading(false);
+            }
+            
           }}
           backgroundColor={colors.blue}>
           <Text style={styles.ButtonText}>
