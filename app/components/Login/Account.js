@@ -84,7 +84,8 @@ const Account = ({navigation}) => {
         <View>
           <View
             style={{
-              backgroundColor: colors.EarthGreen,
+              backgroundColor: colors.blue,
+              elevation:16,
               width: '100%',
               height: px(200),
               borderBottomLeftRadius: px(200),
@@ -129,7 +130,9 @@ const Account = ({navigation}) => {
                 size={px(24)}></AntDesign>
               <Text style={styles.textStyle}>Change Password</Text>
             </Pressable>
-            <Pressable style={styles.InformationComponent}>
+            <Pressable onPress={()=>{
+              navigation.navigate('MyOrders')}} 
+              style={styles.InformationComponent}>
               <AntDesign
                 name="gift"
                 color={colors.blue}
