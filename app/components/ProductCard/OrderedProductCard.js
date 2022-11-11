@@ -22,23 +22,25 @@ const OrderedProductCard = ({data}) => {
           </Text>
           {sale ? (
             <View>
-              <Text style={styles.price}>
+              <Text style={[styles.price, {color: colors.fontColor}]}>
                 $ {data.product.salePrice} X {data.count}
               </Text>
             </View>
           ) : (
             <View>
-              <Text style={styles.price}>
+              <Text style={[styles.price, {color: colors.fontColor}]}>
                 $ {data.product.price} X {data.count}
               </Text>
             </View>
           )}
           <View>
-            <Text>
+            <Text style={[styles.price, {color: colors.fontColor}]}>
               Total Amount: $
               {sale
-                ? data.product.salePrice.replace(/\s/g, '') * data.count
-                : data.product.price.replace(/\s/g, '') * data.count}
+                ? (
+                    data.product.salePrice.replace(/\s/g, '') * data.count
+                  ).toFixed(2)
+                : data.product.price.replace(/\s/g, '') * data.count.toFixed(2)}
             </Text>
           </View>
         </View>

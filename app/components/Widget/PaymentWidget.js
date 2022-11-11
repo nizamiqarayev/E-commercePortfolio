@@ -29,8 +29,8 @@ const PaymentWidget = ({route, navigation}) => {
             description: 'Payment example (no real withdrawal)', // purpose/justification/description
             amount: ${route.params.total},
             currency: 'USD',
-            email: '${route.params.email._j}',
-            accountId: '${route.params.userId._j}', //customer's/user's/payer's ID (optional)
+            email: '${route.params.email}',
+            accountId: '${route.params.userId}', //customer's/user's/payer's ID (optional)
             invoiceId: '1234567', // order number  (optional)
             skin: 'modern', // disign widget (optional)
             data: {
@@ -84,6 +84,7 @@ const PaymentWidget = ({route, navigation}) => {
               case 'Transaction Complete':
                 break;
               case 'Payment Success':
+                route.params.onCompletion();
                 navigation.navigate('HomePage');
                 break;
               case 'Payment Failed':
