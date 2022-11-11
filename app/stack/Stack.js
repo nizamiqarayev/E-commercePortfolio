@@ -22,6 +22,7 @@ import StoreDetails from '../components/Store/StoreDetails';
 import AddToCartScreen from '../components/AddToCart/AddToCartScreen';
 import Toast from 'react-native-toast-message';
 import PaymentWidget from '../components/Widget/PaymentWidget';
+import Checkout from '../components/Order/Checkout';
 
 const Stack = createNativeStackNavigator();
 
@@ -114,6 +115,13 @@ const StackComponent = () => {
           <Stack.Screen
             name="Profile Password"
             component={ProfilePassword}
+            options={{
+              headerShadowVisible: false,
+            }}
+          />
+          <Stack.Screen
+            name="MyOrders"
+            component={Checkout}
             options={{
               headerShadowVisible: false,
             }}
