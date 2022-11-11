@@ -20,15 +20,25 @@ import payment from '../../paymentMethods/widget';
 const Order = ({navigation}) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [email, setEmail] = useState(async () => {
-    let email = await AsyncStorage.getItem('email');
-    return email;
-  });
-  const [userId, setUserId] = useState(async () => {
-    let userId = await AsyncStorage.getItem('_id');
-    return userId;
-  });
+  const [email, setEmail] = useState('');
+  const [userId, setUserId] = useState('');
   const [totalPrice, setTotalPrice] = useState(0);
+  useEffect(() => {
+    fetchUserId();
+    fetchEmail();
+    console.log(data);
+  }, [data]);
+
+  const fetchUserId = async () => {
+    const userId = await AsyncStorage.getItem('_id');
+    setUserId(userId);
+  };
+
+  const fetchEmail = async () => {
+    const email = await AsyncStorage.getItem('email');
+    console.log(email);
+    setEmail(email);
+  };
 
   useEffect(() => {
     navigation.setOptions({
@@ -47,7 +57,51 @@ const Order = ({navigation}) => {
         );
       },
     });
-  }, []);
+  }, [totalPrice]);
+  const paymentFinished = async () => {
+    let checkoutComplete = false;
+    if (data.length > 0) {
+      checkoutComplete = await sendingCheckout();
+    }
+    if (checkoutComplete) {
+      await deletion();
+    }
+  };
+  const deletion = async () => {
+    for (let i = 0; i < data.length; i++) {
+      try {
+        const response = await base.api().delete('cards/delete', {
+          data: {
+            userId: userId,
+            productId: data[i].product._id,
+          },
+        });
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    // data.forEach(async element => {});
+  };
+  const sendingCheckout = async () => {
+    const productsArr = [];
+    data.forEach(element => {
+      productsArr.push({
+        productId: element.product._id,
+        count: element.count,
+      });
+    });
+    try {
+      const response = await base.api().post('checkouts/send', {
+        userId: userId,
+        products: productsArr,
+      });
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
 
   const getStoreData = async () => {
     try {
@@ -175,10 +229,14 @@ const Order = ({navigation}) => {
           <Button
             backgroundColor={colors.blue}
             onPress={() => {
+              console.log(email);
+              console.log(userId);
+
               navigation.navigate('payment', {
                 total: totalPrice,
                 email: email,
                 userId: userId,
+                onCompletion: paymentFinished,
               });
             }}
             color={colors.white}>

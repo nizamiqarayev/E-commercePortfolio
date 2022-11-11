@@ -113,7 +113,7 @@ const AddToCartScreen = ({route, navigation}) => {
               color={colors.darkgray}
               size={px(27)}
               onPress={() => {
-                navigation.goBack;
+                navigation.goBack();
               }}
             />
           </View>
