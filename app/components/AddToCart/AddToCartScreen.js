@@ -11,14 +11,18 @@ import base from '../../helpers/base';
 const AddToCartScreen = ({route, navigation}) => {
   const [quantity, setQuantity] = useState(1);
   const [userId, setUserId] = useState('');
+  const [logged, setLogged] = useState(false);
 
   const [maxValue, setMaxValue] = useState(
     route.params.price.replace(/\s/g, '') * quantity,
   );
 
   const fetchUserId = async () => {
-    let userId = await AsyncStorage.getItem('_id');
-    setUserId(userId);
+    const userIdFetch = await AsyncStorage.getItem('_id');
+    if (userIdFetch) {
+      setLogged(true);
+    }
+    setUserId(userIdFetch);
   };
 
   useEffect(() => {
