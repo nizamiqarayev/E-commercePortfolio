@@ -146,6 +146,8 @@ const Order = ({navigation}) => {
       setData(products);
       if (products.length > 0) {
         setDataFetched(true);
+      } else {
+        setDataFetched(false);
       }
     } catch (error) {
       console.log(error);
@@ -272,7 +274,7 @@ const Order = ({navigation}) => {
         )}
       </View>
 
-      {loading ? (
+      {dataFetched ? (
         <View
           style={{
             justifyContent: 'center',
