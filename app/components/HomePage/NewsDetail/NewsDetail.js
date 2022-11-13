@@ -17,6 +17,7 @@ import AddedButton from '../../UI/AddedButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LatestNewsListItem from '../LatestNews/LatestNewsListItem';
 import {useNavigation} from '@react-navigation/native';
+import Share from 'react-native-share';
 
 const NewsDetail = ({route, navigation}) => {
   const scrollref = useRef();
@@ -74,6 +75,11 @@ const NewsDetail = ({route, navigation}) => {
   const fun = async () => {
     setLoading(true);
     try {
+      const shareResponse = await Share.open({
+        title: 'Salam',
+        message: `${data.image}\n\n*${data.title}*\n\n${data.content}\n`,
+        failOnCancel: true,
+      });
     } catch (error) {
       setLoading(false);
     }

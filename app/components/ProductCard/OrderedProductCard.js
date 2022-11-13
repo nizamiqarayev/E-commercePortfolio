@@ -5,6 +5,7 @@ import colors from '../../config/colors';
 import px from '../../assets/utility/dimension';
 import IconButton from '../UI/IconButton';
 import base from '../../helpers/base';
+import { RemoveFromCartMessage } from '../../stack/Stack';
 
 const OrderedProductCard = ({data, userId, dataResetter}) => {
   const [sale] = useState(data.product.isSale);
@@ -60,6 +61,7 @@ const OrderedProductCard = ({data, userId, dataResetter}) => {
                   productId: data.product._id,
                 },
               });
+              RemoveFromCartMessage();
               dataResetter();
             }}
           />
