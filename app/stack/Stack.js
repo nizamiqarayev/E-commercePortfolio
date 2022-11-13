@@ -47,6 +47,13 @@ export function successLogin() {
     topOffset: px(50),
   });
 }
+export function notLogged() {
+  Toast.show({
+    type: 'error',
+    text1: 'You must login first',
+    topOffset: px(50),
+  });
+}
 export function successRegister() {
   Toast.show({
     type: 'success',
@@ -71,14 +78,14 @@ export function ErrorLogin() {
 }
 export function AddToCartMessage() {
   Toast.show({
-    type: 'Success',
-    text1: 'Item added to card',
+    type: 'success',
+    text1: 'Item was added to card',
     topOffset: px(50),
   });
 }
 export function RemoveFromCartMessage() {
   Toast.show({
-    type: 'Success',
+    type: 'success',
     text1: 'Item removed from card',
     topOffset: px(50),
   });

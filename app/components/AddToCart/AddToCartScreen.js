@@ -7,6 +7,7 @@ import Button from '../UI/Button';
 import {useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import base from '../../helpers/base';
+import { AddToCartMessage } from '../../stack/Stack';
 
 const AddToCartScreen = ({route, navigation}) => {
   const [quantity, setQuantity] = useState(1);
@@ -44,7 +45,7 @@ const AddToCartScreen = ({route, navigation}) => {
         }
     }
   };
-
+  
   const addToCard = async () => {
     console.log(route.params.id);
     try {
@@ -193,6 +194,7 @@ const AddToCartScreen = ({route, navigation}) => {
                 onPress={() => {
                   const result = addToCard();
                   console.log(result);
+                  AddToCartMessage();
                   navigation.goBack();
                 }}
                 color={colors.white}>

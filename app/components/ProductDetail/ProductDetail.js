@@ -22,12 +22,12 @@ import base from '../../helpers/base';
 import Octicons from 'react-native-vector-icons/Octicons';
 import AddedButton from '../UI/AddedButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import ProductsCarousel from '../HomePage/Products/ProductsCarousel';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Rating} from 'react-native-ratings';
-import {Addedwish, DeletedWish} from '../../stack/Stack';
+import {Addedwish, DeletedWish, notLogged} from '../../stack/Stack';
 
 let interval = null;
 const ProductDetail = ({route}) => {
@@ -55,6 +55,7 @@ const ProductDetail = ({route}) => {
   const navigation = useNavigation();
   const scrollref = useRef();
   const photoIndex = useRef(0);
+  const focused = useIsFocused();
 
   const productsAllData = useSelector(state => state.products);
 
@@ -247,8 +248,9 @@ const ProductDetail = ({route}) => {
       }
       const response = await base.api().get(`cards/${userId}`);
       const data = await response.data;
-      const ids = data.products.map(item => item._id);
+      const ids = data.products.map(item => item.product._id);
       if (ids?.includes(id)) {
+
         return setInCard(true);
       }
       setInCard(false);
@@ -267,8 +269,11 @@ const ProductDetail = ({route}) => {
   };
 
   useEffect(() => {
+    if(focused){
+      getCards();
+    }
     getCardAndWish();
-  }, [id]);
+  }, [id,focused]);
 
   const fun = async () => {
     setLoading(true);
@@ -325,9 +330,9 @@ const ProductDetail = ({route}) => {
         duration: 3000,
       }).start();
     } catch (error) {
-      console.log(userDatas);
+      // console.log(userDatas);
       if (userDatas.username === null) {
-        Alert.alert('Opps...', 'You need to sign in first');
+        notLogged();
       }
     }
     setLoading(false);
@@ -604,14 +609,18 @@ const ProductDetail = ({route}) => {
 
         <Button
           onPress={async () => {
+            const userId = await AsyncStorage.getItem('_id')
             if (inCard) {
             } else {
-              await addToStoreCard();
-              navigation.navigate('addtocartscreen', {
-                id: data._id,
-                price: data.isSale ? data.salePrice : data.price,
-              });
-              setLoading(false);
+             if(userId){
+               navigation.navigate('addtocartscreen', {
+                 id: data._id,
+                 price: data.isSale ? data.salePrice : data.price,
+               });
+               setLoading(false);
+             }else{
+              notLogged();
+             }
             }
           }}
           backgroundColor={colors.blue}>

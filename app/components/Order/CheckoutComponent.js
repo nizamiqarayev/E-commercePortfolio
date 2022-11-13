@@ -1,14 +1,18 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {useState} from 'react';
-import {View, StyleSheet, Image, Text} from 'react-native';
+import {View, StyleSheet, Image, Text, Pressable} from 'react-native';
 import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
 
 const CheckoutComponent = ({item}) => {
   const [sale, setSale] = useState(item.productId.isSale);
-  console.log(item);
+  const navigation=useNavigation();
+  // console.log(item);
   return (
-    <View style={{flex:1}}>
+    <Pressable onPress={()=>{
+      navigation.navigate('ProductDetail',{id:item.productId._id})
+    }} style={{flex:1}}>
       <View
         style={{
           marginHorizontal: px(15),
@@ -47,7 +51,7 @@ const CheckoutComponent = ({item}) => {
           </View>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

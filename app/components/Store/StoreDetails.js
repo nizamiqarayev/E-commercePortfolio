@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Image, Text, StyleSheet,ActivityIndicator} from 'react-native';
+import {View, Image, Text, StyleSheet,ActivityIndicator, ScrollView} from 'react-native';
 import Octicons from 'react-native-vector-icons/Octicons';
 import Antdesign from 'react-native-vector-icons/AntDesign';
 import px from '../../assets/utility/dimension';
@@ -39,7 +39,7 @@ const StoreDetails = ({route}) => {
         <ActivityIndicator size={'large'} />
       </View>
       ) : (
-        <>
+        <ScrollView>
         <View style={styles.mainContainer}>
           <View style={styles.storeContainer}>
             <View>
@@ -106,7 +106,7 @@ const StoreDetails = ({route}) => {
         <View>
         <ProductCardList products={data.products} ></ProductCardList>
         </View>
-        </>
+        </ScrollView>
       )}
     </View>
   );
@@ -115,6 +115,7 @@ const StoreDetails = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
+    paddingBottom:px(10),
   },
   ActivityIndicator: {
     position: 'absolute',

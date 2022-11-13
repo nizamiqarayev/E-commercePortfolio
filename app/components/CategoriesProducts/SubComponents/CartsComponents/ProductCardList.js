@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     paddingHorizontal: px(10),
-    backgroundColor: colors.offGray,
+    backgroundColor: colors.white,
   },
   list: {
     marginHorizontal: px(10),

@@ -84,6 +84,7 @@ const BottomTabsenComponent = () => {
           name={isLogin ? 'Account' : 'Login'}
           component={isLogin ? Account : Login}
           options={{
+            headerShown:!isLogin,
             tabBarIcon: ({focused, color}) => (
               <View>
                 {isLogin ? (
