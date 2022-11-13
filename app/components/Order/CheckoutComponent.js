@@ -8,7 +8,7 @@ import colors from '../../config/colors';
 const CheckoutComponent = ({item}) => {
   const [sale, setSale] = useState(item.productId.isSale);
   const navigation=useNavigation();
-  console.log(item);
+  // console.log(item);
   return (
     <Pressable onPress={()=>{
       navigation.navigate('ProductDetail',{id:item.productId._id})

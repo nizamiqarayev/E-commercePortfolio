@@ -18,7 +18,7 @@ const Checkout = () => {
           const response = await base.api().get('checkouts/all');
     
           setData(response.data.products);
-          console.log('1', response.data.products.length);
+          // console.log('1', response.data.products.length);
         } catch (error) {}
         // console.log('2', loading);
       }

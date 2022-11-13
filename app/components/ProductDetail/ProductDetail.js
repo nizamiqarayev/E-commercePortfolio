@@ -330,9 +330,9 @@ const ProductDetail = ({route}) => {
         duration: 3000,
       }).start();
     } catch (error) {
-      console.log(userDatas);
+      // console.log(userDatas);
       if (userDatas.username === null) {
-        Alert.alert('Opps...', 'You need to sign in first');
+        notLogged();
       }
     }
     setLoading(false);
