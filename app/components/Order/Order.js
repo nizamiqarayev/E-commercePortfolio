@@ -25,15 +25,12 @@ const Order = ({navigation}) => {
 
   const [logged, setLogged] = useState(false);
 
-  useEffect(() => {
-    fetchUserId();
-    fetchEmail();
-    console.log(data);
-  }, []);
+  useEffect(() => {}, []);
 
   useFocusEffect(
     useCallback(() => {
       fetchUserId();
+      fetchEmail();
     }, []),
   );
 
@@ -55,24 +52,32 @@ const Order = ({navigation}) => {
   //   getData();
   // }, logged);
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => {
-        return (
-          <View style={{marginRight: px(10)}}>
-            <Text
-              style={{
-                color: colors.fontColor,
-                fontFamily: 'DMSans-Bold',
-                fontSize: px(16),
-              }}>
-              Total Amount: {totalPrice.toFixed(2)}$
-            </Text>
-          </View>
-        );
-      },
-    });
-  }, [totalPrice]);
+  // useEffect(() => {
+  //   if (logged) {
+  //     navigation.setOptions({
+  //       headerRight: () => {
+  //         return (
+  //           <View style={{marginRight: px(10)}}>
+  //             <Text
+  //               style={{
+  //                 color: colors.fontColor,
+  //                 fontFamily: 'DMSans-Bold',
+  //                 fontSize: px(16),
+  //               }}>
+  //               Total Amount: {totalPrice.toFixed(2)}$
+  //             </Text>
+  //           </View>
+  //         );
+  //       },
+  //     });
+  //   } else {
+  //     navigation.setOptions({
+  //       headerRight: () => {
+  //         return <></>;
+  //       },
+  //     });
+  //   }
+  // }, [totalPrice]);
   const paymentFinished = async () => {
     let checkoutComplete = false;
     if (data.length > 0) {
@@ -159,25 +164,22 @@ const Order = ({navigation}) => {
 
   const calculateTotal = () => {
     var total = 0;
-    if (dataFetched) {
-      data?.map(product => {
-        if (product.product.isSale) {
-          // console.log('isSale', product.product.salePrice * product.count);
-          total =
-            total +
-            parseFloat(
-              product.product.salePrice.replace(/\s/g, '') * product.count,
-            );
-        } else {
-          // console.log('NoSale', product.product.price);
-          total =
-            total +
-            parseFloat(
-              product.product.price.replace(/\s/g, '') * product.count,
-            );
-        }
-      });
-    }
+    data?.map(product => {
+      if (product.product.isSale) {
+        // console.log('isSale', product.product.salePrice * product.count);
+        total =
+          total +
+          parseFloat(
+            product.product.salePrice.replace(/\s/g, '') * product.count,
+          );
+      } else {
+        // console.log('NoSale', product.product.price);
+        total =
+          total +
+          parseFloat(product.product.price.replace(/\s/g, '') * product.count);
+      }
+    });
+
     setTotalPrice(total);
   };
 
@@ -274,9 +276,33 @@ const Order = ({navigation}) => {
         )}
       </View>
 
-      {dataFetched ? (
+      {dataFetched & logged ? (
         <View
           style={{
+            backgroundColor: colors.offGray,
+            justifyContent: 'center',
+            width: '100%',
+            alignItems: 'flex-start',
+            marginBottom: px(10),
+          }}>
+          <Text
+            style={{
+              fontFamily: 'DMSans-Bold',
+              fontSize: 20,
+              marginLeft: px(20),
+              color: colors.black,
+            }}>
+            Your total: {totalPrice.toFixed(2)} $
+          </Text>
+        </View>
+      ) : (
+        <></>
+      )}
+
+      {dataFetched && logged ? (
+        <View
+          style={{
+            backgroundColor: colors.offGray,
             justifyContent: 'center',
             width: '100%',
             alignItems: 'center',
