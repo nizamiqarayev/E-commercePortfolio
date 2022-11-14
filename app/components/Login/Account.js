@@ -98,7 +98,7 @@ const Account = ({navigation}) => {
                 width: '100%',
                 bottom: px(-50),
               }}>
-              <FastImage
+              <Image
                 style={{width: px(100), height: px(100), borderRadius: 1000}}
                 source={{uri: informations.profilePicture}}
               />

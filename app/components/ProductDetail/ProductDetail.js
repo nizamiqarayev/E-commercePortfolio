@@ -418,7 +418,7 @@ const ProductDetail = ({route}) => {
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => {
               return (
-                <FastImage style={styles.image} source={{uri: item.image}} />
+                <Image style={styles.image} source={{uri: item.image}} />
               );
             }}
           />

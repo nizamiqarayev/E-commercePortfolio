@@ -117,7 +117,7 @@ const NewsDetail = ({route, navigation}) => {
       <ScrollView ref={scrollref} style={styles.scrollViewContainer}>
         <View style={styles.container}>
           <View style={styles.imageContainer}>
-            <FastImage style={styles.image} source={{uri: data.image}} />
+            <Image style={styles.image} source={{uri: data.image}} />
           </View>
           <View>
             <Text style={styles.title}>{data.title}</Text>

@@ -4,6 +4,7 @@ import px from '../../../assets/utility/dimension';
 import {useNavigation} from '@react-navigation/native';
 import colors from '../../../config/colors';
 import FastImage from 'react-native-fast-image';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 const LatestNewsListItem = ({data, index, onPress}) => {
   const navigation = useNavigation();
@@ -32,6 +33,7 @@ const LatestNewsListItem = ({data, index, onPress}) => {
           </Text>
         </View>
         <View>
+          
           <FastImage
             style={styles.image}
             source={
