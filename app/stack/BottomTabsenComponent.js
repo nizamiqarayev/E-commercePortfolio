@@ -92,7 +92,7 @@ const BottomTabsenComponent = () => {
             tabBarIcon: ({focused, color}) => (
               <View>
                 {isLogin ? (
-                  <FastImage
+                  <Image
                     style={{
                       borderRadius: 1000,
                     }}

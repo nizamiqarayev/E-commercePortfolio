@@ -12,19 +12,21 @@ import {useState} from 'react';
 
 const ReviewItems = ({Dummy}) => {
   const element = [];
+  let x
   for (let index = 0; index < 3; index++) {
-    element.push(Math.floor(Math.random() * (Dummy.length - 1)));
+     x= Math.floor(Math.random() * (Dummy.length))
+    element.push(x);
   }
   return (
     <View>
-      <ReviewItem data={Dummy[element[0]]} key={0}></ReviewItem>
+      <ReviewItem data={Dummy[0]} key={0}></ReviewItem>
       {Dummy.length > 1 ? (
-        <ReviewItem data={Dummy[element[1]]} key={1}></ReviewItem>
+        <ReviewItem data={Dummy[1]} key={1}></ReviewItem>
       ) : (
         <></>
       )}
       {Dummy.length > 2 ? (
-        <ReviewItem data={Dummy[element[2]]} key={2}></ReviewItem>
+        <ReviewItem data={Dummy[2]} key={2}></ReviewItem>
       ) : (
         <></>
       )}

@@ -1,4 +1,4 @@
-import {Text} from 'react-native';
+import {View,Text} from 'react-native';
 import React from 'react';
 import Register from '../components/Registration/Register';
 import Verification from '../components/Registration/Verification';
@@ -130,8 +130,13 @@ const StackComponent = () => {
             name="MyOrders"
             component={Checkout}
             options={{
+              animation:'slide_from_bottom',
+              headerStyle:{backgroundColor:colors.blue},
+              headerTintColor:colors.white,
               headerShadowVisible: false,
-            }}
+              headerTitle:'My Orders',
+              headerTitleAlign:'center',
+              }}
           />
 
           <Stack.Screen
