@@ -18,6 +18,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import LatestNewsListItem from '../LatestNews/LatestNewsListItem';
 import {useNavigation} from '@react-navigation/native';
 import Share from 'react-native-share';
+import FastImage from 'react-native-fast-image';
 
 const NewsDetail = ({route, navigation}) => {
   const scrollref = useRef();
@@ -95,7 +96,8 @@ const NewsDetail = ({route, navigation}) => {
               <Ionicons
                 name="md-arrow-redo-outline"
                 size={px(16)}
-                color={colors.black}></Ionicons>
+                color={colors.black}
+              />
             </AddedButton>
           </View>
         );
@@ -107,7 +109,7 @@ const NewsDetail = ({route, navigation}) => {
     <>
       {loading ? (
         <View style={styles.ActivityIndicator}>
-          <ActivityIndicator size={'large'}></ActivityIndicator>
+          <ActivityIndicator size={'large'} />
         </View>
       ) : (
         <></>
@@ -115,7 +117,7 @@ const NewsDetail = ({route, navigation}) => {
       <ScrollView ref={scrollref} style={styles.scrollViewContainer}>
         <View style={styles.container}>
           <View style={styles.imageContainer}>
-            <Image style={styles.image} source={{uri: data.image}}></Image>
+            <FastImage style={styles.image} source={{uri: data.image}} />
           </View>
           <View>
             <Text style={styles.title}>{data.title}</Text>

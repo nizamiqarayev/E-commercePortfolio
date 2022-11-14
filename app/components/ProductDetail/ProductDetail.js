@@ -28,6 +28,7 @@ import ProductsCarousel from '../HomePage/Products/ProductsCarousel';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Rating} from 'react-native-ratings';
 import {Addedwish, DeletedWish, notLogged} from '../../stack/Stack';
+import FastImage from 'react-native-fast-image';
 
 let interval = null;
 const ProductDetail = ({route}) => {
@@ -416,7 +417,9 @@ const ProductDetail = ({route}) => {
             pagingEnabled
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => {
-              return <Image style={styles.image} source={{uri: item.image}} />;
+              return (
+                <FastImage style={styles.image} source={{uri: item.image}} />
+              );
             }}
           />
         </View>
@@ -468,7 +471,7 @@ const ProductDetail = ({route}) => {
             navigation.navigate('Store', {data: store});
           }}>
           <View>
-            <Image style={styles.storePhoto} source={{uri: store.photo}} />
+            <FastImage style={styles.storePhoto} source={{uri: store.photo}} />
           </View>
           <View style={styles.storeDescription}>
             <Text style={styles.storename}>{store.name}</Text>

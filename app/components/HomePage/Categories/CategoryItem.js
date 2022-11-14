@@ -3,6 +3,7 @@ import React from 'react';
 import px from '../../../assets/utility/dimension';
 import colors from '../../../config/colors';
 import {useNavigation} from '@react-navigation/native';
+import FastImage from 'react-native-fast-image';
 
 const CategoryItem = ({image, id, title, color}) => {
   const navigation = useNavigation();
@@ -16,7 +17,7 @@ const CategoryItem = ({image, id, title, color}) => {
           navigation.navigate('categoryproducts', {id: id, title: title});
         }}>
         <View style={[styles.backgroundContainer, {backgroundColor: color}]}>
-          <Image style={styles.image} source={{uri: image}} />
+          <FastImage style={styles.image} source={{uri: image}} />
         </View>
         <View>
           <Text style={styles.text}>{title}</Text>

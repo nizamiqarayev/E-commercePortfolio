@@ -1,18 +1,21 @@
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {useState} from 'react';
 import {View, StyleSheet, Image, Text, Pressable} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
 
 const CheckoutComponent = ({item}) => {
   const [sale, setSale] = useState(item.productId.isSale);
-  const navigation=useNavigation();
+  const navigation = useNavigation();
   // console.log(item);
   return (
-    <Pressable onPress={()=>{
-      navigation.navigate('ProductDetail',{id:item.productId._id})
-    }} style={{flex:1}}>
+    <Pressable
+      onPress={() => {
+        navigation.navigate('ProductDetail', {id: item.productId._id});
+      }}
+      style={{flex: 1}}>
       <View
         style={{
           marginHorizontal: px(15),
@@ -20,7 +23,7 @@ const CheckoutComponent = ({item}) => {
           justifyContent: 'space-between',
           alignItems: 'center',
         }}>
-        <Image
+        <FastImage
           style={styles.image}
           source={{uri: item.productId?.coverPhoto}}
         />
@@ -42,7 +45,7 @@ const CheckoutComponent = ({item}) => {
             </View>
           )}
           <View>
-            <Text style={{color:colors.fontColor}}>
+            <Text style={{color: colors.fontColor}}>
               Total Amount: $
               {sale
                 ? item.productId?.salePrice.replace(/\s/g, '') * item.count

@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Text, Image, ActivityIndicator} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import px from '../../assets/utility/dimension';
@@ -16,7 +17,6 @@ const Account = ({navigation}) => {
     email: '',
     profilePicture: null,
   });
-
 
   async function getNameEmail() {
     let name = await AsyncStorage.getItem('username');
@@ -51,7 +51,7 @@ const Account = ({navigation}) => {
     <>
       {loading ? (
         <View style={styles.ActivityIndicator}>
-          <ActivityIndicator size={'large'}></ActivityIndicator>
+          <ActivityIndicator size={'large'} />
         </View>
       ) : (
         <></>
@@ -85,7 +85,7 @@ const Account = ({navigation}) => {
           <View
             style={{
               backgroundColor: colors.blue,
-              elevation:16,
+              elevation: 16,
               width: '100%',
               height: px(200),
               borderBottomLeftRadius: px(200),
@@ -98,45 +98,39 @@ const Account = ({navigation}) => {
                 width: '100%',
                 bottom: px(-50),
               }}>
-              <Image
+              <FastImage
                 style={{width: px(100), height: px(100), borderRadius: 1000}}
-                source={{uri: informations.profilePicture}}></Image>
+                source={{uri: informations.profilePicture}}
+              />
             </View>
           </View>
           <View style={{marginTop: px(70)}}>
             <View style={styles.InformationComponent}>
-              <AntDesign
-                name="user"
-                color={colors.blue}
-                size={px(24)}></AntDesign>
+              <AntDesign name="user" color={colors.blue} size={px(24)} />
               <Text style={styles.textStyle}>
                 {informations.name.toUpperCase()}
               </Text>
             </View>
             <View style={styles.InformationComponent}>
-              <AntDesign
-                name="mail"
-                color={colors.blue}
-                size={px(24)}></AntDesign>
+              <AntDesign name="mail" color={colors.blue} size={px(24)} />
               <Text style={styles.textStyle}>{informations.email}</Text>
             </View>
-            <Pressable onPress={()=>{
-              navigation.navigate('updatepassword',
-              {email:informations.email})
-            }} style={styles.InformationComponent}>
-              <AntDesign
-                name="eyeo"
-                color={colors.blue}
-                size={px(24)}></AntDesign>
+            <Pressable
+              onPress={() => {
+                navigation.navigate('updatepassword', {
+                  email: informations.email,
+                });
+              }}
+              style={styles.InformationComponent}>
+              <AntDesign name="eyeo" color={colors.blue} size={px(24)} />
               <Text style={styles.textStyle}>Change Password</Text>
             </Pressable>
-            <Pressable onPress={()=>{
-              navigation.navigate('MyOrders')}} 
+            <Pressable
+              onPress={() => {
+                navigation.navigate('MyOrders');
+              }}
               style={styles.InformationComponent}>
-              <AntDesign
-                name="gift"
-                color={colors.blue}
-                size={px(24)}></AntDesign>
+              <AntDesign name="gift" color={colors.blue} size={px(24)} />
               <Text style={styles.textStyle}>All orders</Text>
             </Pressable>
           </View>
