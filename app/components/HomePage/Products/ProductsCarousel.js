@@ -41,7 +41,6 @@ const ProductsCarousel = ({inProductDetails, inProductId}) => {
   const productsAllData = useSelector(state => state.products);
   const dispatch = useDispatch();
 
-  const [] = useState([]);
   const [wishes, setWishes] = useState([]);
   const [loaded, setLoaded] = useState(false);
 

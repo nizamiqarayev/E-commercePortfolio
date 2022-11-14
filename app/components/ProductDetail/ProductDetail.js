@@ -250,7 +250,6 @@ const ProductDetail = ({route}) => {
       const data = await response.data;
       const ids = data.products.map(item => item.product._id);
       if (ids?.includes(id)) {
-
         return setInCard(true);
       }
       setInCard(false);
@@ -269,11 +268,11 @@ const ProductDetail = ({route}) => {
   };
 
   useEffect(() => {
-    if(focused){
+    if (focused) {
       getCards();
     }
     getCardAndWish();
-  }, [id,focused]);
+  }, [id, focused]);
 
   const fun = async () => {
     setLoading(true);
@@ -609,18 +608,18 @@ const ProductDetail = ({route}) => {
 
         <Button
           onPress={async () => {
-            const userId = await AsyncStorage.getItem('_id')
+            const userId = await AsyncStorage.getItem('_id');
             if (inCard) {
             } else {
-             if(userId){
-               navigation.navigate('addtocartscreen', {
-                 id: data._id,
-                 price: data.isSale ? data.salePrice : data.price,
-               });
-               setLoading(false);
-             }else{
-              notLogged();
-             }
+              if (userId) {
+                navigation.navigate('addtocartscreen', {
+                  id: data._id,
+                  price: data.isSale ? data.salePrice : data.price,
+                });
+                setLoading(false);
+              } else {
+                notLogged();
+              }
             }
           }}
           backgroundColor={colors.blue}>

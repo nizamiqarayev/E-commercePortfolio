@@ -31,6 +31,7 @@ const HomePage = ({navigation}) => {
               <></>
             ) : (
               <SearchBar
+                navigateOnFocus={true}
                 data={productsAllData.products}
                 finalAction={setAllProductsDisplay}
               />

@@ -86,6 +86,7 @@ const CategorySpecificProducts = ({route, navigation}) => {
             <></>
           ) : (
             <SearchBar
+              autoFocus={true}
               data={productsAllData.filteredProducts}
               finalAction={setProductsForDisplay}
             />
