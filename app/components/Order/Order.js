@@ -224,6 +224,7 @@ const Order = ({navigation}) => {
           marginTop: 20,
           fontFamily: 'DMSans-Medium',
           alignSelf: 'center',
+          color: colors.fontColor,
         }}>
         Card is empty
       </Text>
@@ -233,6 +234,7 @@ const Order = ({navigation}) => {
           marginTop: 20,
           fontFamily: 'DMSans-Medium',
           alignSelf: 'center',
+          color: colors.fontColor,
         }}>
         You must login first
       </Text>
@@ -249,14 +251,14 @@ const Order = ({navigation}) => {
             style={{alignSelf: 'center'}}
           />
         ) : (
-          <Text>First you must log in</Text>
+          <Text style={{color: colors.fontColor}}>First you must log in</Text>
         )}
       </View>
     );
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: colors.white}}>
       <View style={styles.container}>
         {loading ? (
           <Loading />
@@ -279,7 +281,7 @@ const Order = ({navigation}) => {
       {dataFetched & logged ? (
         <View
           style={{
-            backgroundColor: colors.offGray,
+            backgroundColor: colors.white,
             justifyContent: 'center',
             width: '100%',
             alignItems: 'flex-start',
@@ -302,7 +304,7 @@ const Order = ({navigation}) => {
       {dataFetched && logged ? (
         <View
           style={{
-            backgroundColor: colors.offGray,
+            backgroundColor: colors.white,
             justifyContent: 'center',
             width: '100%',
             alignItems: 'center',
