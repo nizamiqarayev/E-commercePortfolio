@@ -3,6 +3,7 @@ import React from 'react';
 import px from '../../../assets/utility/dimension';
 import {useNavigation} from '@react-navigation/native';
 import colors from '../../../config/colors';
+import FastImage from 'react-native-fast-image';
 
 const LatestNewsListItem = ({data, index, onPress}) => {
   const navigation = useNavigation();
@@ -31,7 +32,7 @@ const LatestNewsListItem = ({data, index, onPress}) => {
           </Text>
         </View>
         <View>
-          <Image
+          <FastImage
             style={styles.image}
             source={
               data != null

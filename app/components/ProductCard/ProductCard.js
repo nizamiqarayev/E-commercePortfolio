@@ -13,6 +13,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Addedwish, DeletedWish} from '../../stack/Stack';
+import base from '../../helpers/base';
+import FastImage from 'react-native-fast-image';
 
 const ProductCard = ({data, wishlistes, inWish}) => {
   const navigation = useNavigation();
@@ -54,6 +56,17 @@ const ProductCard = ({data, wishlistes, inWish}) => {
     }
     await AsyncStorage.setItem('wishlist', JSON.stringify(wishes));
 
+    try {
+      const userId = await AsyncStorage.getItem('_id');
+      if (userId) {
+        await base.api().post('wishlists/create', {
+          userId,
+          productId: data._id,
+        });
+      }
+    } catch (error) {
+      console.log({error});
+    }
     Addedwish();
     try {
       setFavorite(true);
@@ -66,6 +79,18 @@ const ProductCard = ({data, wishlistes, inWish}) => {
       return item._id !== data._id;
     });
     await AsyncStorage.setItem('wishlist', JSON.stringify(wishes));
+    const userId = await AsyncStorage.getItem('_id');
+    try {
+      if (userId) {
+        await base.api().delete('wishlists/delete', {
+          data: {
+            userId,
+            productId: data._id,
+          },
+        });
+      }
+    } catch (error) {}
+
     setFavorite(false);
 
     DeletedWish();
@@ -84,11 +109,13 @@ const ProductCard = ({data, wishlistes, inWish}) => {
     // for (let i = 0; i < data.reviews; i++){
     //  count=count+ data.reviews[i].starCount
     // }
-    if (data.reviews.length != 0) {
+    if (data.reviews.length !== 0) {
       data.reviews.forEach(item => {
         count += item.starCount;
       });
-      setStarReview(count / data.reviews.length);
+      if (count !== 0) {
+        setStarReview(count / data.reviews.length);
+      }
     }
   };
   return (
@@ -122,7 +149,7 @@ const ProductCard = ({data, wishlistes, inWish}) => {
           ) : (
             <></>
           )}
-          <Image style={styles.image} source={{uri: data.coverPhoto}} />
+          <FastImage style={styles.image} source={{uri: data.coverPhoto}} />
           <Pressable
             onPress={() => {
               setTimeout(() => {
