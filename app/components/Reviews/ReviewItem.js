@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Image, Text} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import getdate from '../../assets/utility/Date';
 import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
@@ -9,7 +10,7 @@ const ReviewItem = ({data}) => {
   return (
     <View style={styles.container}>
       <View style={{marginRight: px(15)}}>
-        <Image style={styles.image} source={{uri: data?.profileImage}} />
+        <FastImage style={styles.image} source={{uri: data?.profileImage}} />
       </View>
       <View style={{flex: 1}}>
         <View

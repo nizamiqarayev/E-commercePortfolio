@@ -217,7 +217,7 @@ const ProductCard = ({data, wishlistes, inWish}) => {
               justifyContent: 'space-between',
             }}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Image
+              <FastImage
                 style={styles.star}
                 source={require('../../assets/data/ProductCartDummy/Vector.jpg')}
               />

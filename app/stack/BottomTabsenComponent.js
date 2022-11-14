@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Account from '../components/Login/Account';
 import px from '../assets/utility/dimension';
+import FastImage from 'react-native-fast-image';
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -52,7 +53,8 @@ const BottomTabsenComponent = () => {
                 color={focused ? color : colors.darkgray}
               />
             ),
-          }}></BottomTabs.Screen>
+          }}
+        />
         <BottomTabs.Screen
           name="Wishlist"
           component={Wishlist}
@@ -65,7 +67,8 @@ const BottomTabsenComponent = () => {
                 color={focused ? color : colors.darkgray}
               />
             ),
-          }}></BottomTabs.Screen>
+          }}
+        />
         <BottomTabs.Screen
           name="Card"
           component={Order}
@@ -78,17 +81,18 @@ const BottomTabsenComponent = () => {
                 color={focused ? color : colors.darkgray}
               />
             ),
-          }}></BottomTabs.Screen>
+          }}
+        />
 
         <BottomTabs.Screen
           name={isLogin ? 'Account' : 'Login'}
           component={isLogin ? Account : Login}
           options={{
-            headerShown:!isLogin,
+            headerShown: !isLogin,
             tabBarIcon: ({focused, color}) => (
               <View>
                 {isLogin ? (
-                  <Image
+                  <FastImage
                     style={{
                       borderRadius: 1000,
                     }}
@@ -96,7 +100,8 @@ const BottomTabsenComponent = () => {
                       uri: profilePicture,
                       width: px(24),
                       height: px(24),
-                    }}></Image>
+                    }}
+                  />
                 ) : (
                   <Ionicons
                     name="person-outline"

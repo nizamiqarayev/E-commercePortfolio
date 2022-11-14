@@ -5,7 +5,8 @@ import colors from '../../config/colors';
 import px from '../../assets/utility/dimension';
 import IconButton from '../UI/IconButton';
 import base from '../../helpers/base';
-import { RemoveFromCartMessage } from '../../stack/Stack';
+import {RemoveFromCartMessage} from '../../stack/Stack';
+import FastImage from 'react-native-fast-image';
 
 const OrderedProductCard = ({data, userId, dataResetter}) => {
   const [sale] = useState(data.product.isSale);
@@ -18,7 +19,10 @@ const OrderedProductCard = ({data, userId, dataResetter}) => {
           justifyContent: 'space-between',
           alignItems: 'center',
         }}>
-        <Image style={styles.image} source={{uri: data.product.coverPhoto}} />
+        <FastImage
+          style={styles.image}
+          source={{uri: data.product.coverPhoto}}
+        />
         <View style={{width: px(200), paddingLeft: px(10)}}>
           <Text style={{color: colors.black}}>{data.product.name}</Text>
           {sale ? (
