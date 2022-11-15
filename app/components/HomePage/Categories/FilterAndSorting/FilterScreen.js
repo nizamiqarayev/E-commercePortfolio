@@ -30,18 +30,25 @@ const FilterScreen = ({navigation}) => {
   const focus = useIsFocused();
 
   const maxValue = useMemo(() => {
-    return Math.ceil(
-      parseFloat(
-        data.categorySpecificProducts
-          .reduce((previous, current) => {
-            return parseFloat(current.price.replace(/\s/g, '')) >
-              parseFloat(previous.price.replace(/\s/g, ''))
-              ? current
-              : previous;
-          })
-          .price.replace(/\s/g, ''),
-      ),
+    const returnVal = data.categorySpecificProducts.reduce(
+      (previous, current) => {
+        console.log('previous', previous.isSale);
+        console.log('current', current.isSale);
+        const currPrice = current.isSale ? current.salePrice : current.price;
+
+        const prevPrice = previous.isSale ? previous.salePrice : previous.price;
+
+        return parseFloat(currPrice.replace(/\s/g, '')) >
+          parseFloat(prevPrice.replace(/\s/g, ''))
+          ? current
+          : previous;
+      },
     );
+    console.log(returnVal);
+    const returnPrice = returnVal.isSale
+      ? returnVal.salePrice.replace(/\s/g, '')
+      : returnVal.price.replace(/\s/g, '');
+    return Math.ceil(parseFloat(returnPrice));
   }, [focus]);
 
   const dispatch = useDispatch();
