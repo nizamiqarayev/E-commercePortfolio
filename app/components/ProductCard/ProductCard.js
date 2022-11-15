@@ -149,7 +149,11 @@ const ProductCard = ({data, wishlistes, inWish}) => {
           ) : (
             <></>
           )}
-          <FastImage style={styles.image} source={{uri: data.coverPhoto}} />
+          <FastImage
+            resizeMode={'contain'}
+            style={styles.image}
+            source={{uri: data.coverPhoto}}
+          />
           <Pressable
             onPress={() => {
               setTimeout(() => {
@@ -257,6 +261,7 @@ const styles = StyleSheet.create({
     height: px(115),
     width: px(115),
     marginTop: px(15),
+    alignSelf: 'center',
   },
   title: {
     fontFamily: 'DMSans-Medium',
