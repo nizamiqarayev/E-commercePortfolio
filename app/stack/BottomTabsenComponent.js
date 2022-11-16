@@ -73,10 +73,10 @@ const BottomTabsenComponent = () => {
           name="Card"
           component={Order}
           options={{
-            tabBarLabel: 'CARD',
+            tabBarLabel: 'Cart',
             tabBarIcon: ({focused, color}) => (
               <Feather
-                name="credit-card"
+                name="shopping-cart"
                 size={24}
                 color={focused ? color : colors.darkgray}
               />
