@@ -61,6 +61,13 @@ export function successRegister() {
     topOffset: px(50),
   });
 }
+export function ErrorRegister() {
+  Toast.show({
+    type: 'error',
+    text1: 'Your Credentials are incorrect',
+    topOffset: px(50),
+  });
+}
 export function successLogout() {
   Toast.show({
     type: 'success',

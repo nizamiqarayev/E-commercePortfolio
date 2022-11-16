@@ -14,18 +14,22 @@ import base from '../../helpers/base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
-import {successRegister} from '../../stack/Stack';
+import {ErrorRegister, successRegister} from '../../stack/Stack';
+import { useEffect } from 'react';
 
 const dimension = Dimensions.get('screen').height / 830;
 
-const ProfilePassword = ({navigation}) => {
+const ProfilePassword = ({navigation,route}) => {
   const [passwordType, setPasswordType] = useState(true);
   const [confirmType, setConfirm] = useState(true);
 
   const [loading, setLoading] = useState(false);
 
-  const [passwordWarning, setPasswordWarning] = useState(false);
-  const [nameWarning, setNameWarning] = useState(false);
+  const [passwordWarning, setPasswordWarning] = useState(true);
+  const [passwordConfirm, setPasswordConfirm] = useState(false);
+  const [nameWarning, setNameWarning] = useState(true);
+
+  const [equal,setEqual]=useState(false)
 
   const [input, setInput] = useState({
     name: '',
@@ -45,13 +49,19 @@ const ProfilePassword = ({navigation}) => {
     setLoading(true);
 
     if (input.password == input.confirm) {
+      setPasswordConfirm(false)
       try {
+        const response = await base.api().post("user/register",
+          { username: input.name, email: route.params.email, password: input.password })
         successRegister();
         navigation.navigate('Login');
       } catch (error) {
+        ErrorRegister();
+        console.log(error);
         setLoading(false);
       }
     } else {
+      setPasswordConfirm(true)
     }
     setLoading(false);
   };
@@ -62,7 +72,7 @@ const ProfilePassword = ({navigation}) => {
     } else {
       setPasswordWarning(false);
     }
-    if (inputType == 'name' && text.length < 3 && text.length != 0) {
+    if (inputType == 'name' && text.length < 6 && text.length != 0) {
       setNameWarning(true);
     } else {
       setNameWarning(false);
@@ -73,6 +83,13 @@ const ProfilePassword = ({navigation}) => {
       [inputType]: text,
     });
   };
+  useEffect(()=>{
+    if((input.confirm===input.password)&&input.confirm.length>5){
+      setEqual(true)
+    }else{
+      setEqual(false)
+    }
+  },[input])
 
   return (
     <>
@@ -117,7 +134,7 @@ const ProfilePassword = ({navigation}) => {
                       color={'#838589'}
                     />
                     <Text style={{color: '#838589'}}>
-                      Name must be 3 characters or more
+                      Name must be 6 characters or more
                     </Text>
                   </View>
                 ) : (
@@ -226,17 +243,18 @@ const ProfilePassword = ({navigation}) => {
                 )}
               </View>
             </View>
-            <View style={{height: px(60), marginBottom: px(20)}}>
-              <Button
-                backgroundColor={'#3669C9'}
-                color={'white'}
-                onPress={submissionHandler}>
-                Confirmation
-              </Button>
-            </View>
+            
           </View>
         </View>
       </ScrollView>
+      <View style={{height: px(60), margin: px(20)}}>
+              <Button
+                backgroundColor={equal?colors.blue:colors.disabledButton}
+                color={'white'}
+                onPress={equal?submissionHandler:()=>{}}>
+                Confirmation
+              </Button>
+            </View>
     </>
   );
 };
