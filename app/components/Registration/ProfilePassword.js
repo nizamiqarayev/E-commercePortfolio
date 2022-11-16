@@ -25,6 +25,7 @@ const ProfilePassword = ({navigation}) => {
   const [loading, setLoading] = useState(false);
 
   const [passwordWarning, setPasswordWarning] = useState(false);
+
   const [nameWarning, setNameWarning] = useState(false);
 
   const [input, setInput] = useState({
@@ -44,7 +45,7 @@ const ProfilePassword = ({navigation}) => {
   const submissionHandler = async () => {
     setLoading(true);
 
-    if (input.password == input.confirm) {
+    if (input.password == input.confirm && input.password.length > 6) {
       try {
         successRegister();
         navigation.navigate('Login');
@@ -78,7 +79,7 @@ const ProfilePassword = ({navigation}) => {
     <>
       {loading ? (
         <View style={styles.ActivityIndicator}>
-          <ActivityIndicator size={'large'}></ActivityIndicator>
+          <ActivityIndicator size={'large'} />
         </View>
       ) : (
         <></>
