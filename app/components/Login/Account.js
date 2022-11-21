@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Text, Image, ActivityIndicator} from 'react-native';
 import FastImage from 'react-native-fast-image';
@@ -17,7 +18,7 @@ const Account = ({navigation}) => {
     email: '',
     profilePicture: null,
   });
-
+  const focused= useIsFocused()
   async function getNameEmail() {
     let name = await AsyncStorage.getItem('username');
     let email = await AsyncStorage.getItem('email');
@@ -34,7 +35,7 @@ const Account = ({navigation}) => {
     setLoading(true);
     getNameEmail();
     setLoading(false);
-  }, []);
+  }, [focused]);
 
   async function logOut() {
     setLoading(true);
@@ -105,16 +106,20 @@ const Account = ({navigation}) => {
             </View>
           </View>
           <View style={{marginTop: px(70)}}>
-            <View style={styles.InformationComponent}>
+            <Pressable onPress={()=>{
+               navigation.navigate('ChangeUsername',);
+            }} style={styles.InformationComponent}>
               <AntDesign name="user" color={colors.blue} size={px(24)} />
               <Text style={styles.textStyle}>
                 {informations.name.toUpperCase()}
               </Text>
-            </View>
-            <View style={styles.InformationComponent}>
+            </Pressable>
+            <Pressable onPress={()=>{
+              navigation.navigate('ChangeEmail',);
+            }} style={styles.InformationComponent}>
               <AntDesign name="mail" color={colors.blue} size={px(24)} />
               <Text style={styles.textStyle}>{informations.email}</Text>
-            </View>
+            </Pressable>
             <Pressable
               onPress={() => {
                 navigation.navigate('ChangePassword', {
