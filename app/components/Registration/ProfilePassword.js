@@ -15,11 +15,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
 import {ErrorRegister, successRegister} from '../../stack/Stack';
-import { useEffect } from 'react';
+import {useEffect} from 'react';
 
 const dimension = Dimensions.get('screen').height / 830;
 
-const ProfilePassword = ({navigation,route}) => {
+const ProfilePassword = ({navigation, route}) => {
   const [passwordType, setPasswordType] = useState(true);
   const [confirmType, setConfirm] = useState(true);
 
@@ -29,7 +29,7 @@ const ProfilePassword = ({navigation,route}) => {
   const [passwordConfirm, setPasswordConfirm] = useState(false);
   const [nameWarning, setNameWarning] = useState(true);
 
-  const [equal,setEqual]=useState(false)
+  const [equal, setEqual] = useState(false);
 
   const [input, setInput] = useState({
     name: '',
@@ -49,10 +49,13 @@ const ProfilePassword = ({navigation,route}) => {
     setLoading(true);
 
     if (input.password == input.confirm) {
-      setPasswordConfirm(false)
+      setPasswordConfirm(false);
       try {
-        const response = await base.api().post("user/register",
-          { username: input.name, email: route.params.email, password: input.password })
+        const response = await base.api().post('user/register', {
+          username: input.name,
+          email: route.params.email,
+          password: input.password,
+        });
         successRegister();
         navigation.navigate('Login');
       } catch (error) {
@@ -61,7 +64,7 @@ const ProfilePassword = ({navigation,route}) => {
         setLoading(false);
       }
     } else {
-      setPasswordConfirm(true)
+      setPasswordConfirm(true);
     }
     setLoading(false);
   };
@@ -83,19 +86,19 @@ const ProfilePassword = ({navigation,route}) => {
       [inputType]: text,
     });
   };
-  useEffect(()=>{
-    if((input.confirm===input.password)&&input.confirm.length>5){
-      setEqual(true)
-    }else{
-      setEqual(false)
+  useEffect(() => {
+    if (input.confirm === input.password && input.confirm.length > 5) {
+      setEqual(true);
+    } else {
+      setEqual(false);
     }
-  },[input])
+  }, [input]);
 
   return (
     <>
       {loading ? (
         <View style={styles.ActivityIndicator}>
-          <ActivityIndicator size={'large'}></ActivityIndicator>
+          <ActivityIndicator size={'large'} />
         </View>
       ) : (
         <></>
@@ -243,18 +246,17 @@ const ProfilePassword = ({navigation,route}) => {
                 )}
               </View>
             </View>
-            
           </View>
         </View>
       </ScrollView>
       <View style={{height: px(60), margin: px(20)}}>
-              <Button
-                backgroundColor={equal?colors.blue:colors.disabledButton}
-                color={'white'}
-                onPress={equal?submissionHandler:()=>{}}>
-                Confirmation
-              </Button>
-            </View>
+        <Button
+          backgroundColor={equal ? colors.blue : colors.disabledButton}
+          color={'white'}
+          onPress={equal ? submissionHandler : () => {}}>
+          Confirmation
+        </Button>
+      </View>
     </>
   );
 };

@@ -32,8 +32,6 @@ const FilterScreen = ({navigation}) => {
   const maxValue = useMemo(() => {
     const returnVal = data.categorySpecificProducts.reduce(
       (previous, current) => {
-        console.log('previous', previous.isSale);
-        console.log('current', current.isSale);
         const currPrice = current.isSale ? current.salePrice : current.price;
 
         const prevPrice = previous.isSale ? previous.salePrice : previous.price;
@@ -44,7 +42,6 @@ const FilterScreen = ({navigation}) => {
           : previous;
       },
     );
-    console.log(returnVal);
     const returnPrice = returnVal.isSale
       ? returnVal.salePrice.replace(/\s/g, '')
       : returnVal.price.replace(/\s/g, '');
@@ -80,7 +77,7 @@ const FilterScreen = ({navigation}) => {
           borderBottomWidth: 1,
           borderBottomColor: 'lightgray',
         }}>
-        <Text>Price Range</Text>
+        <Text style={{color:colors.fontColor}}>Price Range</Text>
         <RnRangeSlider
           style={styles.slider}
           min={0}

@@ -150,7 +150,7 @@ const AddToCartScreen = ({route, navigation}) => {
                   quanityChangeHandler('decrease');
                 }}
               />
-              <Text>{quantity}</Text>
+              <Text style={{color:colors.fontColor}}>{quantity}</Text>
               <IconButton
                 name="add-outline"
                 color={colors.darkgray}
