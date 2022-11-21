@@ -117,7 +117,7 @@ const Account = ({navigation}) => {
             </View>
             <Pressable
               onPress={() => {
-                navigation.navigate('updatepassword', {
+                navigation.navigate('ChangePassword', {
                   email: informations.email,
                 });
               }}

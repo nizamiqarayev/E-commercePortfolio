@@ -23,6 +23,7 @@ import AddToCartScreen from '../components/AddToCart/AddToCartScreen';
 import Toast from 'react-native-toast-message';
 import PaymentWidget from '../components/Widget/PaymentWidget';
 import Checkout from '../components/Order/Checkout';
+import ChangePassword from '../components/Login/ChangePassword';
 
 const Stack = createNativeStackNavigator();
 
@@ -113,6 +114,7 @@ const StackComponent = () => {
           component={BottomTabsenComponent}
         />
         <Stack.Screen name="ReviewProduct" component={ReviewProduct} />
+        <Stack.Screen name="ChangePassword" options={{headerTitle:''}} component={ChangePassword} />
         <Stack.Group
           screenOptions={{
             headerTitle: '',
