@@ -1,24 +1,25 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Text, Image, ActivityIndicator} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Text, Image, ActivityIndicator } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
 import base from '../../helpers/base';
-import {successLogout} from '../../stack/Stack';
+import { successLogout } from '../../stack/Stack';
 import Button from '../UI/Button';
 
-const Account = ({navigation}) => {
+const Account = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [informations, setInformations] = useState({
     name: '',
     email: '',
     profilePicture: null,
   });
-  const focused= useIsFocused()
+  const focused = useIsFocused()
+
   async function getNameEmail() {
     let name = await AsyncStorage.getItem('username');
     let email = await AsyncStorage.getItem('email');
@@ -100,21 +101,21 @@ const Account = ({navigation}) => {
                 bottom: px(-50),
               }}>
               <Image
-                style={{width: px(100), height: px(100), borderRadius: 1000}}
-                source={{uri: informations.profilePicture}}
+                style={{ width: px(100), height: px(100), borderRadius: 1000 }}
+                source={{ uri: informations.profilePicture }}
               />
             </View>
           </View>
-          <View style={{marginTop: px(70)}}>
-            <Pressable onPress={()=>{
-               navigation.navigate('ChangeUsername',);
+          <View style={{ marginTop: px(70) }}>
+            <Pressable onPress={() => {
+              navigation.navigate('ChangeUsername',);
             }} style={styles.InformationComponent}>
               <AntDesign name="user" color={colors.blue} size={px(24)} />
               <Text style={styles.textStyle}>
                 {informations.name.toUpperCase()}
               </Text>
             </Pressable>
-            <Pressable onPress={()=>{
+            <Pressable onPress={() => {
               navigation.navigate('ChangeEmail',);
             }} style={styles.InformationComponent}>
               <AntDesign name="mail" color={colors.blue} size={px(24)} />

@@ -1,5 +1,5 @@
-import {useFocusEffect} from '@react-navigation/native';
-import React, {useCallback, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useCallback, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -13,9 +13,9 @@ import base from '../../helpers/base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import px from '../../assets/utility/dimension';
 import OrderedProductCard from '../ProductCard/OrderedProductCard';
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 
-const Order = ({navigation}) => {
+const Order = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState('');
@@ -24,8 +24,6 @@ const Order = ({navigation}) => {
   const [dataFetched, setDataFetched] = useState(false);
 
   const [logged, setLogged] = useState(false);
-
-  useEffect(() => {}, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -194,7 +192,7 @@ const Order = ({navigation}) => {
   }, [data]);
 
   const Product = useCallback(
-    ({item}) => {
+    ({ item }) => {
       return (
         <OrderedProductCard
           data={item}
@@ -248,17 +246,17 @@ const Order = ({navigation}) => {
           <ActivityIndicator
             color={colors.EarthGreen}
             size={'large'}
-            style={{alignSelf: 'center'}}
+            style={{ alignSelf: 'center' }}
           />
         ) : (
-          <Text style={{color: colors.fontColor}}>First you must log in</Text>
+          <Text style={{ color: colors.fontColor }}>First you must log in</Text>
         )}
       </View>
     );
   };
 
   return (
-    <View style={{flex: 1, backgroundColor: colors.white}}>
+    <View style={{ flex: 1, backgroundColor: colors.white }}>
       <View style={styles.container}>
         {loading ? (
           <Loading />
@@ -310,7 +308,7 @@ const Order = ({navigation}) => {
             alignItems: 'center',
             marginBottom: px(10),
           }}>
-          <View style={{height: px(50), width: '90%'}}>
+          <View style={{ height: px(50), width: '90%' }}>
             <Button
               backgroundColor={colors.blue}
               onPress={() => {
