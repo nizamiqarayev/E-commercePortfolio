@@ -58,6 +58,7 @@ const Wishlist = () => {
       loading || (
         <Text
           style={{
+            color:colors.fontColor,
             marginTop: 20,
             fontFamily: 'DMSans-Medium',
             alignSelf: 'center',
