@@ -7,14 +7,16 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import px from '../../assets/utility/dimension';
 import colors from '../../config/colors';
 import base from '../../helpers/base';
-import { ErrorRegister, successChangePassword } from '../../stack/Stack';
+import {
+  ErrorRegister,
+  successChangeUsername,
+
+} from '../../stack/Stack';
 import Button from '../UI/Button';
 
-const ChangePassword = ({navigation}) => {
+const ChangeUsername = ({navigation}) => {
   const [inputs, setInputs] = useState({
-    oldpassword: '',
-    newpassword: '',
-    confirmpassword: '',
+    username: '',
   });
   const [button, setButton] = useState(false);
   function getInputs(inputName, data) {
@@ -25,10 +27,7 @@ const ChangePassword = ({navigation}) => {
   }
   console.log(inputs);
   useEffect(() => {
-    if (
-      inputs.confirmpassword === inputs.newpassword &&
-      inputs.confirmpassword.length >= 6
-    ) {
+    if (inputs.username.length>=6) {
       setButton(true);
     } else {
       setButton(false);
@@ -38,17 +37,17 @@ const ChangePassword = ({navigation}) => {
   async function postRequest() {
     const userId = await AsyncStorage.getItem('_id');
     try {
-      const response = await base.api().patch('user/u', {
-        oldPassword: inputs.oldpassword,
-        password: inputs.newpassword,
-        passwordAgain: inputs.confirmpassword,
-        userId,
+        console.log(userId);
+      const response = await base.api().patch('user/update', {
+        userId:userId,
+        username:inputs.username
       });
-      successChangePassword();
-      navigation.navigate('HomePage')
+      await AsyncStorage.setItem('username', inputs.username);
+      successChangeUsername();
+      navigation.navigate('HomePage');
     } catch (error) {
       console.log(error);
-      ErrorRegister()
+      ErrorRegister();
     }
   }
 
@@ -59,41 +58,20 @@ const ChangePassword = ({navigation}) => {
       style={styles.container}>
       <View>
         <View>
-          <Text style={styles.HeadText}>Change Password</Text>
+          <Text style={styles.HeadText}>Change Username</Text>
         </View>
         <View style={styles.MainContainer}>
           <View>
-            <Text style={styles.RegularText}>Old Password</Text>
+            <Text style={styles.RegularText}>New Username</Text>
             <TextInput
               autoComplete="off"
               autoCapitalize="none"
-              secureTextEntry={true}
+              placeholderTextColor={colors.darkgray}
               style={styles.InputContainer}
-              onChangeText={getInputs.bind(this, 'oldpassword')}></TextInput>
-          </View>
-          <View>
-            <Text style={styles.RegularText}>New Password</Text>
-            <TextInput
-              autoComplete="off"
-              autoCapitalize="none"
-              secureTextEntry={true}
-              style={styles.InputContainer}
-              onChangeText={getInputs.bind(this, 'newpassword')}></TextInput>
-          </View>
-          <View>
-            <Text style={styles.RegularText}>Confirm New Password</Text>
-            <TextInput
-              autoComplete="off"
-              autoCapitalize="none"
-              secureTextEntry={true}
-              style={styles.InputContainer}
-              onChangeText={getInputs.bind(
-                this,
-                'confirmpassword',
-              )}></TextInput>
+              onChangeText={getInputs.bind(this, 'username')}></TextInput>
           </View>
           <Text style={{color: colors.darkgray, marginTop: px(20)}}>
-            Password length must be more than 6 symbols
+            Username length must be more than 6 symbols
           </Text>
         </View>
       </View>
@@ -102,8 +80,10 @@ const ChangePassword = ({navigation}) => {
           paddingHorizontal: px(20),
           borderRadius: px(20),
           height: px(50),
+          marginTop:px(40)
         }}>
-        <Button onPress={button? postRequest:()=>{} }
+        <Button
+          onPress={button ? postRequest : () => {}}
           backgroundColor={button ? colors.blue : colors.darkgray}
           color={colors.white}>
           Confirm
@@ -143,4 +123,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChangePassword;
+export default ChangeUsername;

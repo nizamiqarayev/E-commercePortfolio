@@ -24,6 +24,8 @@ import Toast from 'react-native-toast-message';
 import PaymentWidget from '../components/Widget/PaymentWidget';
 import Checkout from '../components/Order/Checkout';
 import ChangePassword from '../components/Login/ChangePassword';
+import ChangeEmail from '../components/Login/ChangeEmail';
+import ChangeUsername from '../components/Login/ChangeUsername';
 
 const Stack = createNativeStackNavigator();
 
@@ -59,6 +61,27 @@ export function successRegister() {
   Toast.show({
     type: 'success',
     text1: 'You Registered successfully',
+    topOffset: px(50),
+  });
+}
+export function successChangePassword() {
+  Toast.show({
+    type: 'success',
+    text1: 'Password changed successfully',
+    topOffset: px(50),
+  });
+}
+export function successChangeEmail() {
+  Toast.show({
+    type: 'success',
+    text1: 'Email changed successfully',
+    topOffset: px(50),
+  });
+}
+export function successChangeUsername() {
+  Toast.show({
+    type: 'success',
+    text1: 'Username changed successfully',
     topOffset: px(50),
   });
 }
@@ -115,6 +138,8 @@ const StackComponent = () => {
         />
         <Stack.Screen name="ReviewProduct" component={ReviewProduct} />
         <Stack.Screen name="ChangePassword" options={{headerTitle:''}} component={ChangePassword} />
+        <Stack.Screen name="ChangeEmail" options={{headerTitle:''}} component={ChangeEmail} />
+        <Stack.Screen name="ChangeUsername" options={{headerTitle:''}} component={ChangeUsername} />
         <Stack.Group
           screenOptions={{
             headerTitle: '',
