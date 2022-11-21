@@ -77,7 +77,7 @@ const FilterScreen = ({navigation}) => {
           borderBottomWidth: 1,
           borderBottomColor: 'lightgray',
         }}>
-        <Text>Price Range</Text>
+        <Text style={{color:colors.fontColor}}>Price Range</Text>
         <RnRangeSlider
           style={styles.slider}
           min={0}
