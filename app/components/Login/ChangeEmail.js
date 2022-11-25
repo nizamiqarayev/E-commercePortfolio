@@ -67,6 +67,8 @@ const ChangeEmail = ({navigation}) => {
               autoComplete="off"
               autoCapitalize="none"
               style={styles.InputContainer}
+              placeholder={'Enter new email'}
+              placeholderTextColor={colors.darkgray}
               onChangeText={getInputs.bind(this, 'email')}></TextInput>
           </View>
         </View>
@@ -113,9 +115,12 @@ const styles = StyleSheet.create({
     marginTop: px(20),
   },
   InputContainer: {
-    borderBottomColor: colors.softGray,
-    borderBottomWidth: px(1),
+    borderColor: colors.blue,
+    borderWidth: px(1),
+    borderRadius: 30,
+    marginVertical: px(10),
     color: colors.fontColor,
+    paddingHorizontal: px(25),
   },
 });
 

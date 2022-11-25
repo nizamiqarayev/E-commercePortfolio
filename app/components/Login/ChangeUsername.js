@@ -66,6 +66,7 @@ const ChangeUsername = ({navigation}) => {
             <TextInput
               autoComplete="off"
               autoCapitalize="none"
+              placeholder={'Enter new username'}
               placeholderTextColor={colors.darkgray}
               style={styles.InputContainer}
               onChangeText={getInputs.bind(this, 'username')}></TextInput>
@@ -117,9 +118,12 @@ const styles = StyleSheet.create({
     marginTop: px(20),
   },
   InputContainer: {
-    borderBottomColor: colors.softGray,
-    borderBottomWidth: px(1),
+    borderColor: colors.blue,
+    borderWidth: px(1),
+    borderRadius: 30,
+    marginVertical: px(10),
     color: colors.fontColor,
+    paddingHorizontal: px(25),
   },
 });
 
