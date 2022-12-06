@@ -25,7 +25,7 @@ const PaymentWidget = ({route, navigation}) => {
           'charge', // or 'charge'
           {
             //options
-            publicId: 'pk_a2636e94412550d124dbc41eb3544', //id of site (from back office)
+            publicId: ${PAYMENT_ID}, //id of site (from back office)
             description: 'Payment example (no real withdrawal)', // purpose/justification/description
             amount: ${route.params.total},
             currency: 'USD',
